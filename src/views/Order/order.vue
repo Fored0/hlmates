@@ -139,6 +139,11 @@ export default {
       ],
     };
   },
+  methods:{
+    deleteRow(){
+      
+    }
+  }
 };
 </script>
 

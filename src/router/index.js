@@ -4,14 +4,14 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
 // 组件路由
-const Home = () => import('views/Home/home')
-const Login = () => import('views/Login/login')
-const Message = () => import('views/Message/message')
-const Order = () => import('views/Order/order')
-const Release = () => import('views/Release/release')
-const Goods = () => import('views/Goods/goods')
-const Register = () => import('views/Register/register')
-const UserCenter = () => import('views/UserCenter/usercenter')
+const Home = () => import('@/views/Home/home')
+const Login = () => import('@/views/Login/login')
+const Message = () => import('@/views/Message/message')
+const Order = () => import('@/views/Order/order')
+const Release = () => import('@/views/Release/release')
+const Goods = () => import('@/views/Goods/goods')
+const Register = () => import('@/views/Register/register')
+const UserCenter = () => import('@/views/UserCenter/usercenter')
 
 
 const routes = [ // 默认首页，无需登录

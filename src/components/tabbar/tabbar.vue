@@ -13,7 +13,7 @@
       <p class="item" @click="toMessage">消息</p>
       <p class="item" @click="toOrder">我的订单</p>
       <p class="item" @click="toGoods">我的发布</p>
-      <p class="item" @click="toRelease"><button>发布商品</button></p>
+      <p class="item"><el-button class="publishBtn"  @click="toRelease" type="primary">发布商品</el-button></p>
     </div>
   </div>
 </template>
@@ -103,5 +103,11 @@ export default {
   border-radius: 35%;
   margin-top: -17px;
   border: 1px solid white;
+}
+.publishBtn{
+  margin-top: -5px;
+  background-color: rgb(12, 12, 12);
+  border:0;
+  color: #fffe07;
 }
 </style>

@@ -17,7 +17,7 @@
           ></el-input>
         </el-form-item>
         <div class="btn">
-          <el-button type="primary" size="mini" plain round>登录</el-button>
+          <el-button @click="handleLogin" type="primary" size="mini" plain round>登录</el-button>
         </div>
       </el-form>
       <div class="caozuo">
@@ -48,6 +48,11 @@ export default {
     toRep() {
       this.$router.push("register");
     },
+    handleLogin(){
+      // 校验用户账号密码
+      this.$router.push("home")
+      // 获取用户信息，更新主页头像（可缓存到本地）
+    }
   },
 };
 </script>
