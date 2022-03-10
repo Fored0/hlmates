@@ -3,32 +3,44 @@
     <div class="left">
       <i class="el-icon-s-home" @click="toHome">主页</i>
     </div>
-    <div class="center">
-      {{ username }}你好！欢迎来到&nbsp;同学你好&nbsp;二手交易平台
-    </div>
+    <div class="center">{{ username }}你好！欢迎来到&nbsp;同学你好&nbsp;二手交易平台</div>
     <div class="right">
       <div class="login">
-        <button class="button" @click='toLogin'>登录</button>
+        <div v-if="userInfo != undefined">
+          <p>{{ userInfo }}</p>
+        </div>
+        <button v-else class="button" @click="toLogin">登录</button>
       </div>
       <p class="item" @click="toMessage">消息</p>
       <p class="item" @click="toOrder">我的订单</p>
       <p class="item" @click="toGoods">我的发布</p>
-      <p class="item"><el-button class="publishBtn"  @click="toRelease" type="primary">发布商品</el-button></p>
+      <p class="item">
+        <el-button class="publishBtn" @click="toRelease" type="primary">发布商品</el-button>
+      </p>
     </div>
   </div>
 </template>
 
 <script>
 export default {
+  name: "TabBar",
   props: {
     username: {
       type: String,
       default: "",
     },
   },
+  data() {
+    return {
+      userInfo: {},
+    }
+  },
+  created() {
+    this.getUserInfo()
+  },
   methods: {
     // 页面跳转
-    toLogin(){
+    toLogin() {
       this.$router.push("/login")
     },
     toHome() {
@@ -46,11 +58,16 @@ export default {
     toGoods() {
       this.$router.push("/goods");
     },
-    toLogin(){
+    toLogin() {
       this.$router.push('/login')
     },
-    toRegister(){
+    toRegister() {
       this.$router.push('/register')
+    },
+    async getUserInfo() {
+      console.log(JSON.parse(localStorage.getItem('userInfo')));
+      this.userInfo =  JSON.parse(localStorage.getItem('userInfo'))
+      console.log(userInfo);
     }
   },
 };
@@ -104,10 +121,10 @@ export default {
   margin-top: -17px;
   border: 1px solid white;
 }
-.publishBtn{
+.publishBtn {
   margin-top: -5px;
   background-color: rgb(12, 12, 12);
-  border:0;
+  border: 0;
   color: #fffe07;
 }
 </style>

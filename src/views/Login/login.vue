@@ -21,7 +21,7 @@
         </div>
       </el-form>
       <div class="caozuo">
-        <div><input type="radio" />记住密码</div>
+        <div><input type="radio" style="width:10px;height:10px" />记住密码</div>
         <div @click="toRep" class="rep">忘记密码？点我去修改</div>
       </div>
     </div>
