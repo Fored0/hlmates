@@ -5,31 +5,29 @@
     <div class="show">
       <el-container>
         <el-header style="height:100px;">
-           <div class="head_img">
-             <img src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" alt="">
-             <div class="top_info">
-               <p>{{topName}}</p>
-               <p>{{'TEL:'+topPhone}}</p>
-             </div>
-           </div>
+          <div class="head_img">
+            <img :src="userInfo.imgUrl" alt />
+            <div class="top_info">
+              <p>{{ userInfo.nickName }}</p>
+              <p>{{ 'TEL:' + userInfo.phoneNumber }}</p>
+            </div>
+          </div>
         </el-header>
-        <el-main
-          ><el-tabs stretch :tab-position="tabPosition" style="height: 450px">
+        <el-main>
+          <el-tabs stretch :tab-position="tabPosition" style="height: 450px">
             <el-tab-pane label="个人中心">个人中心</el-tab-pane>
             <!--  -->
             <el-tab-pane label="我的货架">我的货架</el-tab-pane>
             <!--  -->
-            <el-tab-pane label="我的信息">
-             
-            </el-tab-pane>
+            <el-tab-pane label="我的信息"></el-tab-pane>
             <!--  -->
             <el-tab-pane label="收货地址">收货地址</el-tab-pane>
             <el-tab-pane label="关于账号">关于账号</el-tab-pane>
             <el-tab-pane label="修改密码">修改密码</el-tab-pane>
             <el-tab-pane label="更改账户">更改账户</el-tab-pane>
             <el-tab-pane label="退出登录">退出登录</el-tab-pane>
-          </el-tabs></el-main
-        >
+          </el-tabs>
+        </el-main>
       </el-container>
     </div>
   </div>
@@ -44,11 +42,13 @@ export default {
   },
   data() {
     return {
-      tabPosition: "left",
-      topName:'张女士',
-      topPhone:'12891379321'
+      userInfo: {},
+      tabPosition: 'left',
     };
   },
+  created() {
+    this.userInfo = JSON.parse(localStorage.getItem('userInfo'))
+  }
 };
 </script>
 
@@ -83,23 +83,25 @@ body > .el-container {
   width: 96%;
   margin-left: 2%;
 }
-.head_img{
+.head_img {
   margin-left: -80%;
   height: 100px;
+  margin-top: 1%;
 }
-.head_img img{
-  width: 90px;
-  height: 90xp;
-  border-radius: 30%;
+.head_img img {
+  width: 70px;
+  height: 70px;
+  border-radius: 10%;
   margin: 5px;
 }
-.desc{
+.desc {
   margin-left: 30%;
 }
-.top_info{
+.top_info {
   position: absolute;
-  top: 13%;
-  left: 18%;
+  top: 20%;
+  left: 16%;
+  margin-top: 1%;
   line-height: 2em;
   text-align: left;
   font-size: 18px;

@@ -6,8 +6,8 @@
     <div class="center">{{ username }}你好！欢迎来到&nbsp;同学你好&nbsp;二手交易平台</div>
     <div class="right">
       <div class="login">
-        <div v-if="userInfo != undefined">
-          <p>{{ userInfo }}</p>
+        <div v-if="userInfo != undefined" @click="toUserCenter" >
+          <img class="headImg" :src="userInfo.imgUrl" alt="">
         </div>
         <button v-else class="button" @click="toLogin">登录</button>
       </div>
@@ -36,7 +36,8 @@ export default {
     }
   },
   created() {
-    this.getUserInfo()
+    this.userInfo = JSON.parse(localStorage.getItem('userInfo'))
+    console.log(userInfo);
   },
   methods: {
     // 页面跳转
@@ -64,10 +65,8 @@ export default {
     toRegister() {
       this.$router.push('/register')
     },
-    async getUserInfo() {
-      console.log(JSON.parse(localStorage.getItem('userInfo')));
-      this.userInfo =  JSON.parse(localStorage.getItem('userInfo'))
-      console.log(userInfo);
+    toUserCenter(){
+      this.$router.push('/usercenter')
     }
   },
 };
@@ -114,11 +113,11 @@ export default {
   flex: 1;
 }
 .button {
-  width: 60px;
-  height: 60px;
+  width: 50px;
+  height: 50px;
   margin-right: 50px;
-  border-radius: 35%;
-  margin-top: -17px;
+  border-radius: 50%;
+  margin-top: -12px;
   border: 1px solid white;
 }
 .publishBtn {
@@ -126,5 +125,12 @@ export default {
   background-color: rgb(12, 12, 12);
   border: 0;
   color: #fffe07;
+}
+.headImg{
+  width: 50px;
+  height: 50px;
+  margin-top: -12px;
+  border-radius: 50%;
+  margin-right: 50px;
 }
 </style>
