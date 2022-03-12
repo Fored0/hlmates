@@ -87,20 +87,22 @@ body > .el-container {
   margin-left: -80%;
   height: 100px;
   margin-top: 1%;
+  position: relative;
 }
 .head_img img {
   width: 70px;
   height: 70px;
   border-radius: 10%;
   margin: 5px;
+  flex: 1;
 }
 .desc {
   margin-left: 30%;
 }
 .top_info {
   position: absolute;
-  top: 20%;
-  left: 16%;
+  top: -20%;
+  left: 52%;
   margin-top: 1%;
   line-height: 2em;
   text-align: left;

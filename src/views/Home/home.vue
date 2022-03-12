@@ -20,7 +20,7 @@
           <div class="right">换一批</div>
         </div>
         <div class="goods_item">
-          <ul v-for="(item, index) in homeData.goodThingRecommend.items " @click="show(item.id)" :key="index">
+          <ul v-for="(item, index) in homeData.goodThingRecommend.items " @click="toGoodsDetail(item.id)" :key="index">
             <li>
               <img :src="item.url" alt />
               <div class="goods_scp">{{ item.description }}</div>
@@ -36,7 +36,7 @@
           <div class="right">换一批</div>
         </div>
         <div class="goods_item">
-          <ul v-for="(item, index) in homeData.goodThingRecommend.items " @click="show(item.id)" :key="index">
+          <ul v-for="(item, index) in homeData.goodThingRecommend.items " @click="toGoodsDetail(item.id)" :key="index">
             <li>
               <img :src="item.url" alt />
               <div class="goods_scp">{{ item.description }}</div>
@@ -52,7 +52,7 @@
           <div class="right">换一批</div>
         </div>
         <div class="goods_item">
-          <ul v-for="(item, index) in homeData.goodThingRecommend.items " @click="show(item.id)" :key="index">
+          <ul v-for="(item, index) in homeData.goodThingRecommend.items " @click="toGoodsDetail(item.id)" :key="index">
             <li>
               <img :src="item.url" alt />
               <div class="goods_scp">{{ item.description }}</div>
@@ -68,7 +68,7 @@
           <div class="right">换一批</div>
         </div>
         <div class="goods_item">
-          <ul v-for="(item, index) in homeData.book.items " @click="show(item.id)" :key="index">
+          <ul v-for="(item, index) in homeData.book.items " @click="toGoodsDetail(item.id)" :key="index">
             <li>
               <img :src="item.url" alt />
               <div class="goods_scp">{{ item.description }}</div>
@@ -99,9 +99,8 @@ export default {
     };
   },
   methods:{
-    show(id){
-      console.log(id);
-      
+    toGoodsDetail(id){
+      this.$router.push(`/goodsdetail/${id}`)
     }
   }
 };

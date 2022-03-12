@@ -13,7 +13,7 @@
       </div>
       <p class="item" @click="toMessage">消息</p>
       <p class="item" @click="toOrder">我的订单</p>
-      <p class="item" @click="toGoods">我的发布</p>
+      <p class="item" @click="toMyRelease">我的发布</p>
       <p class="item">
         <el-button class="publishBtn" @click="toRelease" type="primary">发布商品</el-button>
       </p>
@@ -37,7 +37,7 @@ export default {
   },
   created() {
     this.userInfo = JSON.parse(localStorage.getItem('userInfo'))
-    console.log(userInfo);
+    console.log(this.userInfo);
   },
   methods: {
     // 页面跳转
@@ -56,8 +56,8 @@ export default {
     toRelease() {
       this.$router.push("/release");
     },
-    toGoods() {
-      this.$router.push("/goods");
+    toMyRelease() {
+      this.$router.push("/myrelease");
     },
     toLogin() {
       this.$router.push('/login')

@@ -9,9 +9,10 @@ const Login = () => import('@/views/Login/login')
 const Message = () => import('@/views/Message/message')
 const Order = () => import('@/views/Order/order')
 const Release = () => import('@/views/Release/release')
-const Goods = () => import('@/views/Goods/goods')
+const MyRelease = () => import('@/views/MyRelease/myrelease')
 const Register = () => import('@/views/Register/register')
 const UserCenter = () => import('@/views/UserCenter/usercenter')
+const GoodsDetail = ()=>import('@/views/GoodsDetail/goodsdetail')
 
 
 const routes = [ // 默认首页，无需登录
@@ -49,10 +50,15 @@ const routes = [ // 默认首页，无需登录
     path: '/release',
     component: Release
   },
-  // 商品
+  // 我的发布商品
   {
-    path: '/goods',
-    component: Goods
+    path: '/myrelease',
+    component: MyRelease
+  },
+  // 商品详情
+  {
+    path:`/goodsdetail/:id`,
+    component:GoodsDetail
   },
   //个人中心 
   {
