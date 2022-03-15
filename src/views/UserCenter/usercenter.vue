@@ -15,9 +15,10 @@
         </el-header>
         <el-main>
           <el-tabs stretch :tab-position="tabPosition" style="height: 450px">
-            <el-tab-pane label="个人中心">个人中心</el-tab-pane>
-            <!--  -->
-            <el-tab-pane label="我的货架">我的货架</el-tab-pane>
+            <el-tab-pane label="个人中心">
+              <user-center :userCenterData="userCenterData" ></user-center>
+            </el-tab-pane>
+            
             <!--  -->
             <el-tab-pane label="我的信息"></el-tab-pane>
             <!--  -->
@@ -34,16 +35,22 @@
 </template>
 
 <script>
+
 import TabBar from "@/components/tabbar/tabbar";
+import UserCenter from './tabItem/userCenter'
+import mockData from './mockData.js'
 
 export default {
   components: {
     TabBar,
-  },
+    UserCenter,
+    MyGoodsShelves,
+},
   data() {
     return {
       userInfo: {},
       tabPosition: 'left',
+      userCenterData:mockData
     };
   },
   created() {
@@ -82,6 +89,7 @@ body > .el-container {
   margin-top: 20px;
   width: 96%;
   margin-left: 2%;
+  height: 800px;
 }
 .head_img {
   margin-left: -80%;
