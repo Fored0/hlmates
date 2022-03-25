@@ -22,9 +22,9 @@
               <div class="desc_span">{{ scope.row.desc }}</div>
             </template>
           </el-table-column>
-          <el-table-column prop="address" label="收货地址" width="160">
+          <el-table-column prop="address" label="收货地址" width="260">
           </el-table-column>
-          <el-table-column label="金额/付款方式" width="160">
+          <el-table-column label="金额/付款方式" width="200">
             <template slot-scope="scope">
               <div>
                 <p>{{ scope.row.price }}</p>
@@ -33,13 +33,13 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column prop="date" label="创建时间" width="160">
+          <el-table-column prop="date" label="创建时间" width="200">
           </el-table-column>
-          <el-table-column prop="number" label="订单编号" width="160">
+          <el-table-column prop="number" label="订单编号" width="200">
           </el-table-column>
-          <el-table-column prop="state" label="状态" width="160">
+          <el-table-column prop="state" label="状态" width="200">
           </el-table-column>
-          <el-table-column fixed="right" label="操作" width="120">
+          <el-table-column fixed="right" label="操作" width="200">
             <template slot-scope="scope">
               <el-button
                 @click.native.prevent="deleteRow(scope.$index, tableData)"

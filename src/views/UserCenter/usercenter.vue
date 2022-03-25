@@ -15,14 +15,14 @@
         </el-header>
         <el-main>
           <el-tabs stretch :tab-position="tabPosition" style="height: 450px">
-            <el-tab-pane label="个人中心">
-              <user-center :userCenterData="userCenterData" ></user-center>
+            <!--  -->
+            <el-tab-pane label="我的信息">
+              <my-info :userCenterData="userCenterData" ></my-info>
             </el-tab-pane>
-            
             <!--  -->
-            <el-tab-pane label="我的信息"></el-tab-pane>
-            <!--  -->
-            <el-tab-pane label="收货地址">收货地址</el-tab-pane>
+            <el-tab-pane label="收货地址">
+              <my-address></my-address>
+            </el-tab-pane>
             <el-tab-pane label="关于账号">关于账号</el-tab-pane>
             <el-tab-pane label="修改密码">修改密码</el-tab-pane>
             <el-tab-pane label="更改账户">更改账户</el-tab-pane>
@@ -37,14 +37,15 @@
 <script>
 
 import TabBar from "@/components/tabbar/tabbar";
-import UserCenter from './tabItem/userCenter'
+import MyInfo from './tabItem/myInfo'
+import MyAddress from './tabItem/address.vue'
 import mockData from './mockData.js'
 
 export default {
   components: {
     TabBar,
-    UserCenter,
-    MyGoodsShelves,
+    MyInfo,
+    MyAddress
 },
   data() {
     return {
@@ -61,13 +62,12 @@ export default {
 
 <style scoped>
 .el-header {
-  background-color: #d1e3f5;
+  border-bottom: 1px solid silver;
   color: #333;
   text-align: center;
   line-height: 60px;
 }
 .el-main {
-  background-color: #e9eef3;
   color: #333;
   text-align: center;
   line-height: 160px;
@@ -75,6 +75,10 @@ export default {
 
 body > .el-container {
   margin-bottom: 40px;
+}
+
+section.el-container.is-vertical{
+border: 1px solid silver;
 }
 
 .el-container:nth-child(5) .el-aside,
@@ -94,7 +98,7 @@ body > .el-container {
 .head_img {
   margin-left: -80%;
   height: 100px;
-  margin-top: 1%;
+  margin-top: 0.5%;
   position: relative;
 }
 .head_img img {

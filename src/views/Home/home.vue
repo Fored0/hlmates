@@ -149,7 +149,7 @@ export default {
 }
 .goods_title .right {
   float: right;
-  margin-top: -4%;
+  margin-top: -3%;
   margin-right: 2%;
 }
 .goods_item {
