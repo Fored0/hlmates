@@ -1,123 +1,90 @@
 <template>
   <div>
-    <tab-bar></tab-bar>
-    <!--  -->
-    <div class="show">
-      <el-container>
-        <el-header style="height:100px;">
-          <div class="head_img">
-            <img :src="userInfo.imgUrl" alt />
-            <div class="top_info">
-              <p>{{ userInfo.nickName }}</p>
-              <p>{{ 'TEL:' + userInfo.phoneNumber }}</p>
-            </div>
-          </div>
-        </el-header>
-        <el-main>
-          <el-tabs stretch :tab-position="tabPosition" style="height: 450px">
-            <!--  -->
-            <el-tab-pane label="我的信息">
-              <my-info :userCenterData="userCenterData" ></my-info>
-            </el-tab-pane>
-            <!--  -->
-            <el-tab-pane label="收货地址">
-              <my-address></my-address>
-            </el-tab-pane>
-            <el-tab-pane label="关于账号">关于账号</el-tab-pane>
-            <el-tab-pane label="修改密码">修改密码</el-tab-pane>
-            <el-tab-pane label="更改账户">更改账户</el-tab-pane>
-            <el-tab-pane label="退出登录">退出登录</el-tab-pane>
-          </el-tabs>
-        </el-main>
-      </el-container>
+    <tab-bar />
+    <div class="card">
+      <el-card class="box-card">
+        <div slot="header" class="clearfix">
+          <h4>基本信息</h4>
+          <el-button class="opeBtn" @click="infoDialogVisible=true" size="small" type="primary">编辑信息</el-button>
+        </div>
+        <el-descriptions direction="vertical" :column="3" border>
+          <el-descriptions-item label="用户名">{{ userCenterData.userCenter.userName }}</el-descriptions-item>
+          <el-descriptions-item label="昵称">{{ userCenterData.userCenter.nickName }}</el-descriptions-item>
+          <el-descriptions-item label="手机号">{{ userCenterData.userCenter.phoneNumber }}</el-descriptions-item>
+          <el-descriptions-item label="邮箱">{{ userCenterData.userCenter.email }}</el-descriptions-item>
+          <el-descriptions-item label="所在院校">{{ userCenterData.userCenter.school }}</el-descriptions-item>
+        </el-descriptions>
+      </el-card>
     </div>
+    <div class="card">
+      <el-card>
+        <div slot="header" class="clearfix">
+          <h4>收货信息</h4>
+          <el-button class="opeBtn" size="small" type="primary">新增收货地址</el-button>
+        </div>
+        <el-table :data="userCenterData.receive" style="width: 100%">
+          <el-table-column label="收货人" width="180">
+            <template slot-scope="scope">
+              <span style="margin-left: 10px">{{ scope.row.receivePeople }}</span>
+            </template>
+          </el-table-column>
+          <el-table-column label="所在地区" width="380">
+            <template slot-scope="scope">
+              <span>{{ scope.row.locationAddress }}</span>
+            </template>
+          </el-table-column>
+          <el-table-column label="详细地址" width="380">
+            <template slot-scope="scope">
+              <span>{{ scope.row.detailAddress }}</span>
+            </template>
+          </el-table-column>
+          <el-table-column label="操作">
+            <template slot-scope="scope">
+              <el-button size="mini" type="danger" @click="deleteAddress(scope)">删除</el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+      </el-card>
+    </div>
+    <el-dialog title="修改个人信息" :visible.sync="infoDialogVisible" width="30%">
+      <span>这是一段信息</span>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="infoDialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="infoDialogVisible = false">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
 <script>
-
 import TabBar from "@/components/tabbar/tabbar";
-import MyInfo from './tabItem/myInfo'
-import MyAddress from './tabItem/address.vue'
 import mockData from './mockData.js'
-
 export default {
   components: {
-    TabBar,
-    MyInfo,
-    MyAddress
-},
+    TabBar
+  },
   data() {
     return {
-      userInfo: {},
-      tabPosition: 'left',
-      userCenterData:mockData
-    };
+      userCenterData: mockData,
+      infoDialogVisible: false
+    }
   },
-  created() {
-    this.userInfo = JSON.parse(localStorage.getItem('userInfo'))
+  methods: {
+    deleteAddress(scope) {
+      console.log(scope.row.id);
+    }
   }
-};
+}
 </script>
 
 <style scoped>
-.el-header {
-  border-bottom: 1px solid silver;
-  color: #333;
-  text-align: center;
-  line-height: 60px;
-}
-.el-main {
-  color: #333;
-  text-align: center;
-  line-height: 160px;
-}
-
-body > .el-container {
-  margin-bottom: 40px;
-}
-
-section.el-container.is-vertical{
-border: 1px solid silver;
-}
-
-.el-container:nth-child(5) .el-aside,
-.el-container:nth-child(6) .el-aside {
-  line-height: 260px;
-}
-
-.el-container:nth-child(7) .el-aside {
-  line-height: 320px;
-}
-.show {
+.card {
+  width: 70vw;
+  margin-left: 15vw;
   margin-top: 20px;
-  width: 96%;
-  margin-left: 2%;
-  height: 800px;
 }
-.head_img {
-  margin-left: -80%;
-  height: 100px;
-  margin-top: 0.5%;
-  position: relative;
-}
-.head_img img {
-  width: 70px;
-  height: 70px;
-  border-radius: 10%;
-  margin: 5px;
-  flex: 1;
-}
-.desc {
-  margin-left: 30%;
-}
-.top_info {
-  position: absolute;
-  top: -20%;
-  left: 52%;
-  margin-top: 1%;
-  line-height: 2em;
-  text-align: left;
-  font-size: 18px;
+.opeBtn {
+  float: right;
+  margin-top: -25px;
 }
 </style>
