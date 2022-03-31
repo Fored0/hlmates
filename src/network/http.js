@@ -1,13 +1,7 @@
 import axios from "axios"
 
-const MyHttpServer = {}
-MyHttpServer.install = (Vue) => {
-  axios.defaults.baseURL = 'http://127.0.0.1:8888/api/private/v1/'
-  // 设置请求拦截器
-  axios.interceptors.request.use((config) => {
-    
-  })
-  Vue.prototype.$http = axios
-}
+const request = axios.create({
+  baseURL:'http://192.168.3.119:1025/loadData'
+})
 
-export default MyHttpServer
+export default request

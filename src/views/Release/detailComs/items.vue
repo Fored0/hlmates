@@ -41,20 +41,15 @@
         <el-input
           type="textarea"
           v-model="formData.desc"
-          style="width: 50%"
+          style="width: 30%"
           placeholder="描述下转让原因、物品来源、可否面议、物品亮点瑕疵等方面"
         ></el-input>
       </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="onSubmit">立即创建</el-button>
-        <el-button type="primary" @click="onReset">重置</el-button>
-      </el-form-item>
-      <div class="ringhtContent">
-        <el-form-item label="联系人">
-          <el-input v-model="formData.occupantName"></el-input>
+      <el-form-item label="联系人">
+          <el-input  style="width: 30%" v-model="formData.occupantName"></el-input>
         </el-form-item>
         <el-form-item label="联系电话">
-          <el-input v-model="formData.concatPhone"></el-input>
+          <el-input  style="width: 30%" v-model="formData.concatPhone"></el-input>
         </el-form-item>
         <el-form-item>
           <el-upload
@@ -64,6 +59,7 @@
             :on-remove="handleRemove"
             :file-list="fileList"
             list-type="picture"
+             style="width: 30%"
           >
             <el-button size="small" type="primary">点击上传</el-button>
             <div slot="tip" class="el-upload__tip">
@@ -71,7 +67,10 @@
             </div>
           </el-upload>
         </el-form-item>
-      </div>
+      <el-form-item>
+        <el-button type="primary" @click="onSubmit">立即创建</el-button>
+        <el-button type="primary" @click="onReset">重置</el-button>
+      </el-form-item>
     </el-form>
   </div>
 </template>
@@ -122,9 +121,5 @@ export default {
 </script>
 
 <style scoped>
-.ringhtContent {
-  float: right;
-  margin-top: -32%;
-  margin-right: 20%;
-}
+
 </style>

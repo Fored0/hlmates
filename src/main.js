@@ -12,8 +12,6 @@ import 'element-ui/lib/theme-chalk/index.css';
 // 清除浏览器默认样式
 import 'assets/css/reset.css'
 
-// 网络请求
-// import MyHttpServer from './network/http'
 
 // 模拟,需要将js值转换为JSON字符串进行缓存
 const userInfo = {
