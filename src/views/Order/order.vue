@@ -211,8 +211,11 @@ export default {
   margin-top: 20px;
 }
 .desc_span {
-  margin-left: 50%;
-  margin-top: -15%;
+  width: 150px;
+  height: 85px;
+  overflow: auto;
+  float: right;
+  margin-right: 10%;
 }
 el-dialog {
   min-height: 40vh;

@@ -1,23 +1,45 @@
 <template>
   <div class="tabbar">
     <div class="left">
-      <i class="el-icon-s-home" @click="toHome">主页</i>
+      <i class="el-icon-s-home" @click="$router.push('/home')">主页</i>
     </div>
-    <div class="center">{{ username }}你好！欢迎来到&nbsp;同学你好&nbsp;二手交易平台</div>
+    <div class="center">
+      {{ username }}你好！欢迎来到&nbsp;同学你好&nbsp;二手交易平台
+    </div>
     <div class="right">
       <div class="login">
-        <div v-if="userInfo != undefined" @click="toUserCenter" >
-          <img class="headImg" :src="userInfo.imgUrl" alt="">
+        <div v-if="hasLoginned" @click="toTargetPath('usercenter')">
+          <img class="headImg" :src="userInfo.imgUrl" alt="" />
         </div>
-        <button v-else class="button" @click="toLogin">登录</button>
+        <button v-else class="button" @click="$router.push('/login')">
+          登录
+        </button>
       </div>
-      <p class="item" @click="toMessage">消息</p>
-      <p class="item" @click="toOrder">我的订单</p>
-      <p class="item" @click="toMyRelease">我的发布</p>
+      <p class="item" @click="toTargetPath('message')">消息</p>
+      <p class="item" @click="toTargetPath('order')">我的订单</p>
+      <p class="item" @click="toTargetPath('myrelease')">我的发布</p>
       <p class="item">
-        <el-button class="publishBtn" @click="toRelease" type="primary">发布商品</el-button>
+        <el-button
+          class="publishBtn"
+          @click="toTargetPath('release')"
+          type="primary"
+          >发布商品</el-button
+        >
       </p>
     </div>
+    <el-dialog title="提示" :visible.sync="dialogVisible" width="30%">
+      <span>该功能需要登录才能使用哦，请先登录！</span>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="$router.push('/register'), (dialogVisible = false)"
+          >没有账号？去注册</el-button
+        >
+        <el-button
+          type="primary"
+          @click="$router.push('/login'), (dialogVisible = false)"
+          >已有帐号？去登录</el-button
+        >
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -33,41 +55,25 @@ export default {
   data() {
     return {
       userInfo: {},
-    }
+      hasLoginned: false,
+      dialogVisible: false,
+    };
   },
   created() {
-    this.userInfo = JSON.parse(localStorage.getItem('userInfo'))
-    console.log(this.userInfo);
+    this.userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    Object.keys(this.userInfo).length !== 0
+      ? (this.hasLoginned = true)
+      : (this.hasLoginned = false);
   },
   methods: {
     // 页面跳转
-    toLogin() {
-      this.$router.push("/login")
+    toTargetPath(path) {
+      if (this.hasLoginned) {
+        this.$router.push(`/${path}`);
+      } else {
+        this.dialogVisible = true;
+      }
     },
-    toHome() {
-      this.$router.push("/home");
-    },
-    toMessage() {
-      this.$router.push("/message");
-    },
-    toOrder() {
-      this.$router.push("/order");
-    },
-    toRelease() {
-      this.$router.push("/release");
-    },
-    toMyRelease() {
-      this.$router.push("/myrelease");
-    },
-    toLogin() {
-      this.$router.push('/login')
-    },
-    toRegister() {
-      this.$router.push('/register')
-    },
-    toUserCenter(){
-      this.$router.push('/usercenter')
-    }
   },
 };
 </script>
@@ -126,7 +132,7 @@ export default {
   border: 0;
   color: #fffe07;
 }
-.headImg{
+.headImg {
   width: 50px;
   height: 50px;
   margin-top: -12px;

@@ -1,6 +1,6 @@
 <template>
   <div class="bottom">
-    <el-divider></el-divider>
+    
     <div class="activeText">
       <div class="text">
         <el-popover
@@ -72,6 +72,7 @@ export default {
   width: 70%;
   margin-left: 15%;
   height: 150px;
+  position: relative;
 }
 .activeText {
   display: inline-flex;

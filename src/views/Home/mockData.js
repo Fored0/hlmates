@@ -1,9 +1,9 @@
-const homeData = {
+const mockData = {
   recommend: ["IPhone 12 全新", "Ipad Air 95新", "Nike AF1电玩像素 未拆封"],
-  goodThingRecommend: {
-    itemName: "好物推荐",
+  roomLittleThing: {
+    itemName: "宿舍小物件",
     icon:'',
-    items: [
+    itemList: [
       {
         url:
           "https://img0.baidu.com/it/u=1721391133,702358773&fm=253&fmt=auto&app=120&f=JPEG?w=500&h=625", //图片地址
@@ -44,7 +44,7 @@ const homeData = {
   digital: {
     itemName: "数码产品",
     icon:'',
-    items: [
+    itemList: [
       {
         url:
           "https://img0.baidu.com/it/u=1721391133,702358773&fm=253&fmt=auto&app=120&f=JPEG?w=500&h=625", //图片地址
@@ -59,12 +59,26 @@ const homeData = {
         price: "10000000.00",
         id:'7'
       },
+      {
+        url:
+          "https://img0.baidu.com/it/u=1721391133,702358773&fm=253&fmt=auto&app=120&f=JPEG?w=500&h=625", //图片地址
+        description: "良辰美景",
+        price: "10000000.00",
+        id:'6'
+      },
+      {
+        url:
+          "https://img0.baidu.com/it/u=1721391133,702358773&fm=253&fmt=auto&app=120&f=JPEG?w=500&h=625", //图片地址
+        description: "良辰美景",
+        price: "10000000.00",
+        id:'6'
+      }
     ],
   },
   clothes: {
     itemName: "鞋服产品",
     icon:'',
-    items: [
+    itemList: [
       {
         url:
           "https://img0.baidu.com/it/u=1721391133,702358773&fm=253&fmt=auto&app=120&f=JPEG?w=500&h=625", //图片地址
@@ -79,12 +93,19 @@ const homeData = {
         price: "10000000.00",
         id:'9'
       },
+      {
+        url:
+          "https://img0.baidu.com/it/u=1721391133,702358773&fm=253&fmt=auto&app=120&f=JPEG?w=500&h=625", //图片地址
+        description: "良辰美景",
+        price: "10000000.00",
+        id:'6'
+      }
     ],
   },
   book: {
     itemName: "书籍推荐",
     icon:'',
-    items: [
+    itemList: [
       {
         url:
           "https://img0.baidu.com/it/u=1721391133,702358773&fm=253&fmt=auto&app=120&f=JPEG?w=500&h=625", //图片地址
@@ -103,4 +124,4 @@ const homeData = {
   },
 };
 
-export default homeData;
+export default mockData;
