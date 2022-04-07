@@ -13,6 +13,7 @@ const MyRelease = () => import('@/views/MyRelease/myrelease')
 const Register = () => import('@/views/Register/register')
 const UserCenter = () => import('@/views/UserCenter/usercenter')
 const GoodsDetail = ()=>import('@/views/GoodsDetail/goodsdetail')
+const Pay=()=>import('@/views/Pay/pay')
 
 
 const routes = [ // 默认首页，无需登录
@@ -64,6 +65,11 @@ const routes = [ // 默认首页，无需登录
   {
     path: '/usercenter',
     component: UserCenter,
+  },
+  // 付款
+  {
+    path:'/pay',
+    component:Pay
   }
 ]
 

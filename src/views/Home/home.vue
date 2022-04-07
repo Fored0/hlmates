@@ -89,12 +89,18 @@
       </div>
     </div>
     <!-- 右侧轮播及新发布提醒 -->
-    <div class="swiper">
-      <el-carousel indicator-position="outside">
-        <el-carousel-item v-for="item,index in swiperList" :key="index">
-          <img :src="item.url" alt="">
-        </el-carousel-item>
-      </el-carousel>
+    <div class="right_container">
+      <p>为您推荐：</p>
+      <div class="swiper">
+        <el-carousel  height="230px" @click="log()" trigger="click" indicator-position="outside">
+          <el-carousel-item v-for="item, index in swiperList" :key="index">
+            <img style="width:100%;height:220px" :src="item.url" alt />
+          </el-carousel-item>
+        </el-carousel>
+      </div>
+      <div class="show_new_goods_message">
+        <el-button plain @click="open2">右下角</el-button>
+      </div>
     </div>
     <bottom-bar></bottom-bar>
   </div>
@@ -112,13 +118,13 @@ export default {
   data() {
     return {
       input: "",
-      homeData:mockData,
-      swiperList:[
-        {url:'https://img0.baidu.com/it/u=3073049700,2209615132&fm=253&fmt=auto&app=138&f=JPEG?w=990&h=500'},
-        {url:'https://img0.baidu.com/it/u=3073049700,2209615132&fm=253&fmt=auto&app=138&f=JPEG?w=990&h=500'},
-        {url:'https://img0.baidu.com/it/u=3073049700,2209615132&fm=253&fmt=auto&app=138&f=JPEG?w=990&h=500'},
-        {url:'https://img0.baidu.com/it/u=3073049700,2209615132&fm=253&fmt=auto&app=138&f=JPEG?w=990&h=500'},
-        {url:'https://img0.baidu.com/it/u=3073049700,2209615132&fm=253&fmt=auto&app=138&f=JPEG?w=990&h=500'}
+      homeData: mockData,
+      swiperList: [
+        { url: 'https://img0.baidu.com/it/u=3073049700,2209615132&fm=253&fmt=auto&app=138&f=JPEG?w=990&h=500' },
+        { url: 'https://img0.baidu.com/it/u=2775655496,2255017447&fm=253&fmt=auto&app=120&f=JPEG?w=1422&h=800' },
+        { url: 'https://img1.baidu.com/it/u=700675537,3936578503&fm=253&fmt=auto&app=138&f=JPEG?w=889&h=500' },
+        { url: 'https://img0.baidu.com/it/u=3712997108,442011921&fm=253&fmt=auto&app=138&f=JPEG?w=889&h=500' },
+        { url: 'https://img1.baidu.com/it/u=2476457920,2055857727&fm=253&fmt=auto&app=138&f=JPEG?w=889&h=500' }
       ]
     };
   },
@@ -126,8 +132,21 @@ export default {
     toGoodsDetail(id) {
       this.$router.push(`/goodsdetail/${id}`);
     },
-  }
-};
+    log(item) {
+      this.log(item)
+    },
+    open2() {
+      this.$notify({
+        title: '自定义位置',
+        message: '右下角弹出的消息',
+        position: 'bottom-right',
+        onClick:()=>{
+          console.log('1')
+        }
+      })
+    },
+    }
+  };
 </script>
 
 <style scoped>
@@ -137,12 +156,20 @@ export default {
   position: relative;
   float: left;
 }
-.swiper{
+.right_container {
   float: right;
   width: 21%;
-
   margin-right: 3%;
+  margin-top: 0.8%;
 }
+.right_container p:first-child {
+  text-align-last: left;
+  font-size: 20px;
+}
+.swiper {
+  margin-top: 10px;
+}
+
 .input {
   width: 30%;
   margin-left: 35%;

@@ -64,14 +64,14 @@ const mockData = {
           "https://img0.baidu.com/it/u=1721391133,702358773&fm=253&fmt=auto&app=120&f=JPEG?w=500&h=625", //图片地址
         description: "良辰美景",
         price: "10000000.00",
-        id:'6'
+        id:'44'
       },
       {
         url:
           "https://img0.baidu.com/it/u=1721391133,702358773&fm=253&fmt=auto&app=120&f=JPEG?w=500&h=625", //图片地址
         description: "良辰美景",
         price: "10000000.00",
-        id:'6'
+        id:'55'
       }
     ],
   },

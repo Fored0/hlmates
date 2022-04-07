@@ -20,8 +20,8 @@
             </div>
             <br />
             <div class="concat_btns">
-              <button class="connect_btn">联系卖家</button>
-              <button class="buy_btn">我要购买</button>
+              <button @click="toConnectSeller" class="connect_btn">联系卖家</button>
+              <button @click="toPay" class="buy_btn">我要购买</button>
             </div>
           </div>
         </div>
@@ -74,7 +74,14 @@ export default {
       detailData: mockData,
     };
   },
-  methods: {},
+  methods: {
+    toConnectSeller(){
+
+    },
+    toPay(params){
+      this.$router.push(`/pay`)
+    }
+  },
   created() {
     this.id = this.$route.params.id;
     console.log(this.id);

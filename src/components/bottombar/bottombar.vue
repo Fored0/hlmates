@@ -68,11 +68,9 @@ export default {
 </script>
 <style scoped >
 .bottom {
-  margin-top: 2%;
   width: 70%;
   margin-left: 15%;
   height: 150px;
-  position: relative;
 }
 .activeText {
   display: inline-flex;

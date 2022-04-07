@@ -4,7 +4,7 @@
       <i class="el-icon-s-home" @click="$router.push('/home')">主页</i>
     </div>
     <div class="center">
-      {{ username }}你好！欢迎来到&nbsp;同学你好&nbsp;二手交易平台
+      <h2 style="margin-right:5px;" >{{ userInfo.nickName }}</h2> 你好！欢迎来到&nbsp;同学你好&nbsp;二手交易平台
     </div>
     <div class="right">
       <div class="login">
