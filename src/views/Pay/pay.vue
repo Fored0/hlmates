@@ -1,17 +1,18 @@
 <template>
   <div>
     <tab-bar></tab-bar>
-    <el-steps :active="active" finish-status="success" simple>
-      <el-step title="步骤 1" icon="el-icon-edit">
-        <el-card class="box-card">
-          <div v-for="o in 4" :key="o" class="text item">{{ '列表内容 ' + o }}</div>
-        </el-card>
-      </el-step>
-      <el-step title="步骤 2" icon="el-icon-upload"><div v-for="o in 4" :key="o" class="text item">{{ '列表内容 ' + o }}</div></el-step>
-      <el-step title="步骤 3" icon="el-icon-picture"></el-step>
-    </el-steps>
-    <el-button @click="nextStep">下一步</el-button>
-    <el-button @click="preStep">上一步</el-button>
+    <el-card class="card">
+      <div class="current_address">
+        <p class="current_title">确认收货地址</p>
+        <div class="address_container" v-popover:popover >
+          <div>收货人:{{ '四川眉山（张同学）' }}</div>
+          <div>详细地址:{{ '四川眉山（张同学）四川眉山（张同学四川眉山（张同学22222222' }}</div>
+          <div>TEL:{{ '四川眉山（张同学）' }}</div>
+        </div>
+      </div>
+      <div class="select_another" @click="addressVisibility=true" ><el-button>选择其他收货地址</el-button></div>
+    </el-card>
+    
   </div>
 </template>
 
@@ -23,19 +24,53 @@ export default {
   },
   data() {
     return {
-      active: 1
+      active: 1,
+      options,
+      addressForm: {
+        receivePeople: '',
+        locationAddress: '',
+        detailAddress: ''
+      },
+      addressVisibility:false
     }
   },
+  created() {
+
+  },
   methods: {
-    nextStep() {
-      this.active < 3 ? this.active++ : 3
-    },
-    preStep() {
-      this.active > 1 ? this.active-- : 1
+    show(){
+      console.log('1');
+      this.addressVisibility=false
     }
   }
 }
 </script>
 
-<style>
+<style scoped >
+.card {
+  width: 50%;
+  margin-left: 25%;
+  margin-top: 20px;
+  text-indent: 3em;
+}
+.current_title {
+  font-size: 18px;
+  font-weight: 600;
+}
+.address_container {
+  border: 2px dashed rgb(228, 230, 170);
+  word-wrap: break-word;
+  margin: 10px 0 0 3em;
+}
+.address_container div {
+  line-height: 2em;
+  font-size: 16px;
+  width: 100%;
+  height: 30px;
+  overflow: hidden;
+  margin-left: -1em;
+}
+.select_another{
+  margin-top: 10px;
+}
 </style>

@@ -79,7 +79,7 @@ export default {
 
     },
     toPay(params){
-      this.$router.push(`/pay`)
+      this.$router.push('/placeorder')
     }
   },
   created() {
