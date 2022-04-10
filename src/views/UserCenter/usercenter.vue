@@ -121,10 +121,13 @@
           ></el-input>
         </el-form-item>
         <el-form-item label="添加收货地址" :label-width="formLabelWidth">
-          <el-input
+          <el-cascader
+            style="width: 100%"
+            ref="areaRef"
+            :options="options"
             v-model="addressForm.locationAddress"
-            autocomplete="off"
-          ></el-input> </el-form-item
+            clearable
+          ></el-cascader> </el-form-item
         ><el-form-item label="详细地址" :label-width="formLabelWidth">
           <el-input
             v-model="addressForm.detailAddress"
@@ -145,6 +148,7 @@
 <script>
 import TabBar from "@/components/tabbar/tabbar";
 import mockData from "./mockData.js";
+import { map } from "./map";
 export default {
   components: {
     TabBar,
@@ -155,6 +159,7 @@ export default {
       infoDialogVisible: false,
       addressDialogVisible: false,
       formLabelWidth: "120px",
+      options: map,
       infoForm: {
         userName: "",
         nickName: "",
@@ -174,10 +179,14 @@ export default {
       console.log(scope.row.id);
     },
     addressDialogOnSave() {
+      console.log(this.$refs.areaRef.getCheckedNodes()[0].pathLabels);
+      let locationAddress = this.$refs.areaRef.getCheckedNodes()[0].pathLabels
       console.log(this.addressForm);
+
       this.addressDialogVisible = false;
     },
     infoModifyDialogOnSave() {
+      
       console.log(this.infoForm);
       this.infoDialogVisible = false;
     },
