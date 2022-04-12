@@ -72,6 +72,11 @@
         </el-table>
       </el-card>
     </div>
+    <div class="shopCart__card">
+      <ul>
+        <li v-for="item in shopCartData" :key='item.id' >{{item.id}}</li>
+      </ul>
+    </div>
     <el-dialog
       width="30%"
       title="修改个人信息"
@@ -107,7 +112,6 @@
         >
       </div>
     </el-dialog>
-
     <el-dialog
       width="30%"
       title="添加收货信息"
@@ -160,6 +164,7 @@ export default {
       addressDialogVisible: false,
       formLabelWidth: "120px",
       options: map,
+      shopCartData:[],
       infoForm: {
         userName: "",
         nickName: "",
@@ -174,21 +179,26 @@ export default {
       },
     };
   },
+  created(){
+    this.shopCartData = this.$store.state.shopCart.data
+  },
   methods: {
     deleteAddress(scope) {
       console.log(scope.row.id);
+      console.log(this.$store.state.shopCart.data);
     },
     addressDialogOnSave() {
       console.log(this.$refs.areaRef.getCheckedNodes()[0].pathLabels);
-      let locationAddress = this.$refs.areaRef.getCheckedNodes()[0].pathLabels
+      let locationAddress = this.$refs.areaRef.getCheckedNodes()[0].pathLabels;
       console.log(this.addressForm);
-
       this.addressDialogVisible = false;
     },
     infoModifyDialogOnSave() {
-      
       console.log(this.infoForm);
       this.infoDialogVisible = false;
+    },
+    load() {
+      this.count += 2;
     },
   },
 };
@@ -197,11 +207,21 @@ export default {
 <style scoped>
 .card {
   width: 70vw;
-  margin-left: 15vw;
+  margin-left: 2vw;
   margin-top: 20px;
 }
 .opeBtn {
   float: right;
   margin-top: -25px;
+}
+.shopCart__card {
+  float: right;
+  position: absolute;
+  right: 3vw;
+  top: 90px;
+  width: 22vw;
+  height: 550px;
+  background-color: red;
+  overflow: scroll;
 }
 </style>
