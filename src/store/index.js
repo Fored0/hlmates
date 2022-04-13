@@ -11,21 +11,49 @@ export default new Vuex.Store({
         {
           id:2190,
           name:'zhangsan',
-          imgUrl:'',
+          imgUrl:'https://picasso.alicdn.com/imgextra/O1CNA1LMjIjM1y0NVsmudEc_!!4218606516-0-psf.jpg_430x430q90.jpg',
           count:1,
           singlePrice:26.99
         },
         {
           id:21920,
           name:'zhangsan',
-          imgUrl:'',
+          imgUrl:'https://picasso.alicdn.com/imgextra/O1CNA1LMjIjM1y0NVsmudEc_!!4218606516-0-psf.jpg_430x430q90.jpg',
           count:1,
           singlePrice:26.99
         },
         {
           id:21930,
           name:'zhangsan',
-          imgUrl:'',
+          imgUrl:'https://picasso.alicdn.com/imgextra/O1CNA1LMjIjM1y0NVsmudEc_!!4218606516-0-psf.jpg_430x430q90.jpg',
+          count:1,
+          singlePrice:26.99
+        },
+        {
+          id:219302,
+          name:'zhangsan',
+          imgUrl:'https://picasso.alicdn.com/imgextra/O1CNA1LMjIjM1y0NVsmudEc_!!4218606516-0-psf.jpg_430x430q90.jpg',
+          count:1,
+          singlePrice:26.99
+        },
+        {
+          id:219310,
+          name:'zhangsan',
+          imgUrl:'https://picasso.alicdn.com/imgextra/O1CNA1LMjIjM1y0NVsmudEc_!!4218606516-0-psf.jpg_430x430q90.jpg',
+          count:1,
+          singlePrice:26.99
+        },
+        {
+          id:219230,
+          name:'zhangsan',
+          imgUrl:'https://picasso.alicdn.com/imgextra/O1CNA1LMjIjM1y0NVsmudEc_!!4218606516-0-psf.jpg_430x430q90.jpg',
+          count:1,
+          singlePrice:26.99
+        },
+        {
+          id:2191230,
+          name:'zhangsan',
+          imgUrl:'https://picasso.alicdn.com/imgextra/O1CNA1LMjIjM1y0NVsmudEc_!!4218606516-0-psf.jpg_430x430q90.jpg',
           count:1,
           singlePrice:26.99
         },

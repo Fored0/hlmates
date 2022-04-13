@@ -52,12 +52,12 @@
               }}</span>
             </template>
           </el-table-column>
-          <el-table-column label="所在地区" width="380">
+          <el-table-column label="所在地区" width="330">
             <template slot-scope="scope">
               <span>{{ scope.row.locationAddress }}</span>
             </template>
           </el-table-column>
-          <el-table-column label="详细地址" width="380">
+          <el-table-column label="详细地址" width="330">
             <template slot-scope="scope">
               <span>{{ scope.row.detailAddress }}</span>
             </template>
@@ -73,10 +73,20 @@
       </el-card>
     </div>
     <div class="shopCart__card">
-      <ul>
-        <li v-for="item in shopCartData" :key='item.id' >{{item.id}}</li>
-      </ul>
+      <div class="shopCart__card--title">购物车</div>
+      <div>
+        <el-checkbox
+          class="shopCart__item"
+          v-for="item in shopCartData"
+          :key="item.id"
+          border
+        >
+          <img class="shopCart__item--img" :src="item.imgUrl" alt="" />
+        </el-checkbox>
+      </div>
+      
     </div>
+    <div class="shopCart__card--bottom"></div>
     <el-dialog
       width="30%"
       title="修改个人信息"
@@ -164,7 +174,7 @@ export default {
       addressDialogVisible: false,
       formLabelWidth: "120px",
       options: map,
-      shopCartData:[],
+      shopCartData: [],
       infoForm: {
         userName: "",
         nickName: "",
@@ -179,8 +189,8 @@ export default {
       },
     };
   },
-  created(){
-    this.shopCartData = this.$store.state.shopCart.data
+  created() {
+    this.shopCartData = this.$store.state.shopCart.data;
   },
   methods: {
     deleteAddress(scope) {
@@ -206,7 +216,7 @@ export default {
 
 <style scoped>
 .card {
-  width: 70vw;
+  width: 65vw;
   margin-left: 2vw;
   margin-top: 20px;
 }
@@ -215,13 +225,48 @@ export default {
   margin-top: -25px;
 }
 .shopCart__card {
-  float: right;
   position: absolute;
   right: 3vw;
   top: 90px;
   width: 22vw;
   height: 550px;
-  background-color: red;
-  overflow: scroll;
+  overflow-y: scroll;
+}
+.shopCart__card--title{
+  margin-left: 10px;
+  font-size: 18px;
+  font-weight: 200;
+}
+.shopCart__item {
+  display: block;
+  height: 100px;
+  width: 300px;
+  margin-left: 10px;
+  margin-top: 5px;
+}
+.shopCart__item--img {
+  width: 80px;
+  height: 80px;
+  position: absolute;
+  top: 10px;
+  left: 30px;
+}
+.shopCart__item--name {
+  position: absolute;
+  top: 15px;
+  left: 150px;
+}
+.shopCart__card--bottom{
+  width: 21.2vw;
+  height: 50px;
+  position: fixed;
+  right: 3vw;
+  top: 590px;
+  bottom: 0;
+  z-index: 22;
+  background-color: rgb(255, 255, 255);
+  border: 1px solid silver;
+  border-radius: 0 0 5px 5px;
+  border-top: none;
 }
 </style>
