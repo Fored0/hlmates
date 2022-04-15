@@ -5,42 +5,22 @@
       <p>注册成为同学你好的mai家</p>
     </div>
     <div class="form">
-      <el-form
-        :model="ruleForm"
-        status-icon
-        :rules="rules"
-        ref="ruleForm"
-        label-width="100px"
-        class="demo-ruleForm"
-      >
+      <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+        <el-form-item label="账户名" prop="account">
+          <el-input v-model.number="ruleForm.account"></el-input>
+        </el-form-item>
         <el-form-item label="用户名" prop="name">
-          <el-input
-            type="name"
-            v-model="ruleForm.name"
-            autocomplete="off"
-          ></el-input>
+          <el-input type="name" v-model="ruleForm.name" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="密码" prop="pass">
-          <el-input
-            type="password"
-            v-model="ruleForm.pass"
-            autocomplete="off"
-          ></el-input>
+          <el-input type="password" v-model="ruleForm.pass" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="确认密码" prop="checkPass">
-          <el-input
-            type="password"
-            v-model="ruleForm.checkPass"
-            autocomplete="off"
-          ></el-input>
+          <el-input type="password" v-model="ruleForm.checkPass" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="手机号" prop="phone">
-          <el-input v-model.number="ruleForm.phone"></el-input>
-        </el-form-item>
+
         <el-form-item>
-          <el-button type="primary" @click="submitForm('ruleForm')"
-            >提交</el-button
-          >
+          <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
           <el-button @click="resetForm('ruleForm')">重置</el-button>
         </el-form-item>
       </el-form>
@@ -55,19 +35,13 @@ export default {
     NavBar,
   },
   data() {
-    var checkPhone = (rule, value, callback) => {
+    var checkAccount = (rule, value, callback) => {
       if (!value) {
-        return callback(new Error("手机号码不能为空"));
+        return callback(new Error("账户名不能为空"));
       }
       setTimeout(() => {
         if (!Number.isInteger(value)) {
-          callback(new Error("请输入电话号码"));
-        } else {
-          if (!/^1[3456789]\d{9}$/.test(value)) {
-            callback(new Error("请输入有效手机号码"));
-          } else {
-            callback();
-          }
+          callback(new Error("请输入账户名"));
         }
       }, 100);
     };
@@ -102,7 +76,7 @@ export default {
         name: "",
         pass: "",
         checkPass: "",
-        phone: "",
+        account: "",
       },
       rules: {
         name: [
@@ -113,7 +87,7 @@ export default {
         ],
         pass: [{ validator: validatePass, trigger: "blur" }],
         checkPass: [{ validator: validatePass2, trigger: "blur" }],
-        phone: [{ validator: checkPhone, trigger: "blur" }],
+        account: [{ validator: checkAccount, trigger: "blur" }],
       },
     };
   },
@@ -142,6 +116,7 @@ export default {
   font-weight: bold;
   margin-bottom: 20px;
 }
+
 .form {
   margin-left: 15%;
   width: 40%;

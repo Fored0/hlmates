@@ -17,11 +17,10 @@
           ></el-input>
         </el-form-item>
         <div class="btn">
-          <el-button @click="handleLogin" type="primary" size="mini" plain round>登录</el-button>
+          <el-button @click="handleLogin" type="primary" size="large" round>登录</el-button>
         </div>
       </el-form>
       <div class="caozuo">
-        <div><input type="radio" style="width:10px;height:10px" />记住密码</div>
         <div @click="toRep" class="rep">忘记密码？点我去修改</div>
       </div>
     </div>
