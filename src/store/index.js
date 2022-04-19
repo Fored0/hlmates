@@ -10,7 +10,7 @@ export default new Vuex.Store({
       data:[
         {
           id:2190,
-          name:'zhangsan',
+          name:'水星记',
           imgUrl:'https://picasso.alicdn.com/imgextra/O1CNA1LMjIjM1y0NVsmudEc_!!4218606516-0-psf.jpg_430x430q90.jpg',
           count:1,
           singlePrice:26.99

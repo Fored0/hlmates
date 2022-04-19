@@ -45,25 +45,28 @@
           >
         </div>
         <el-table :data="userCenterData.receive" style="width: 100%">
-          <el-table-column label="收货人" width="180">
+          <el-table-column label="收货人" width="120">
             <template slot-scope="scope">
               <span style="margin-left: 10px">{{
                 scope.row.receivePeople
               }}</span>
             </template>
           </el-table-column>
-          <el-table-column label="所在地区" width="330">
+          <el-table-column label="所在地区" width="240">
             <template slot-scope="scope">
               <span>{{ scope.row.locationAddress }}</span>
             </template>
           </el-table-column>
-          <el-table-column label="详细地址" width="330">
+          <el-table-column label="详细地址" width="180">
             <template slot-scope="scope">
               <span>{{ scope.row.detailAddress }}</span>
             </template>
           </el-table-column>
           <el-table-column label="操作">
             <template slot-scope="scope">
+              <el-button size="mini" type="primary" @click="editAddress(scope)"
+                >修改</el-button
+              >
               <el-button size="mini" type="danger" @click="deleteAddress(scope)"
                 >删除</el-button
               >
@@ -72,21 +75,41 @@
         </el-table>
       </el-card>
     </div>
-    <div class="shopCart__card">
-      <div class="shopCart__card--title">购物车</div>
-      <div>
-        <el-checkbox
-          class="shopCart__item"
-          v-for="item in shopCartData"
-          :key="item.id"
-          border
-        >
-          <img class="shopCart__item--img" :src="item.imgUrl" alt="" />
-        </el-checkbox>
+    <div class="shopCart--table">
+      <div class="my--car">我的购物车</div>
+      <el-table
+        stripe
+        ref="multipleTable"
+        :data="tableData"
+        tooltip-effect="dark"
+        style="width: 100%"
+        @selection-change="handleSelectionChange"
+        @select="selectNotAll()"
+        @select-all="selectAll()"
+      >
+        <el-table-column type="selection" width="55"> </el-table-column>
+        <el-table-column label="日期" width="120">
+          <template slot-scope="scope">{{ scope.row.date }}</template>
+        </el-table-column>
+        <el-table-column prop="name" label="姓名" width="120">
+        </el-table-column>
+        <el-table-column prop="address" label="地址" show-overflow-tooltip>
+        </el-table-column>
+      </el-table>
+      <div class="shopCart--bottom" style="margin-top: 20px">
+        <div class="shopCart--total">合计{{}}</div>
+        <div>
+          <el-button
+            class="shopCart--option"
+            type="danger"
+            round
+            @click="toPay()"
+            >去结算</el-button
+          >
+        </div>
       </div>
-      
     </div>
-    <div class="shopCart__card--bottom"></div>
+    <!-- dialog -->
     <el-dialog
       width="30%"
       title="修改个人信息"
@@ -174,7 +197,6 @@ export default {
       addressDialogVisible: false,
       formLabelWidth: "120px",
       options: map,
-      shopCartData: [],
       infoForm: {
         userName: "",
         nickName: "",
@@ -187,12 +209,53 @@ export default {
         locationAddress: "",
         detailAddress: "",
       },
+      tableData: [
+        {
+          date: "2016-05-03",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1518 弄",
+        },
+        {
+          date: "2016-05-02",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1518 弄",
+        },
+        {
+          date: "2016-05-04",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1518 弄",
+        },
+        {
+          date: "2016-05-01",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1518 弄",
+        },
+        {
+          date: "2016-05-08",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1518 弄",
+        },
+        {
+          date: "2016-05-06",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1518 弄",
+        },
+        {
+          date: "2016-05-07",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1518 弄",
+        },
+      ],
+      multipleSelection: [],
     };
   },
   created() {
     this.shopCartData = this.$store.state.shopCart.data;
   },
   methods: {
+    editAddress(e) {
+      console.log(e);
+    },
     deleteAddress(scope) {
       console.log(scope.row.id);
       console.log(this.$store.state.shopCart.data);
@@ -207,16 +270,26 @@ export default {
       console.log(this.infoForm);
       this.infoDialogVisible = false;
     },
-    load() {
-      this.count += 2;
+    toPay() {
+      console.log(this.$refs.multipleTable);
+      // console.log(this.);
     },
+    handleSelectionChange(val) {
+      this.multipleSelection = val;
+    },
+    selectNotAll(e){
+      console.log(e);
+    },
+    selectAll(e){
+      console.log(e)
+    }
   },
 };
 </script>
 
 <style scoped>
 .card {
-  width: 65vw;
+  width: 50vw;
   margin-left: 2vw;
   margin-top: 20px;
 }
@@ -229,44 +302,32 @@ export default {
   right: 3vw;
   top: 90px;
   width: 22vw;
-  height: 550px;
+  height: 501px;
   overflow-y: scroll;
 }
-.shopCart__card--title{
-  margin-left: 10px;
+.shopCart--table {
+  position: absolute;
+  width: 44%;
+  right: 2%;
+  top: 85px;
+}
+.my--car {
+  width: 100%;
+  text-align: center;
+  font-weight: bold;
   font-size: 18px;
-  font-weight: 200;
+  margin-bottom: 10px;
 }
-.shopCart__item {
-  display: block;
-  height: 100px;
-  width: 300px;
-  margin-left: 10px;
-  margin-top: 5px;
+.shopCart--bottom {
+  display: flex;
 }
-.shopCart__item--img {
-  width: 80px;
-  height: 80px;
-  position: absolute;
-  top: 10px;
-  left: 30px;
+.shopCart--total {
+  width: 50%;
+  color: red;
+  font-size: 15px;
+  margin-left: 66px;
+  padding-top: 10px;
 }
-.shopCart__item--name {
-  position: absolute;
-  top: 15px;
-  left: 150px;
-}
-.shopCart__card--bottom{
-  width: 21.2vw;
-  height: 50px;
-  position: fixed;
-  right: 3vw;
-  top: 590px;
-  bottom: 0;
-  z-index: 22;
-  background-color: rgb(255, 255, 255);
-  border: 1px solid silver;
-  border-radius: 0 0 5px 5px;
-  border-top: none;
+.shopCart--option {
 }
 </style>

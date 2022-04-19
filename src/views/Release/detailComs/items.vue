@@ -32,7 +32,7 @@
       </el-form-item>
       <el-form-item label="标题">
         <el-input
-          v-model="formData.name"
+          v-model="formData.title"
           style="width: 30%"
           placeholder="标题不能为空"
         ></el-input>
@@ -82,6 +82,7 @@ export default {
         price: "",
         desc: "",
         img: "",
+        title:""
       },
       fileList: [
         {
