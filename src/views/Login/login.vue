@@ -5,16 +5,10 @@
     <div class="form">
       <el-form ref="form" :model="form" :label-position="labelPosition">
         <el-form-item label="用户名">
-          <el-input
-            v-model="form.name"
-            style="width: 20%"
-          ></el-input> </el-form-item
-        ><el-form-item label="用户密码">
-          <el-input
-            v-model="form.password"
-            style="width: 20%"
-            show-password
-          ></el-input>
+          <el-input v-model="form.name" style="width: 20%"></el-input>
+        </el-form-item>
+        <el-form-item label="用户密码">
+          <el-input v-model="form.password" style="width: 20%" show-password></el-input>
         </el-form-item>
         <div class="btn">
           <el-button @click="handleLogin" type="primary" size="large" round>登录</el-button>
@@ -24,14 +18,19 @@
         <div @click="toRep" class="rep">忘记密码？点我去修改</div>
       </div>
     </div>
+    <div class="bottom__bar">
+      <bottom-bar></bottom-bar>
+    </div>
   </div>
 </template>
 
 <script>
 import NavBar from "@/components/tabbar/navbar.vue";
+import BottomBar from "../../components/bottombar/bottombar";
 export default {
   components: {
     NavBar,
+    BottomBar
   },
   data() {
     return {
@@ -47,7 +46,7 @@ export default {
     toRep() {
       this.$router.push("register");
     },
-    handleLogin(){
+    handleLogin() {
       // 校验用户账号密码
       this.$router.push("home")
       // 获取用户信息，更新主页头像（可缓存到本地）
@@ -62,29 +61,41 @@ export default {
   height: 100vh;
   background-size: cover;
 }
+
 .title {
   margin-left: 15%;
   font-size: 25px;
   font-weight: bold;
 }
+
 .title span {
   font-size: 18px;
 }
+
 .form {
   margin-left: 15%;
   margin-top: 2%;
 }
+
 .caozuo {
   display: flex;
   margin-top: 2%;
   width: 300px;
 }
+
 .caozuo div {
   flex: 1;
 }
-.rep{
+
+.rep {
   cursor: pointer;
   color: rgb(221, 96, 23);
   font-weight: lighter;
+}
+
+.bottom__bar {
+  position: absolute;
+  width: 100vw;
+  bottom: 0;
 }
 </style>

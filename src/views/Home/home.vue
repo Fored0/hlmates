@@ -10,81 +10,61 @@
       <!-- 数码产品 -->
       <div class="goods_rec">
         <div class="goods_title">
-          <div class="left">{{ homeData.digital.itemName }}</div>
-          <div class="right">换一批</div>
+          <div class="goods__title--left">{{ homeData.digital.itemName }}</div>
+          <div class="goods__title--right">{{ homeData.digital.itemName }}</div>
         </div>
-        <div class="goods_item">
-          <ul
-            v-for="(item, index) in homeData.digital.itemList"
-            @click="toGoodsDetail(item.id)"
-            :key="index"
-          >
-            <li>
-              <img :src="item.url" alt />
-              <div class="goods_scp">{{ item.description }}</div>
-              <div class="goods_price">￥{{ item.price }}</div>
-            </li>
-          </ul>
+        <div class="goods__item">
+          <div class="goods__item--show" v-for="(item, index) in homeData.digital.itemList"
+            @click="toGoodsDetail(item.id)" :key="index">
+            <img class="goods__item--img" :src="item.url">
+            <div class="goods__item--desc">{{ item.description }}</div>
+            <div class="goods__item--price">￥{{ item.price }}</div>
+          </div>
         </div>
       </div>
-      <!-- 鞋服化妆品 -->
+      <!-- 鞋服化妆品 clothes-->
       <div class="goods_rec">
         <div class="goods_title">
-          <div class="left">{{ homeData.clothes.itemName }}</div>
-          <div class="right">换一批</div>
+          <div class="goods__title--left">{{ homeData.clothes.itemName }}</div>
+          <div class="goods__title--right">{{ homeData.clothes.itemName }}</div>
         </div>
-        <div class="goods_item">
-          <ul
-            v-for="(item, index) in homeData.clothes.itemList"
-            @click="toGoodsDetail(item.id)"
-            :key="index"
-          >
-            <li>
-              <img :src="item.url" alt />
-              <div class="goods_scp">{{ item.description }}</div>
-              <div class="goods_price">￥{{ item.price }}</div>
-            </li>
-          </ul>
+        <div class="goods__item">
+          <div class="goods__item--show" v-for="(item, index) in homeData.clothes.itemList"
+            @click="toGoodsDetail(item.id)" :key="index">
+            <img class="goods__item--img" :src="item.url">
+            <div class="goods__item--desc">{{ item.description }}</div>
+            <div class="goods__item--price">￥{{ item.price }}</div>
+          </div>
         </div>
       </div>
-      <!-- 书籍 -->
+      <!-- 书籍 book-->
       <div class="goods_rec">
         <div class="goods_title">
-          <div class="left">{{ homeData.book.itemName }}</div>
-          <div class="right">换一批</div>
+          <div class="goods__title--left">{{ homeData.book.itemName }}</div>
+          <div class="goods__title--right">{{ homeData.book.itemName }}</div>
         </div>
-        <div class="goods_item">
-          <ul
-            v-for="(item, index) in homeData.book.itemList"
-            @click="toGoodsDetail(item.id)"
-            :key="index"
-          >
-            <li>
-              <img :src="item.url" alt />
-              <div class="goods_scp">{{ item.description }}</div>
-              <div class="goods_price">￥{{ item.price }}</div>
-            </li>
-          </ul>
+        <div class="goods__item">
+          <div class="goods__item--show" v-for="(item, index) in homeData.book.itemList" @click="toGoodsDetail(item.id)"
+            :key="index">
+            <img class="goods__item--img" :src="item.url">
+            <div class="goods__item--desc">{{ item.description }}</div>
+            <div class="goods__item--price">￥{{ item.price }}</div>
+          </div>
         </div>
       </div>
-      <!-- 宿舍小物件 -->
+      <!-- 宿舍小物件 roomLittleThing-->
       <div class="goods_rec">
         <div class="goods_title">
-          <div class="left">{{ homeData.roomLittleThing.itemName }}</div>
-          <div class="right">换一批</div>
+          <div class="goods__title--left">{{ homeData.roomLittleThing.itemName }}</div>
+          <div class="goods__title--right">{{ homeData.roomLittleThing.itemName }}</div>
         </div>
-        <div class="goods_item">
-          <ul
-            v-for="(item, index) in homeData.roomLittleThing.itemList"
-            @click="toGoodsDetail(item.id)"
-            :key="index"
-          >
-            <li>
-              <img :src="item.url" alt />
-              <div class="goods_scp">{{ item.description }}</div>
-              <div class="goods_price">￥{{ item.price }}</div>
-            </li>
-          </ul>
+        <div class="goods__item">
+          <div class="goods__item--show" v-for="(item, index) in homeData.roomLittleThing.itemList"
+            @click="toGoodsDetail(item.id)" :key="index">
+            <img class="goods__item--img" :src="item.url">
+            <div class="goods__item--desc">{{ item.description }}</div>
+            <div class="goods__item--price">￥{{ item.price }}</div>
+          </div>
         </div>
       </div>
     </div>
@@ -92,7 +72,7 @@
     <div class="right_container">
       <p>为您推荐：</p>
       <div class="swiper">
-        <el-carousel  height="230px" @click="log()" trigger="click" indicator-position="outside">
+        <el-carousel height="230px" @click="log()" trigger="click" indicator-position="outside">
           <el-carousel-item v-for="item, index in swiperList" :key="index">
             <img style="width:100%;height:220px" :src="item.url" alt />
           </el-carousel-item>
@@ -140,13 +120,13 @@ export default {
         title: '自定义位置',
         message: '右下角弹出的消息',
         position: 'bottom-right',
-        onClick:()=>{
+        onClick: () => {
           console.log('1')
         }
       })
     },
-    }
-  };
+  }
+};
 </script>
 
 <style scoped>
@@ -156,16 +136,19 @@ export default {
   position: relative;
   float: left;
 }
+
 .right_container {
   float: right;
   width: 21%;
   margin-right: 3%;
   margin-top: 0.8%;
 }
+
 .right_container p:first-child {
   text-align-last: left;
   font-size: 20px;
 }
+
 .swiper {
   margin-top: 10px;
 }
@@ -176,65 +159,82 @@ export default {
   margin-top: 20px;
   overflow: hidden;
 }
+
 .btn {
   position: absolute;
   left: 65%;
 }
+
 .input .recommend ul {
   display: flex;
   margin-top: 15px;
 }
+
 .input .recommend ul li {
   flex: 1;
   font-size: 15px;
   color: #000000;
 }
+
 /*  */
 .goods_rec {
   border: 1px solid rgb(177, 152, 141);
   margin-top: 20px;
-  border-radius: 20px;
+  border-radius: 18px;
   min-width: 850px;
+  height: 17vh;
+  cursor: pointer;
 }
+
 .goods_title {
   width: 100%;
-  height: 40px;
+  height: 30px;
   background-color: #fffe07;
-  font-size: 20px;
+  font-size: 14px;
   font-weight: bold;
   line-height: 2em;
-  margin-bottom: 20px;
   border-radius: 20px;
 }
-.goods_title .left {
-  margin-left: 2%;
+
+.goods__title--left {
   float: left;
+  margin-left: 5%;
 }
-.goods_title .right {
-  float: right;
-  margin-right: 2%;
+
+.goods__title--right {
+  float: left;
+  margin-left: 76%;
 }
-.goods_item {
+
+.goods__item {
+  width: 100%;
   display: flex;
 }
-.goods_item ul {
-  flex: 1;
+
+.goods__item--show {
+  width: 22%;
   margin-left: 3%;
-  margin-top: -1%;
-  text-align: center;
 }
-.goods_item li img {
-  width: 130px;
-  height: 130px;
-  border-radius: 15px;
+
+.goods__item--img {
+  width: 90px;
+  height: 90px;
+  margin-top: 8%;
+  border-radius: 10px;
 }
-.goods_scp {
-  font-size: 12px;
-  color: silver;
+
+.goods__item--desc {
+  margin-top: -35%;
+  margin-left: 45%;
+  width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
-.goods_price {
-  font-size: 18px;
+
+.goods__item--price {
+  margin-left: 45%;
+  margin-top: 10%;
   color: red;
-  font-weight: bolder;
 }
 </style>

@@ -1,17 +1,12 @@
 <template>
   <div>
     <tab-bar></tab-bar>
-    <!--  -->
     <div class="title">我的发布</div>
-    <!--  -->
     <div class="card">
       <div class="block">
         <div class="goods_item" v-for="(item, id) in goods" :key="id">
-          <img
-            src="https://img0.baidu.com/it/u=3122136587,3938996930&fm=26&fmt=auto"
-            alt=""
-          />
-          <div class="desc">
+          <img src="https://img0.baidu.com/it/u=3122136587,3938996930&fm=26&fmt=auto" alt="" />
+          <div class="desc" @click="toGoodsDetail(item.id)">
             <p>{{ item.name }}</p>
             <ul>
               <li>{{ "浏览:" + item.liulan }}</li>
@@ -20,45 +15,26 @@
           </div>
 
           <div class="btn">
-            <el-button type="danger" round @click="handleOffShelf(item)"
-              >下架</el-button
-            >
-            <el-button type="primary" round @click="editId(item.id)"
-              >编辑</el-button
-            >
+            <el-button type="danger" round @click="handleOffShelf(item)">下架</el-button>
+            <el-button type="primary" round @click="editId(item.id)">编辑</el-button>
           </div>
         </div>
-        <el-pagination layout="prev, pager, next" :total="1000">
-        </el-pagination>
       </div>
     </div>
 
-    <el-dialog
-      title="收货地址"
-      width="500px"
-      :visible.sync="editDialogFormVisible"
-    >
+    <el-dialog title="收货地址" width="500px" :visible.sync="editDialogFormVisible">
       <el-form :model="editDialogForm">
         <el-form-item label="类别" :label-width="formLabelWidth">
           <el-input v-model="editDialogForm.category"></el-input>
         </el-form-item>
         <el-form-item label="新旧程度" :label-width="formLabelWidth">
-          <el-input
-            v-model="editDialogForm.degree"
-            autocomplete="off"
-          ></el-input>
+          <el-input v-model="editDialogForm.degree" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="转让价格" :label-width="formLabelWidth">
-          <el-input
-            v-model="editDialogForm.price"
-            autocomplete="off"
-          ></el-input>
+          <el-input v-model="editDialogForm.price" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="标题" :label-width="formLabelWidth">
-          <el-input
-            v-model="editDialogForm.title"
-            autocomplete="off"
-          ></el-input>
+          <el-input v-model="editDialogForm.title" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="详细描述" :label-width="formLabelWidth">
           <el-input v-model="editDialogForm.desc" autocomplete="off"></el-input>
@@ -109,6 +85,24 @@ export default {
           xiangyao: "232",
           id: 4,
         },
+        {
+          name: "任天堂 Nintendo Switch",
+          liulan: "121",
+          xiangyao: "232",
+          id: 5,
+        },
+        {
+          name: "任天堂 Nintendo Switch",
+          liulan: "121",
+          xiangyao: "232",
+          id: 6,
+        },
+        {
+          name: "任天堂 Nintendo Switch",
+          liulan: "121",
+          xiangyao: "232",
+          id: 7,
+        },
       ],
       editDialogForm: {
         category: "",
@@ -148,6 +142,9 @@ export default {
       console.log(this.id);
       this.editDialogFormVisible = false;
     },
+    toGoodsDetail(id) {
+      this.$router.push(`/goodsdetail/${id}`)
+    },
   },
 };
 </script>
@@ -165,15 +162,18 @@ export default {
   color: yellow;
   background-color: rgb(43, 40, 40);
 }
+
 .card {
   width: 70%;
   margin-left: 15%;
   margin-top: 1%;
-  height: 550px;
+  height: 80vh;
+  overflow-y: scroll;
   border: 1px solid rgb(197, 188, 188);
   box-shadow: 1px 1px 2px bisque;
   border-radius: 10px;
 }
+
 .goods_item {
   width: 94%;
   height: 110px;
@@ -182,6 +182,7 @@ export default {
   margin-top: 2%;
   border-radius: 10px;
 }
+
 .goods_item img {
   width: 90px;
   height: 90px;
@@ -189,24 +190,31 @@ export default {
   border-radius: 10px;
   margin-left: 2%;
 }
+
 .goods_item .desc {
   margin-left: 17%;
-  margin-top: -7.5%;
+  margin-top: -6.5%;
+  width: 50%;
+  cursor: pointer;
 }
+
 .desc p {
   font-size: 15px;
 }
+
 .desc ul {
   display: flex;
   margin-top: 3%;
-  width: 15%;
+  width: 30%;
 }
+
 .desc ul li {
   flex: 1;
 }
+
 .btn {
   margin-left: 80%;
-  margin-top: -6%;
+  margin-top: -45px;
   width: 20%;
 }
 </style>
