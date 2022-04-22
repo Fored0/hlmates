@@ -1,7 +1,8 @@
-import axios from "axios"
+import axios from "axios";
 
 const request = axios.create({
-  baseURL:'http://192.168.3.119:1025/loadData'
-})
+  baseURL: "  http://127.0.0.1:8081/",
+  timeout: 2000,
+});
 
-export default request
+export default request;

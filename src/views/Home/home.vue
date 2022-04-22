@@ -11,7 +11,7 @@
       <div class="goods_rec">
         <div class="goods_title">
           <div class="goods__title--left">{{ homeData.digital.itemName }}</div>
-          <div class="goods__title--right">{{ homeData.digital.itemName }}</div>
+          <div class="goods__title--right">换一批</div>
         </div>
         <div class="goods__item">
           <div class="goods__item--show" v-for="(item, index) in homeData.digital.itemList"
@@ -26,7 +26,7 @@
       <div class="goods_rec">
         <div class="goods_title">
           <div class="goods__title--left">{{ homeData.clothes.itemName }}</div>
-          <div class="goods__title--right">{{ homeData.clothes.itemName }}</div>
+          <div class="goods__title--right">换一批</div>
         </div>
         <div class="goods__item">
           <div class="goods__item--show" v-for="(item, index) in homeData.clothes.itemList"
@@ -41,7 +41,7 @@
       <div class="goods_rec">
         <div class="goods_title">
           <div class="goods__title--left">{{ homeData.book.itemName }}</div>
-          <div class="goods__title--right">{{ homeData.book.itemName }}</div>
+          <div class="goods__title--right">换一批</div>
         </div>
         <div class="goods__item">
           <div class="goods__item--show" v-for="(item, index) in homeData.book.itemList" @click="toGoodsDetail(item.id)"
@@ -56,7 +56,7 @@
       <div class="goods_rec">
         <div class="goods_title">
           <div class="goods__title--left">{{ homeData.roomLittleThing.itemName }}</div>
-          <div class="goods__title--right">{{ homeData.roomLittleThing.itemName }}</div>
+          <div class="goods__title--right">换一批</div>
         </div>
         <div class="goods__item">
           <div class="goods__item--show" v-for="(item, index) in homeData.roomLittleThing.itemList"
@@ -124,6 +124,9 @@ export default {
           console.log('1')
         }
       })
+    },
+    loadMore() {
+
     },
   }
 };
@@ -203,7 +206,7 @@ export default {
 
 .goods__title--right {
   float: left;
-  margin-left: 76%;
+  margin-left: 80%;
 }
 
 .goods__item {
