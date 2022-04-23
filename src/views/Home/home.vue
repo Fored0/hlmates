@@ -3,8 +3,16 @@
   <div class="home">
     <tab-bar></tab-bar>
     <div class="input">
-      <el-input placeholder="请输入内容" v-model="input" clearable></el-input>
-      <el-button class="btn" icon="el-icon-search"></el-button>
+      <el-input
+        placeholder="请输入内容"
+        v-model="searchInput"
+        clearable
+      ></el-input>
+      <el-button
+        class="btn"
+        icon="el-icon-search"
+        @click="handleSearch"
+      ></el-button>
     </div>
     <div class="show_goods">
       <!-- 数码产品 -->
@@ -95,7 +103,6 @@
       <div class="swiper">
         <el-carousel
           height="230px"
-          @click="log()"
           trigger="click"
           indicator-position="outside"
         >
@@ -116,6 +123,7 @@
 import TabBar from "components/tabbar/tabbar.vue";
 import BottomBar from "components/bottombar/bottombar.vue";
 import mockData from "./mockData";
+import request from "@/network/http.js";
 export default {
   components: {
     TabBar,
@@ -123,7 +131,7 @@ export default {
   },
   data() {
     return {
-      input: "",
+      searchInput: "",
       homeData: mockData,
       swiperList: [
         {
@@ -148,9 +156,6 @@ export default {
     toGoodsDetail(id) {
       this.$router.push(`/goodsdetail/${id}`);
     },
-    log(item) {
-      this.log(item);
-    },
     open2() {
       this.$notify({
         title: "自定义位置",
@@ -162,6 +167,10 @@ export default {
       });
     },
     loadMore() {},
+    handleSearch() {
+      console.log(this.searchInput);
+      this.$router.push(`/search/${this.searchInput}`);
+    },
   },
 };
 </script>

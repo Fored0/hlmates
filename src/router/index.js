@@ -12,9 +12,10 @@ const Release = () => import('@/views/Release/release')
 const MyRelease = () => import('@/views/MyRelease/myrelease')
 const Register = () => import('@/views/Register/register')
 const UserCenter = () => import('@/views/UserCenter/usercenter')
-const GoodsDetail = ()=>import('@/views/GoodsDetail/goodsdetail')
-const PlaceOrder = ()=>import('@/views/PlaceOrder/placeorder')
-const Pay=()=>import('@/views/Pay/pay')
+const GoodsDetail = () => import('@/views/GoodsDetail/goodsdetail')
+const PlaceOrder = () => import('@/views/PlaceOrder/placeorder')
+const Pay = () => import('@/views/Pay/pay')
+const Search = () => import('@/views/Search/search')
 
 
 const routes = [ // 默认首页，无需登录
@@ -25,42 +26,42 @@ const routes = [ // 默认首页，无需登录
   // 首页
   {
     path: '/home',
-    component: Home
+    component: Home,
   },
   // 登录
   {
     path: '/login',
-    component: Login
+    component: Login,
   },
   // 注册
   {
     path: '/register',
-    component: Register
+    component: Register,
   },
   // 消息
   {
     path: '/message',
-    component: Message
+    component: Message,
   },
   // 订单
   {
     path: '/order',
-    component: Order
+    component: Order,
   },
   // 发布
   {
     path: '/release',
-    component: Release
+    component: Release,
   },
   // 我的发布商品
   {
     path: '/myrelease',
-    component: MyRelease
+    component: MyRelease,
   },
   // 商品详情
   {
-    path:`/goodsdetail/:id`,
-    component:GoodsDetail
+    path: `/goodsdetail/:id`,
+    component: GoodsDetail
   },
   //个人中心 
   {
@@ -69,14 +70,19 @@ const routes = [ // 默认首页，无需登录
   },
   // 付款
   {
-    path:'/pay',
-    component:Pay
+    path: '/pay',
+    component: Pay,
   },
   // 确认订单
   {
-    path:'/placeorder',
-    component:PlaceOrder
-  }
+    path: '/placeorder',
+    component: PlaceOrder,
+  },
+  //  搜索
+  {
+    path: '/search/:searchKey',
+    component: Search,
+  },
 ]
 
 const router = new VueRouter({
