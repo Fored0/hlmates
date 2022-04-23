@@ -43,9 +43,9 @@ export default {
 </script>
 <style scoped >
 .bottom {
-  position: absolute;
+  margin-top: 30px;
   width: 70%;
-  left: 20%;
+  margin-left: 20%;
   height: 40px;
   bottom: 20px;
 }

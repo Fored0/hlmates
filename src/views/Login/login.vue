@@ -4,18 +4,47 @@
     <div class="title">登录<span>「同学你好」</span></div>
     <div class="form">
       <el-form ref="form" :model="form" :label-position="labelPosition">
-        <el-form-item label="用户名">
-          <el-input v-model="form.name" style="width: 20%"></el-input>
-        </el-form-item>
-        <el-form-item label="用户密码">
-          <el-input v-model="form.password" style="width: 20%" show-password></el-input>
-        </el-form-item>
+        <div v-if="!isShowModify">
+          <el-form-item label="账号名">
+            <el-input v-model="form.name" style="width: 20%"></el-input>
+          </el-form-item>
+          <el-form-item label="帐号密码">
+            <el-input
+              v-model="form.password"
+              style="width: 20%"
+              show-password
+            ></el-input>
+          </el-form-item>
+        </div>
+        <div v-else>
+          <el-form-item label="账号名">
+            <el-input v-model="form.name" style="width: 20%"></el-input>
+          </el-form-item>
+          <el-form-item label="新密码">
+            <el-input
+              v-model="form.password"
+              style="width: 20%"
+              show-password
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="确认密码">
+            <el-input
+              v-model="form.password"
+              style="width: 20%"
+              show-password
+            ></el-input>
+          </el-form-item>
+        </div>
         <div class="btn">
-          <el-button @click="handleLogin" type="primary" size="large" round>登录</el-button>
+          <el-button @click="handleLogin" type="primary" size="large" round
+            >登录</el-button
+          >
         </div>
       </el-form>
-      <div class="caozuo">
-        <div @click="toRep" class="rep">忘记密码？点我去修改</div>
+      <div class="option">
+        <div @click="toRep" class="rep">
+          {{ isShowModify ? "放弃修改！" : "忘记密码？点我修改！" }}
+        </div>
       </div>
     </div>
     <div class="bottom__bar">
@@ -27,16 +56,18 @@
 <script>
 import NavBar from "@/components/tabbar/navbar.vue";
 import BottomBar from "../../components/bottombar/bottombar";
+import request from "@/network/http.js";
 export default {
   components: {
     NavBar,
-    BottomBar
+    BottomBar,
   },
   data() {
     return {
+      isShowModify: false,
       form: {
         name: "",
-        passwprd: "",
+        password: "",
       },
       radio: "",
       labelPosition: "top",
@@ -44,13 +75,25 @@ export default {
   },
   methods: {
     toRep() {
-      this.$router.push("register");
+      // this.$router.push("register");
+      this.isShowModify = !this.isShowModify;
     },
     handleLogin() {
       // 校验用户账号密码
-      this.$router.push("home")
       // 获取用户信息，更新主页头像（可缓存到本地）
-    }
+      console.log(this.form);
+      request
+        .post({
+          userAccount: this.form.name,
+          passwprd: this.form.passwprd,
+        })
+        .then((res) => {
+          // this.$router.push("home")
+        })
+        .catch((err) => {
+          throw new Error(err);
+        });
+    },
   },
 };
 </script>
@@ -77,13 +120,13 @@ export default {
   margin-top: 2%;
 }
 
-.caozuo {
+.option {
   display: flex;
   margin-top: 2%;
   width: 300px;
 }
 
-.caozuo div {
+.option div {
   flex: 1;
 }
 

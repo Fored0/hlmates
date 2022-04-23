@@ -20,8 +20,13 @@
             </div>
             <br />
             <div class="concat_btns">
-              <button @click="toConnectSeller" class="connect_btn">联系卖家</button>
+              <button @click="toConnectSeller" class="connect_btn">
+                联系卖家
+              </button>
               <button @click="toPay" class="buy_btn">我要购买</button>
+              <button @click="joinShopCart" class="jionShopCart_btn">
+                加入购物车
+              </button>
             </div>
           </div>
         </div>
@@ -29,17 +34,25 @@
       <div class="center_desc">
         <div class="divider">
           <div class="vertical_divider"></div>
-          <div class="desc_text">物品描述</div>
+          <div class="desc_text">
+            物品描述<span class="total_comment">{{
+              "共有" + totalComment + "条评论"
+            }}</span>
+          </div>
         </div>
-        <div class="desc">
+        <div
+          class="desc"
+          v-for="(item, index) in detailData.description.slice(0, 3)"
+          :key="index"
+        >
           <div class="head_img">
-            <el-avatar :src="detailData.description.imgUrl"></el-avatar>
+            <el-avatar :src="item.imgUrl"></el-avatar>
           </div>
           <div class="desc_people">
-            {{ detailData.description.descPeople }} <span>有话说:</span>
+            {{ item.descPeople }} <span>有话说:</span>
           </div>
           <div class="hide_sanjiao"></div>
-          <div class="desc_content">{{ detailData.description.content }}</div>
+          <div class="desc_content">{{ item.content }}</div>
         </div>
       </div>
       <div class="bottom_img">
@@ -72,18 +85,21 @@ export default {
         type: Number,
       },
       detailData: mockData,
+      totalComment: 0,
     };
   },
   methods: {
-    toConnectSeller(){
-
+    toConnectSeller() {},
+    toPay(params) {
+      this.$router.push("/placeorder");
     },
-    toPay(params){
-      this.$router.push('/placeorder')
-    }
+    joinShopCart() {},
   },
   created() {
     this.id = this.$route.params.id;
+    this.totalComment = Array.isArray(this.detailData.description)
+      ? this.detailData.description.length
+      : 0;
     console.log(this.id);
   },
 };
@@ -160,6 +176,12 @@ export default {
   font-size: 14px;
   border: 1px solid red;
 }
+.jionShopCart_btn {
+  margin-top: 20px;
+  background-color: red;
+  border: 0;
+  color: white;
+}
 .center_desc {
   margin-top: 20px;
 }
@@ -183,6 +205,9 @@ export default {
 .desc {
   margin: 30px 0 0 40px;
 }
+.total_comment {
+  margin-left: 20px;
+}
 .desc_people {
   float: left;
   margin-top: -35px;
@@ -195,12 +220,11 @@ export default {
   font-size: 14px;
 }
 .desc_content {
-  width: 400px;
+  width: 520px;
   border: 1px solid rgb(226, 220, 220);
-  min-height: 50px;
   text-align: left;
-  text-indent: 2em;
-  line-height: 1.5em;
+  text-indent: -15px;
+  line-height: 20px;
   font-weight: 300;
   margin-left: 40px;
   background-color: rgb(241, 238, 238);
@@ -218,14 +242,13 @@ export default {
 }
 .bottom_img {
   margin-top: 20px;
-  
 }
-.goods_img{
+.goods_img {
   display: flex;
   width: 600px;
   overflow: hidden;
 }
-.item_img img{
+.item_img img {
   flex: 1;
   margin: 20px;
   width: 280px;

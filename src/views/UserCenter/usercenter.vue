@@ -14,7 +14,7 @@
           >
         </div>
         <el-descriptions direction="vertical" :column="3" border>
-          <el-descriptions-item label="用户名">{{
+          <el-descriptions-item label="账户名">{{
             userCenterData.userCenter.userName
           }}</el-descriptions-item>
           <el-descriptions-item label="昵称">{{
@@ -116,26 +116,38 @@
       :visible.sync="infoDialogVisible"
     >
       <el-form :model="infoForm">
-        <el-form-item label="用户名" :label-width="formLabelWidth">
-          <el-input v-model="infoForm.userName" autocomplete="off"></el-input>
+        <el-form-item label="账户名" :label-width="formLabelWidth">
+          <el-input
+            v-model="infoForm.userName"
+            autocomplete="off"
+            disabled
+            :placeholder="userCenterData.userCenter.userName"
+          ></el-input>
         </el-form-item>
         <el-form-item label="昵称" :label-width="formLabelWidth">
           <el-input
             v-model="infoForm.nickName"
             autocomplete="off"
+            :placeholder="userCenterData.userCenter.nickName"
           ></el-input> </el-form-item
         ><el-form-item label="手机号" :label-width="formLabelWidth">
           <el-input
             v-model="infoForm.phoneNumber"
             autocomplete="off"
+            :placeholder="userCenterData.userCenter.phoneNumber"
           ></el-input> </el-form-item
         ><el-form-item label="邮箱" :label-width="formLabelWidth">
           <el-input
             v-model="infoForm.email"
             autocomplete="off"
+            :placeholder="userCenterData.userCenter.email"
           ></el-input> </el-form-item
         ><el-form-item label="所在院校" :label-width="formLabelWidth">
-          <el-input v-model="infoForm.school" autocomplete="off"></el-input>
+          <el-input
+            v-model="infoForm.school"
+            autocomplete="off"
+            :placeholder="userCenterData.userCenter.school"
+          ></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -186,6 +198,7 @@
 import TabBar from "@/components/tabbar/tabbar";
 import mockData from "./mockData.js";
 import { map } from "./map";
+import request from "@/network/http.js";
 export default {
   components: {
     TabBar,
@@ -268,6 +281,25 @@ export default {
     },
     infoModifyDialogOnSave() {
       console.log(this.infoForm);
+      request.post("user/updateUserInfo", {
+        userAccount: this.userCenterData.userCenter.userName,
+        userName:
+          this.infoForm.nickName === ""
+            ? this.userCenterData.userCenter.nickName
+            : this.infoForm.nickName,
+        phone:
+          this.infoForm.phoneNumber === ""
+            ? this.userCenterData.userCenter.phoneNumber
+            : this.infoForm.phoneNumber,
+        emile:
+          this.infoForm.email === ""
+            ? this.userCenterData.userCenter.email
+            : this.infoForm.email,
+        school:
+          this.infoForm.school === ""
+            ? this.userCenterData.userCenter.school
+            : this.infoForm.school,
+      });
       this.infoDialogVisible = false;
     },
     toPay() {
@@ -277,12 +309,12 @@ export default {
     handleSelectionChange(val) {
       this.multipleSelection = val;
     },
-    selectNotAll(e){
+    selectNotAll(e) {
       console.log(e);
     },
-    selectAll(e){
-      console.log(e)
-    }
+    selectAll(e) {
+      console.log(e);
+    },
   },
 };
 </script>

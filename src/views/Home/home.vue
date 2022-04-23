@@ -14,9 +14,13 @@
           <div class="goods__title--right">换一批</div>
         </div>
         <div class="goods__item">
-          <div class="goods__item--show" v-for="(item, index) in homeData.digital.itemList"
-            @click="toGoodsDetail(item.id)" :key="index">
-            <img class="goods__item--img" :src="item.url">
+          <div
+            class="goods__item--show"
+            v-for="(item, index) in homeData.digital.itemList.slice(0, 4)"
+            @click="toGoodsDetail(item.id)"
+            :key="index"
+          >
+            <img class="goods__item--img" :src="item.url" />
             <div class="goods__item--desc">{{ item.description }}</div>
             <div class="goods__item--price">￥{{ item.price }}</div>
           </div>
@@ -29,9 +33,13 @@
           <div class="goods__title--right">换一批</div>
         </div>
         <div class="goods__item">
-          <div class="goods__item--show" v-for="(item, index) in homeData.clothes.itemList"
-            @click="toGoodsDetail(item.id)" :key="index">
-            <img class="goods__item--img" :src="item.url">
+          <div
+            class="goods__item--show"
+            v-for="(item, index) in homeData.clothes.itemList.slice(0, 4)"
+            @click="toGoodsDetail(item.id)"
+            :key="index"
+          >
+            <img class="goods__item--img" :src="item.url" />
             <div class="goods__item--desc">{{ item.description }}</div>
             <div class="goods__item--price">￥{{ item.price }}</div>
           </div>
@@ -44,9 +52,13 @@
           <div class="goods__title--right">换一批</div>
         </div>
         <div class="goods__item">
-          <div class="goods__item--show" v-for="(item, index) in homeData.book.itemList" @click="toGoodsDetail(item.id)"
-            :key="index">
-            <img class="goods__item--img" :src="item.url">
+          <div
+            class="goods__item--show"
+            v-for="(item, index) in homeData.book.itemList.slice(0, 4)"
+            @click="toGoodsDetail(item.id)"
+            :key="index"
+          >
+            <img class="goods__item--img" :src="item.url" />
             <div class="goods__item--desc">{{ item.description }}</div>
             <div class="goods__item--price">￥{{ item.price }}</div>
           </div>
@@ -55,13 +67,22 @@
       <!-- 宿舍小物件 roomLittleThing-->
       <div class="goods_rec">
         <div class="goods_title">
-          <div class="goods__title--left">{{ homeData.roomLittleThing.itemName }}</div>
+          <div class="goods__title--left">
+            {{ homeData.roomLittleThing.itemName }}
+          </div>
           <div class="goods__title--right">换一批</div>
         </div>
         <div class="goods__item">
-          <div class="goods__item--show" v-for="(item, index) in homeData.roomLittleThing.itemList"
-            @click="toGoodsDetail(item.id)" :key="index">
-            <img class="goods__item--img" :src="item.url">
+          <div
+            class="goods__item--show"
+            v-for="(item, index) in homeData.roomLittleThing.itemList.slice(
+              0,
+              4
+            )"
+            @click="toGoodsDetail(item.id)"
+            :key="index"
+          >
+            <img class="goods__item--img" :src="item.url" />
             <div class="goods__item--desc">{{ item.description }}</div>
             <div class="goods__item--price">￥{{ item.price }}</div>
           </div>
@@ -72,9 +93,14 @@
     <div class="right_container">
       <p>为您推荐：</p>
       <div class="swiper">
-        <el-carousel height="230px" @click="log()" trigger="click" indicator-position="outside">
-          <el-carousel-item v-for="item, index in swiperList" :key="index">
-            <img style="width:100%;height:220px" :src="item.url" alt />
+        <el-carousel
+          height="230px"
+          @click="log()"
+          trigger="click"
+          indicator-position="outside"
+        >
+          <el-carousel-item v-for="(item, index) in swiperList" :key="index">
+            <img style="width: 100%; height: 220px" :src="item.url" alt />
           </el-carousel-item>
         </el-carousel>
       </div>
@@ -100,12 +126,22 @@ export default {
       input: "",
       homeData: mockData,
       swiperList: [
-        { url: 'https://img0.baidu.com/it/u=3073049700,2209615132&fm=253&fmt=auto&app=138&f=JPEG?w=990&h=500' },
-        { url: 'https://img0.baidu.com/it/u=2775655496,2255017447&fm=253&fmt=auto&app=120&f=JPEG?w=1422&h=800' },
-        { url: 'https://img1.baidu.com/it/u=700675537,3936578503&fm=253&fmt=auto&app=138&f=JPEG?w=889&h=500' },
-        { url: 'https://img0.baidu.com/it/u=3712997108,442011921&fm=253&fmt=auto&app=138&f=JPEG?w=889&h=500' },
-        { url: 'https://img1.baidu.com/it/u=2476457920,2055857727&fm=253&fmt=auto&app=138&f=JPEG?w=889&h=500' }
-      ]
+        {
+          url: "https://img0.baidu.com/it/u=3073049700,2209615132&fm=253&fmt=auto&app=138&f=JPEG?w=990&h=500",
+        },
+        {
+          url: "https://img0.baidu.com/it/u=2775655496,2255017447&fm=253&fmt=auto&app=120&f=JPEG?w=1422&h=800",
+        },
+        {
+          url: "https://img1.baidu.com/it/u=700675537,3936578503&fm=253&fmt=auto&app=138&f=JPEG?w=889&h=500",
+        },
+        {
+          url: "https://img0.baidu.com/it/u=3712997108,442011921&fm=253&fmt=auto&app=138&f=JPEG?w=889&h=500",
+        },
+        {
+          url: "https://img1.baidu.com/it/u=2476457920,2055857727&fm=253&fmt=auto&app=138&f=JPEG?w=889&h=500",
+        },
+      ],
     };
   },
   methods: {
@@ -113,22 +149,20 @@ export default {
       this.$router.push(`/goodsdetail/${id}`);
     },
     log(item) {
-      this.log(item)
+      this.log(item);
     },
     open2() {
       this.$notify({
-        title: '自定义位置',
-        message: '右下角弹出的消息',
-        position: 'bottom-right',
+        title: "自定义位置",
+        message: "右下角弹出的消息",
+        position: "bottom-right",
         onClick: () => {
-          console.log('1')
-        }
-      })
+          console.log("1");
+        },
+      });
     },
-    loadMore() {
-
-    },
-  }
+    loadMore() {},
+  },
 };
 </script>
 
@@ -185,7 +219,7 @@ export default {
   margin-top: 20px;
   border-radius: 18px;
   min-width: 850px;
-  height: 17vh;
+  height: 127px;
   cursor: pointer;
 }
 
@@ -222,13 +256,13 @@ export default {
 .goods__item--img {
   width: 90px;
   height: 90px;
-  margin-top: 8%;
+  margin-top: 3px;
   border-radius: 10px;
 }
 
 .goods__item--desc {
-  margin-top: -35%;
-  margin-left: 45%;
+  margin-top: -80px;
+  margin-left: 100px;
   width: 100px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -236,8 +270,8 @@ export default {
 }
 
 .goods__item--price {
-  margin-left: 45%;
-  margin-top: 10%;
+  margin-left: 100px;
+  margin-top: 25px;
   color: red;
 }
 </style>
