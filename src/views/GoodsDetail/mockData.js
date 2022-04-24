@@ -27,7 +27,6 @@ const mockData = {
     'https://img0.baidu.com/it/u=2441133694,3563177909&fm=253&fmt=auto&app=138&f=JPEG?w=363&h=500',
     'https://img0.baidu.com/it/u=2441133694,3563177909&fm=253&fmt=auto&app=138&f=JPEG?w=363&h=500',
     'https://img0.baidu.com/it/u=2441133694,3563177909&fm=253&fmt=auto&app=138&f=JPEG?w=363&h=500',
-    'https://img0.baidu.com/it/u=2441133694,3563177909&fm=253&fmt=auto&app=138&f=JPEG?w=363&h=500-u'
   ]
 }
 export default mockData

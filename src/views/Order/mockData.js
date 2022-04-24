@@ -1,6 +1,5 @@
 const mockData = {
-  tableData: [
-    {
+  tableData: [{
       imgUrlList: [
         "https://img0.baidu.com/it/u=2292808981,2192611081&fm=26&fmt=auto",
         "https://img2.baidu.com/it/u=1814268193,3619863984&fm=253&fmt=auto&app=138&f=JPEG?w=632&h=500",
@@ -102,21 +101,19 @@ const mockData = {
       id: 3333333,
     },
   ],
-  sellData: [
-    {
-      imgUrlList: [
-        "https://img0.baidu.com/it/u=2292808981,2192611081&fm=26&fmt=auto",
-      ],
-      date: "2016-05-03",
-      name: "王小虎",
-      address: "上海市普陀区金沙江路 1518 弄",
-      desc: "举头望明月，低头思故乡",
-      state: "已支付订单",
-      number: "126863281",
-      price: "182.5",
-      pay: "微信支付",
-      id: 22,
-    },
-  ],
+  sellData: [{
+    imgUrlList: [
+      "https://img0.baidu.com/it/u=2292808981,2192611081&fm=26&fmt=auto",
+    ],
+    date: "2016-05-03",
+    name: "王小虎",
+    address: "上海市普陀区金沙江路 1518 弄",
+    desc: "举头望明月，低头思故乡",
+    state: "已支付订单",
+    number: "126863281",
+    price: "182.5",
+    pay: "微信支付",
+    id: 22,
+  }, ],
 };
 export default mockData;

@@ -57,17 +57,30 @@
       </div>
       <div class="bottom_img">
         <div class="vertical_divider"></div>
-        <div class="desc_text">物品图片</div>
+        <div class="desc_text">
+          物品描述<span class="total_comment">{{
+            "共有" + totalPicture + "张图片"
+          }}</span>
+        </div>
         <div class="goods_img">
           <div
             class="item_img"
-            v-for="(item, index) in detailData.goodsImgs"
+            v-for="(item, index) in detailData.goodsImgs.slice(0, 5)"
             :key="index"
           >
             <img :src="item" alt="" />
           </div>
         </div>
       </div>
+      <!-- <div class="demo-image__preview">
+        <el-image
+          v-for="(item, index) in detailData.goodsImgs"
+          :key="index"
+          style="width: 100px; height: 100px; margin-right: 15px"
+          :src="item"
+          :preview-src-list="detailData.goodsImgs"
+        ></el-image>
+      </div> -->
     </div>
   </div>
 </template>
@@ -86,6 +99,7 @@ export default {
       },
       detailData: mockData,
       totalComment: 0,
+      totalPicture: 0,
     };
   },
   methods: {
@@ -100,6 +114,9 @@ export default {
     this.totalComment = Array.isArray(this.detailData.description)
       ? this.detailData.description.length
       : 0;
+    this.totalPicture = Array.isArray(this.detailData.goodsImgs)
+      ? this.detailData.goodsImgs.length
+      : 0;
     console.log(this.id);
   },
 };
@@ -110,7 +127,7 @@ export default {
   margin-left: 15%;
   border: 1px solid silver;
   margin-bottom: 20px;
-  height: 1200px;
+  height: 1000px;
 }
 
 .title {
@@ -244,14 +261,15 @@ export default {
   margin-top: 20px;
 }
 .goods_img {
-  display: flex;
-  width: 600px;
-  overflow: hidden;
+  display: grid;
+  grid-auto-columns: 3;
+  grid-template-columns: repeat(5, 1fr);
+  grid-auto-rows: 200px;
+  cursor: pointer;
 }
 .item_img img {
-  flex: 1;
   margin: 20px;
-  width: 280px;
-  height: 280px;
+  width: 170px;
+  height: 170px;
 }
 </style>

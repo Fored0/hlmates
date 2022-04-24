@@ -5,31 +5,67 @@
       <p>注册成为同学你好的mai家</p>
     </div>
     <div class="form">
-      <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+      <el-form
+        :model="ruleForm"
+        status-icon
+        :rules="rules"
+        ref="ruleForm"
+        label-width="100px"
+        class="demo-ruleForm"
+      >
         <el-form-item label="账户名" prop="userAccount">
-          <el-input v-model.number="ruleForm.userAccount" placeholder="账户名注册之后就不能修改了哦！"></el-input>
+          <el-input
+            v-model.number="ruleForm.userAccount"
+            placeholder="账户名注册之后就不能修改了哦！"
+          ></el-input>
         </el-form-item>
         <el-form-item label="昵称" prop="name">
-          <el-input type="name" v-model="ruleForm.name" autocomplete="off"></el-input>
+          <el-input
+            type="name"
+            v-model="ruleForm.name"
+            autocomplete="off"
+          ></el-input>
         </el-form-item>
         <el-form-item label="手机" prop="phone">
-          <el-input type="name" v-model="ruleForm.phone" autocomplete="off"></el-input>
+          <el-input
+            type="name"
+            v-model="ruleForm.phone"
+            autocomplete="off"
+          ></el-input>
         </el-form-item>
         <el-form-item label="所在院校" prop="school">
-          <el-input type="name" v-model="ruleForm.school" autocomplete="off"></el-input>
+          <el-input
+            type="name"
+            v-model="ruleForm.school"
+            autocomplete="off"
+          ></el-input>
         </el-form-item>
         <el-form-item label="邮箱账号" prop="emile">
-          <el-input type="name" v-model="ruleForm.emile" autocomplete="off"></el-input>
+          <el-input
+            type="name"
+            v-model="ruleForm.emile"
+            autocomplete="off"
+          ></el-input>
         </el-form-item>
         <el-form-item label="密码" prop="pass">
-          <el-input type="password" v-model="ruleForm.pass" autocomplete="off"></el-input>
+          <el-input
+            type="password"
+            v-model="ruleForm.pass"
+            autocomplete="off"
+          ></el-input>
         </el-form-item>
         <el-form-item label="确认密码" prop="checkPass">
-          <el-input type="password" v-model="ruleForm.checkPass" autocomplete="off"></el-input>
+          <el-input
+            type="password"
+            v-model="ruleForm.checkPass"
+            autocomplete="off"
+          ></el-input>
         </el-form-item>
 
         <el-form-item>
-          <el-button type="primary" @click="submitForm('ruleForm')">注册并登录</el-button>
+          <el-button type="primary" @click="submitForm('ruleForm')"
+            >注册并登录</el-button
+          >
           <el-button @click="resetForm('ruleForm')">重置</el-button>
         </el-form-item>
       </el-form>
@@ -49,7 +85,7 @@ export default {
       if (!Number.isInteger(value)) {
         callback(new Error("账户名只能为数字哦"));
       } else {
-        callback()
+        callback();
       }
     };
     var validatePass = (rule, value, callback) => {
@@ -79,27 +115,28 @@ export default {
       }
     };
     var validataPhone = (rule, value, callback) => {
-      if (value.split('').length < 11) {
-        callback(new Error("请输入有效电话号码"))
+      if (value.split("").length < 11) {
+        callback(new Error("请输入有效电话号码"));
       } else {
         callback();
       }
     };
     var validataSchool = (rule, value, callback) => {
-      if (value === '') {
-        callback(new Error("请输入所在院校"))
+      if (value === "") {
+        callback(new Error("请输入所在院校"));
       } else {
         callback();
       }
     };
     var validataEmile = (rule, value, callback) => {
-      const reg = /([a-z]|[0-9])+((\.|\-|_)?([a-z]|[0-9])+)*@[a-z]+(\-?[a-z]+)*(\.[a-z]+(\-?[a-z]+)*)+/
+      const reg =
+        /([a-z]|[0-9])+((\.|\-|_)?([a-z]|[0-9])+)*@[a-z]+(\-?[a-z]+)*(\.[a-z]+(\-?[a-z]+)*)+/;
       if (!reg.test(value)) {
-        callback(new Error("邮箱账号格式不正确！请重新输入"))
+        callback(new Error("邮箱账号格式不正确！请重新输入"));
       } else {
-        callback()
+        callback();
       }
-    }
+    };
     return {
       ruleForm: {
         name: "",
@@ -111,7 +148,7 @@ export default {
         emile: "",
       },
       rules: {
-        name: [{ alidator: validataName, trigger: "blur" }],
+        name: [{ validator: validataName, trigger: "blur" }],
         pass: [{ validator: validatePass, trigger: "blur" }],
         checkPass: [{ validator: validatePass2, trigger: "blur" }],
         userAccount: [{ validator: checkAccount, trigger: "blur" }],
@@ -131,19 +168,22 @@ export default {
           return false;
         }
       });
-      console.log(this.ruleForm)
-      request.post('user/userRegister', {
-        userName: this.ruleForm.name,
-        phone: this.ruleForm.phone,
-        emile: this.ruleForm.emile,
-        school: this.ruleForm.school,
-        password: this.ruleForm.pass,
-        userAccount: this.ruleForm.userAccount,
-      }).then((res) => {
-        console.log(res)
-      }).catch((err) => {
-        throw new Error(err)
-      })
+      console.log(this.ruleForm);
+      request
+        .post("user/userRegister", {
+          userName: this.ruleForm.name,
+          phone: this.ruleForm.phone,
+          emile: this.ruleForm.emile,
+          school: this.ruleForm.school,
+          password: this.ruleForm.pass,
+          userAccount: this.ruleForm.userAccount,
+        })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          throw new Error(err);
+        });
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();

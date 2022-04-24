@@ -97,7 +97,7 @@
         </el-table-column>
       </el-table>
       <div class="shopCart--bottom" style="margin-top: 20px">
-        <div class="shopCart--total">合计{{}}</div>
+        <div class="shopCart--total">{{ "合计：" }}</div>
         <div>
           <el-button
             class="shopCart--option"

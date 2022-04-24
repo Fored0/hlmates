@@ -197,8 +197,11 @@
         <el-descriptions-item label="描述" span="3">{{
           showSellDetail.desc
         }}</el-descriptions-item>
-        <el-descriptions-item :span="3" label="图片">
-          <div class="demo-image__preview">
+        <el-descriptions-item :span="3" label="图片" style="overflow: hidden">
+          <div
+            class="demo-image__preview"
+            v-if="Array.isArray(showSellDetail.imgUrlList)"
+          >
             <el-image
               v-for="(item, index) in showSellDetail.imgUrlList"
               :key="index"
