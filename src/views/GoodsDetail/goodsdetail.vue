@@ -21,7 +21,7 @@
             <br />
             <div class="concat_btns">
               <button @click="toConnectSeller" class="connect_btn">
-                联系卖家
+                给卖家留言
               </button>
               <button @click="toPay" class="buy_btn">我要购买</button>
               <button @click="joinShopCart" class="jionShopCart_btn">

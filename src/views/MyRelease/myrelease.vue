@@ -5,7 +5,10 @@
     <div class="card">
       <div class="block">
         <div class="goods_item" v-for="(item, id) in goods" :key="id">
-          <img src="https://img0.baidu.com/it/u=3122136587,3938996930&fm=26&fmt=auto" alt="" />
+          <img
+            src="https://img0.baidu.com/it/u=3122136587,3938996930&fm=26&fmt=auto"
+            alt=""
+          />
           <div class="desc" @click="toGoodsDetail(item.id)">
             <p>{{ item.name }}</p>
             <ul>
@@ -15,26 +18,46 @@
           </div>
 
           <div class="btn">
-            <el-button type="danger" round @click="handleOffShelf(item)">下架</el-button>
-            <el-button type="primary" round @click="editId(item.id)">编辑</el-button>
+            <el-button type="danger" round @click="handleOffShelf(item)"
+              >下架</el-button
+            >
+            <el-button type="primary" round @click="editId(item.id)"
+              >编辑</el-button
+            >
+            <el-button type="primary" round @click="editId(item.id)"
+              >详情</el-button
+            >
           </div>
         </div>
       </div>
     </div>
 
-    <el-dialog title="收货地址" width="500px" :visible.sync="editDialogFormVisible">
+    <el-dialog
+      title="收货地址"
+      width="500px"
+      :visible.sync="editDialogFormVisible"
+    >
       <el-form :model="editDialogForm">
         <el-form-item label="类别" :label-width="formLabelWidth">
           <el-input v-model="editDialogForm.category"></el-input>
         </el-form-item>
         <el-form-item label="新旧程度" :label-width="formLabelWidth">
-          <el-input v-model="editDialogForm.degree" autocomplete="off"></el-input>
+          <el-input
+            v-model="editDialogForm.degree"
+            autocomplete="off"
+          ></el-input>
         </el-form-item>
         <el-form-item label="转让价格" :label-width="formLabelWidth">
-          <el-input v-model="editDialogForm.price" autocomplete="off"></el-input>
+          <el-input
+            v-model="editDialogForm.price"
+            autocomplete="off"
+          ></el-input>
         </el-form-item>
         <el-form-item label="标题" :label-width="formLabelWidth">
-          <el-input v-model="editDialogForm.title" autocomplete="off"></el-input>
+          <el-input
+            v-model="editDialogForm.title"
+            autocomplete="off"
+          ></el-input>
         </el-form-item>
         <el-form-item label="详细描述" :label-width="formLabelWidth">
           <el-input v-model="editDialogForm.desc" autocomplete="off"></el-input>
@@ -122,10 +145,17 @@ export default {
         type: "warning",
       })
         .then((res) => {
-          this.$message({
-            type: "success",
-            message: "下架成功!",
-          });
+          if (res.status === "success") {
+            this.$message({
+              type: "success",
+              message: "下架成功!",
+            });
+          } else {
+            this.$message({
+              type: "erroe",
+              message: "下架失败!",
+            });
+          }
         })
         .catch(() => {
           this.$message({
@@ -143,7 +173,7 @@ export default {
       this.editDialogFormVisible = false;
     },
     toGoodsDetail(id) {
-      this.$router.push(`/goodsdetail/${id}`)
+      this.$router.push(`/goodsdetail/${id}`);
     },
   },
 };
@@ -213,8 +243,8 @@ export default {
 }
 
 .btn {
-  margin-left: 80%;
+  margin-left: 70%;
   margin-top: -45px;
-  width: 20%;
+  width: 30%;
 }
 </style>
