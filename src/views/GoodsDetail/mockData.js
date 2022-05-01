@@ -1,5 +1,6 @@
 const mockData = {
   title: 'IPhone 12 95新 自用',
+  user: 'zhangzhang',
   currentPrice: 4000,
   address: '四川大学锦江学院',
   img: 'https://img2.baidu.com/it/u=1446103087,965574921&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=695',

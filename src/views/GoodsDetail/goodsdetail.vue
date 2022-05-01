@@ -20,7 +20,7 @@
             </div>
             <br />
             <div class="concat_btns">
-              <button @click="toConnectSeller" class="connect_btn">
+              <button @click="dialogVisible = true" class="connect_btn">
                 给卖家留言
               </button>
               <button @click="toPay" class="buy_btn">我要购买</button>
@@ -68,20 +68,27 @@
             v-for="(item, index) in detailData.goodsImgs.slice(0, 5)"
             :key="index"
           >
-            <img :src="item" alt="" />
+            <img :src="item" alt="img" />
           </div>
         </div>
       </div>
-      <!-- <div class="demo-image__preview">
-        <el-image
-          v-for="(item, index) in detailData.goodsImgs"
-          :key="index"
-          style="width: 100px; height: 100px; margin-right: 15px"
-          :src="item"
-          :preview-src-list="detailData.goodsImgs"
-        ></el-image>
-      </div> -->
     </div>
+    <el-dialog :visible.sync="dialogVisible" width="30%">
+      <el-form :model="form"
+        ><el-form-item :label="'给' + detailData.user + '留言'"
+          ><el-input
+            type="textarea"
+            :rows="2"
+            placeholder="请输入内容"
+            v-model="form.replyMessage"
+          >
+          </el-input></el-form-item
+      ></el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="toReply()">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -100,10 +107,16 @@ export default {
       detailData: mockData,
       totalComment: 0,
       totalPicture: 0,
+      dialogVisible: false,
+      form: {
+        replyMessage: "",
+      },
     };
   },
   methods: {
-    toConnectSeller() {},
+    toReply() {
+      this.dialogVisible = false;
+    },
     toPay(params) {
       this.$router.push("/placeorder");
     },

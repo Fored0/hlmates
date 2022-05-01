@@ -169,7 +169,15 @@ export default {
     loadMore() {},
     handleSearch() {
       console.log(this.searchInput);
-      this.$router.push(`/search/${this.searchInput}`);
+      if (this.searchInput.split("").length === 0) {
+        this.$message({
+          showClose: true,
+          message: "请先输入内容再进行查询！",
+          type: "error",
+        });
+      } else {
+        this.$router.push(`/search/${this.searchInput}`);
+      }
     },
   },
 };
