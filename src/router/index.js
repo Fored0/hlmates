@@ -15,6 +15,7 @@ const UserCenter = () => import('@/views/UserCenter/usercenter')
 const GoodsDetail = () => import('@/views/GoodsDetail/goodsdetail')
 const PlaceOrder = () => import('@/views/PlaceOrder/placeorder')
 const Search = () => import('@/views/Search/search')
+const ShopCart = () => import('@/views/shopCart/shopCart')
 
 
 const routes = [ // 默认首页，无需登录
@@ -77,6 +78,11 @@ const routes = [ // 默认首页，无需登录
     path: '/search/:searchKey',
     component: Search,
   },
+  //  购物车
+  {
+    path: '/shopCart',
+    component: ShopCart,
+  }
 ]
 
 const router = new VueRouter({

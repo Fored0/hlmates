@@ -4,7 +4,8 @@
       <i class="el-icon-s-home" @click="$router.push('/home')">主页</i>
     </div>
     <div class="center">
-      <h2 style="margin-right:5px;" >{{ userInfo.nickName }}</h2> 你好！欢迎来到&nbsp;同学你好&nbsp;二手交易平台
+      <h2 style="margin-right: 5px">{{ userInfo.nickName }}</h2>
+      你好！欢迎来到&nbsp;同学你好&nbsp;二手交易平台
     </div>
     <div class="right">
       <div class="login">
@@ -16,6 +17,7 @@
         </button>
       </div>
       <p class="item" @click="toTargetPath('message')">消息</p>
+      <p class="item" @click="toTargetPath('shopCart')">购物车</p>
       <p class="item" @click="toTargetPath('order')">我的订单</p>
       <p class="item" @click="toTargetPath('myrelease')">我的发布</p>
       <p class="item">
@@ -109,7 +111,7 @@ export default {
   top: 20px;
 }
 .right {
-  margin-left: 60%;
+  margin-left: 57%;
   display: flex;
   width: 40%;
   position: absolute;

@@ -75,40 +75,6 @@
         </el-table>
       </el-card>
     </div>
-    <div class="shopCart--table">
-      <div class="my--car">我的购物车</div>
-      <el-table
-        stripe
-        ref="multipleTable"
-        :data="tableData"
-        tooltip-effect="dark"
-        style="width: 100%"
-        @selection-change="handleSelectionChange"
-        @select="selectNotAll()"
-        @select-all="selectAll()"
-      >
-        <el-table-column type="selection" width="55"> </el-table-column>
-        <el-table-column label="日期" width="120">
-          <template slot-scope="scope">{{ scope.row.date }}</template>
-        </el-table-column>
-        <el-table-column prop="name" label="姓名" width="120">
-        </el-table-column>
-        <el-table-column prop="address" label="地址" show-overflow-tooltip>
-        </el-table-column>
-      </el-table>
-      <div class="shopCart--bottom" style="margin-top: 20px">
-        <div class="shopCart--total">{{ "合计：" }}</div>
-        <div>
-          <el-button
-            class="shopCart--option"
-            type="danger"
-            round
-            @click="toPay()"
-            >去结算</el-button
-          >
-        </div>
-      </div>
-    </div>
     <!-- dialog -->
     <el-dialog
       width="30%"
@@ -321,45 +287,12 @@ export default {
 
 <style scoped>
 .card {
-  width: 50vw;
-  margin-left: 2vw;
+  width: 70vw;
+  margin-left: 15vw;
   margin-top: 20px;
 }
 .opeBtn {
   float: right;
   margin-top: -25px;
-}
-.shopCart__card {
-  position: absolute;
-  right: 3vw;
-  top: 90px;
-  width: 22vw;
-  height: 501px;
-  overflow-y: scroll;
-}
-.shopCart--table {
-  position: absolute;
-  width: 44%;
-  right: 2%;
-  top: 85px;
-}
-.my--car {
-  width: 100%;
-  text-align: center;
-  font-weight: bold;
-  font-size: 18px;
-  margin-bottom: 10px;
-}
-.shopCart--bottom {
-  display: flex;
-}
-.shopCart--total {
-  width: 50%;
-  color: red;
-  font-size: 15px;
-  margin-left: 66px;
-  padding-top: 10px;
-}
-.shopCart--option {
 }
 </style>
