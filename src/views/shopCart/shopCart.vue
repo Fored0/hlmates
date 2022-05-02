@@ -34,7 +34,7 @@
               <div class="specification">Memory Capacity:4TB Color:special</div>
             </div>
           </div>
-          <div class="product-price">${{ item.price }}</div>
+          <div class="product-price">￥{{ item.price }}</div>
           <div class="product-quantity">
             <el-input-number
               v-model="item.num"
@@ -57,7 +57,7 @@
           合计 : <span style="color: #e33333">${{ totalPrice }}</span>
         </div>
         <div class="btn">
-          <el-button type="primary">去支付</el-button>
+          <el-button type="primary" @click="toPay()">去支付</el-button>
         </div>
       </div>
     </div>
@@ -112,7 +112,6 @@ export default {
   methods: {
     //全选
     handleCheckAllChange(val) {
-      console.log(val);
       this.isIndeterminate = false;
       if (val == false) {
         for (let i in this.cartList) {
@@ -153,6 +152,9 @@ export default {
       });
       this.allChecked = allChecked;
       this.totalPrice = totalPrice;
+    },
+    toPay() {
+      console.log(this.cartList);
     },
   },
 };

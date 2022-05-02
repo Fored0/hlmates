@@ -115,7 +115,7 @@ export default {
   },
   methods: {
     toReply() {
-      this.dialogVisible = false;
+      this.dialogVisible = false
     },
     toPay(params) {
       this.$router.push("/placeorder");

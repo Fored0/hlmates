@@ -38,17 +38,19 @@
             border
             style="width: 100%"
           >
-            <el-table-column prop="imgUrl" label="图片" width="180">
-              <img :src="tableData.imgUrl" alt=""
-            /></el-table-column>
             <el-table-column
               prop="goodsName"
               label="商品"
               width="180"
             ></el-table-column>
             <el-table-column
+              prop="price"
+              label="单价"
+              width="180"
+            ></el-table-column>
+            <el-table-column
               prop="count"
-              label="姓名"
+              label="数量"
               width="180"
             ></el-table-column>
             <el-table-column label="支付方式" width="180">
@@ -61,7 +63,7 @@
                 >
                 </el-option> </el-select
             ></el-table-column>
-            <el-table-column prop="price" label="价格"></el-table-column>
+            <el-table-column prop="totalPrice" label="总计"> </el-table-column>
           </el-table>
         </div>
       </div>
@@ -146,6 +148,7 @@ export default {
             { label: 1, value: "Alipay" },
           ],
           price: 100,
+          totalPrice: 2800,
         },
       ],
       payByMethods: [
