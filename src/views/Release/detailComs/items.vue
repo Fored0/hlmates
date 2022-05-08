@@ -2,15 +2,11 @@
   <div>
     <el-form ref="form" :model="formData" label-width="80px">
       <el-form-item label="类别">
-        <el-select v-model="formData.category" placeholder="请选择">
-          <el-option
-            v-for="(item, index) in itemsData.category"
-            :key="index"
-            :label="item.label"
-            :value="item.value"
-            >{{ item.label }}</el-option
-          >
-        </el-select>
+        <el-input
+          v-model="formData.category"
+          style="width: 30%"
+          placeholder="请输入类别"
+        ></el-input>
       </el-form-item>
       <el-form-item label="新旧程度">
         <el-select v-model="formData.degree" placeholder="请选择">
@@ -71,6 +67,7 @@
 </template>
 
 <script>
+import request from "@/network/http";
 export default {
   name: "items",
   data() {
@@ -82,7 +79,7 @@ export default {
         price: "",
         desc: "",
         img: "",
-        title:""
+        title: "",
       },
       fileList: [
         {
@@ -95,10 +92,23 @@ export default {
   created() {
     // console.log(this);
   },
+  beforeMount() {
+    console.log("attr", this.$attrs);
+  },
   methods: {
     // 提交表单
     onSubmit() {
       console.log(this.formData);
+      request.post("release/insertRelease", {
+        title: this.formData.title,
+        Text: this.formData.desc,
+        price: this.formData.price,
+        abrasion: this.formData.degree,
+        // fileId:this.formData.fileList,
+        // releaseType: "1",
+        type: "1",
+        childType: this.formData.category,
+      });
     },
     onReset() {
       this.formData = {};

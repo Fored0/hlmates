@@ -3,15 +3,12 @@
     <!--  -->
     <tab-bar></tab-bar>
     <!--  -->
-    <el-tabs type="border-card" stretch class="card">
+    <el-tabs stretch class="card">
       <el-tab-pane label="我买入的">
         <el-table
           v-if="orderData.tableData.length !== 0"
           :data="orderData.tableData"
-          height="80vh"
-          border
           style="width: 100%"
-          stripe
         >
           <el-table-column prop="detail" label="订单详情" width="390">
             <template slot-scope="scope">
@@ -24,7 +21,7 @@
             label="收货地址"
             width="260"
           ></el-table-column>
-          <el-table-column label="金额/付款方式" width="230">
+          <el-table-column label="金额/付款方式" width="150">
             <template slot-scope="scope">
               <div>
                 <p>{{ scope.row.price }}</p>
@@ -35,12 +32,12 @@
           <el-table-column
             prop="date"
             label="创建时间"
-            width="230"
+            width="150"
           ></el-table-column>
           <el-table-column
             prop="number"
             label="订单编号"
-            width="230"
+            width="150"
           ></el-table-column>
           <el-table-column
             prop="state"
@@ -70,10 +67,7 @@
         <el-table
           v-if="orderData.sellData.length !== 0"
           :data="orderData.sellData"
-          height="80vh"
-          border
           style="width: 100%"
-          stripe
         >
           <el-table-column prop="detail" label="订单详情" width="390">
             <template slot-scope="scope">
@@ -85,9 +79,9 @@
           <el-table-column
             prop="address"
             label="收货地址"
-            width="260"
+            width="220"
           ></el-table-column>
-          <el-table-column label="金额/付款方式" width="200">
+          <el-table-column label="金额/付款方式" width="150">
             <template slot-scope="scope">
               <div>
                 <p>{{ scope.row.price }}</p>
@@ -98,17 +92,17 @@
           <el-table-column
             prop="date"
             label="创建时间"
-            width="200"
+            width="150"
           ></el-table-column>
           <el-table-column
             prop="number"
             label="订单编号"
-            width="200"
+            width="150"
           ></el-table-column>
           <el-table-column
             prop="state"
             label="状态"
-            width="200"
+            width="150"
           ></el-table-column>
           <el-table-column fixed="right" label="操作" width="200">
             <template slot-scope="scope">
@@ -219,6 +213,17 @@
         >
       </span>
     </el-dialog>
+    <div class="pagination">
+      <el-pagination
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :page-sizes="[10, 15, 20]"
+        :page-size="pagesize"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="total"
+      >
+      </el-pagination>
+    </div>
   </div>
 </template>
 
@@ -230,6 +235,9 @@ export default {
   components: {
     TabBar,
   },
+  created() {
+    // this.getOrderData();
+  },
   data() {
     return {
       orderData: mockData,
@@ -237,14 +245,18 @@ export default {
       sellDialogVisible: false,
       showPurchaseDetail: [],
       showSellDetail: [],
+      currentPage: 1,
+      pagesize: 10,
+      total: 0,
     };
   },
   methods: {
     // 确保删除后再弹出消息
     deleteRow(params) {
-      console.log(params);
       request
-        .get()
+        .post("order/deleteOrder", {
+          id: params,
+        })
         .then((res) => {
           console.log(res);
           if (res.status === 200) {
@@ -264,20 +276,29 @@ export default {
         });
     },
     showPurchaseDetailInfo(id) {
-      this.purchaseDialogVisible = true;
-      this.orderData.tableData.forEach((item) => {
-        if (item.id === id) {
-          this.showPurchaseDetail = item;
-        }
+      request.post("order/selectOrder", {
+        id,
       });
+      this.purchaseDialogVisible = true;
     },
     showSellDetailInfo(id) {
       this.sellDialogVisible = true;
-      this.orderData.sellData.forEach((item) => {
-        if (item.id === id) {
-          this.showSellDetail = item;
-        }
+      request.post("order/selectOrder", {
+        id,
       });
+    },
+    getOrderData() {
+      request.post("order/selectOrderList", {
+        pageNumber: this.currentPage,
+        pageSize: this.pagesize,
+        property: "f50a2ab9717b4077a345021b749bd1c6",
+      });
+    },
+    handleSizeChange(val) {
+      this.pagesize = val;
+    },
+    handleCurrentChange(val) {
+      this.currentPage = val;
     },
   },
 };
@@ -292,12 +313,18 @@ export default {
 }
 .desc_span {
   width: 150px;
-  height: 85px;
-  overflow: auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
   float: right;
   margin-right: 10%;
 }
 el-dialog {
   min-height: 40vh;
+}
+.pagination {
+  margin: 2vw 0 0 66vw;
 }
 </style>
