@@ -62,10 +62,10 @@ export default {
     };
   },
   created() {
-    this.userInfo = JSON.parse(localStorage.getItem("userInfo"));
-    Object.keys(this.userInfo).length !== 0
-      ? (this.hasLoginned = true)
-      : (this.hasLoginned = false);
+    // this.userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    // Object.keys(this.userInfo).length !== 0
+    //   ? (this.hasLoginned = true)
+    //   : (this.hasLoginned = false);
   },
   methods: {
     // 页面跳转

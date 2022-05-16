@@ -39,6 +39,9 @@
           <el-button @click="handleLogin" type="primary" size="large" round
             >登录</el-button
           >
+          <el-button @click="handleRegister" type="primary" size="large" round
+            >还没帐号？去注册</el-button
+          >
         </div>
       </el-form>
       <div class="option">
@@ -82,17 +85,13 @@ export default {
       // 校验用户账号密码
       // 获取用户信息，更新主页头像（可缓存到本地）
       console.log(this.form);
-      request
-        .post({
-          userAccount: this.form.name,
-          passwprd: this.form.passwprd,
-        })
-        .then((res) => {
-          // this.$router.push("home")
-        })
-        .catch((err) => {
-          throw new Error(err);
-        });
+      this.$http.post("user/judgeAccountAndPassword", {
+        username: this.form.username,
+        password: this.form.password,
+      });
+    },
+    handleRegister() {
+      this.$router.push("/register");
     },
   },
 };
@@ -137,7 +136,6 @@ export default {
 }
 
 .bottom__bar {
-  position: absolute;
   width: 100vw;
   bottom: 0;
 }

@@ -94,6 +94,7 @@
 <script>
 import TabBar from "components/tabbar/tabbar.vue";
 import mockData from "./mockData";
+import request from "@/network/http.js";
 
 export default {
   components: {
@@ -115,12 +116,17 @@ export default {
   },
   methods: {
     toReply() {
-      this.dialogVisible = false
+      this.dialogVisible = false;
     },
     toPay(params) {
       this.$router.push("/placeorder");
     },
-    joinShopCart() {},
+    joinShopCart() {
+      request.post("cart/insertCart", {
+        userId: "",
+        releaseId: "",
+      });
+    },
   },
   created() {
     this.id = this.$route.params.id;

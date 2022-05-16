@@ -247,7 +247,7 @@ export default {
       showSellDetail: [],
       currentPage: 1,
       pagesize: 10,
-      total: 0,
+      total: 100,
     };
   },
   methods: {
@@ -325,6 +325,6 @@ el-dialog {
   min-height: 40vh;
 }
 .pagination {
-  margin: 2vw 0 0 66vw;
+  margin: 2vw 0 0 3vw;
 }
 </style>

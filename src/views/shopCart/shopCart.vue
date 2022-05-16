@@ -53,6 +53,17 @@
             >全选</el-checkbox
           >
         </div>
+        <div class="pagination">
+          <el-pagination
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+            :page-sizes="[10, 15, 20]"
+            :page-size="pagesize"
+            layout="total, sizes, prev, pager, next, jumper"
+            :total="total"
+          >
+          </el-pagination>
+        </div>
         <div class="total">
           合计 : <span style="color: #e33333">${{ totalPrice }}</span>
         </div>
@@ -76,6 +87,9 @@ export default {
       quantity: 4,
       checkAll: false,
       isIndeterminate: true,
+      currentPage: 1,
+      pagesize: 10,
+      total: 100,
       totalPrice: 0,
       cartList: [
         {

@@ -68,6 +68,17 @@
         <el-button type="primary" @click="handleEdit()">确 定</el-button>
       </div>
     </el-dialog>
+    <div class="pagination">
+      <el-pagination
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :page-sizes="[10, 15, 20]"
+        :page-size="pagesize"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="total"
+      >
+      </el-pagination>
+    </div>
   </div>
 </template>
 
@@ -82,6 +93,9 @@ export default {
       editDialogFormVisible: false,
       editDialogFormVisible: false,
       formLabelWidth: "120px",
+      currentPage: 1,
+      pagesize: 10,
+      total: 100,
       id: "",
       goods: [
         {
@@ -175,6 +189,12 @@ export default {
     toGoodsDetail(id) {
       this.$router.push(`/goodsdetail/${id}`);
     },
+    handleSizeChange(val) {
+      this.pagesize = val;
+    },
+    handleCurrentChange(val) {
+      this.currentPage = val;
+    },
   },
 };
 </script>
@@ -197,11 +217,6 @@ export default {
   width: 70%;
   margin-left: 15%;
   margin-top: 1%;
-  height: 80vh;
-  overflow-y: scroll;
-  border: 1px solid rgb(197, 188, 188);
-  box-shadow: 1px 1px 2px bisque;
-  border-radius: 10px;
 }
 
 .goods_item {
@@ -246,5 +261,8 @@ export default {
   margin-left: 70%;
   margin-top: -45px;
   width: 30%;
+}
+.pagination {
+  margin: 2vw 0 0 17vw;
 }
 </style>

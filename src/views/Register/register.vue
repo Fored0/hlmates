@@ -169,6 +169,14 @@ export default {
         }
       });
       console.log(this.ruleForm);
+      // this.$http.post("user/userRegister", {
+      //   userName: this.ruleForm.name,
+      //   phone: this.ruleForm.phone,
+      //   emile: this.ruleForm.emile,
+      //   school: this.ruleForm.school,
+      //   password: this.ruleForm.pass,
+      //   userAccount: this.ruleForm.userAccount,
+      // });
       request
         .post("user/userRegister", {
           userName: this.ruleForm.name,
