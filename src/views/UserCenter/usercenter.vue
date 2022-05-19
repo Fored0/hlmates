@@ -15,19 +15,19 @@
         </div>
         <el-descriptions direction="vertical" :column="3" border>
           <el-descriptions-item label="账户名">{{
-            userCenterData.userCenter.userName
+            userCenterData.userAccount
           }}</el-descriptions-item>
           <el-descriptions-item label="昵称">{{
-            userCenterData.userCenter.nickName
+            userCenterData.userName
           }}</el-descriptions-item>
           <el-descriptions-item label="手机号">{{
-            userCenterData.userCenter.phoneNumber
+            userCenterData.phone
           }}</el-descriptions-item>
           <el-descriptions-item label="邮箱">{{
-            userCenterData.userCenter.email
+            userCenterData.emile
           }}</el-descriptions-item>
           <el-descriptions-item label="所在院校">{{
-            userCenterData.userCenter.school
+            userCenterData.school
           }}</el-descriptions-item>
         </el-descriptions>
       </el-card>
@@ -44,7 +44,7 @@
             >新增收货地址</el-button
           >
         </div>
-        <el-table :data="userCenterData.receive" style="width: 100%">
+        <!-- <el-table :data="userCenterData.receive" style="width: 100%">
           <el-table-column label="收货人" width="120">
             <template slot-scope="scope">
               <span style="margin-left: 10px">{{
@@ -72,7 +72,7 @@
               >
             </template>
           </el-table-column>
-        </el-table>
+        </el-table> -->
       </el-card>
     </div>
     <!-- dialog -->
@@ -87,32 +87,32 @@
             v-model="infoForm.userName"
             autocomplete="off"
             disabled
-            :placeholder="userCenterData.userCenter.userName"
+            :placeholder="userCenterData.userAccount"
           ></el-input>
         </el-form-item>
         <el-form-item label="昵称" :label-width="formLabelWidth">
           <el-input
             v-model="infoForm.nickName"
             autocomplete="off"
-            :placeholder="userCenterData.userCenter.nickName"
+            :placeholder="userCenterData.userName"
           ></el-input> </el-form-item
         ><el-form-item label="手机号" :label-width="formLabelWidth">
           <el-input
             v-model="infoForm.phoneNumber"
             autocomplete="off"
-            :placeholder="userCenterData.userCenter.phoneNumber"
+            :placeholder="userCenterData.phone"
           ></el-input> </el-form-item
         ><el-form-item label="邮箱" :label-width="formLabelWidth">
           <el-input
             v-model="infoForm.email"
             autocomplete="off"
-            :placeholder="userCenterData.userCenter.email"
+            :placeholder="userCenterData.emile"
           ></el-input> </el-form-item
         ><el-form-item label="所在院校" :label-width="formLabelWidth">
           <el-input
             v-model="infoForm.school"
             autocomplete="off"
-            :placeholder="userCenterData.userCenter.school"
+            :placeholder="userCenterData.school"
           ></el-input>
         </el-form-item>
       </el-form>
@@ -162,7 +162,6 @@
 
 <script>
 import TabBar from "@/components/tabbar/tabbar";
-import mockData from "./mockData.js";
 import { map } from "./map";
 import request from "@/network/http.js";
 export default {
@@ -171,7 +170,7 @@ export default {
   },
   data() {
     return {
-      userCenterData: mockData,
+      userCenterData: {},
       infoDialogVisible: false,
       addressDialogVisible: false,
       formLabelWidth: "120px",
@@ -188,48 +187,10 @@ export default {
         locationAddress: "",
         detailAddress: "",
       },
-      tableData: [
-        {
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄",
-        },
-        {
-          date: "2016-05-02",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄",
-        },
-        {
-          date: "2016-05-04",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄",
-        },
-        {
-          date: "2016-05-01",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄",
-        },
-        {
-          date: "2016-05-08",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄",
-        },
-        {
-          date: "2016-05-06",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄",
-        },
-        {
-          date: "2016-05-07",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄",
-        },
-      ],
-      multipleSelection: [],
     };
   },
   created() {
-    this.shopCartData = this.$store.state.shopCart.data;
+    this.getUserInfo();
   },
   methods: {
     editAddress(e) {
@@ -268,18 +229,19 @@ export default {
       });
       this.infoDialogVisible = false;
     },
-    toPay() {
-      console.log(this.$refs.multipleTable);
-      // console.log(this.);
-    },
-    handleSelectionChange(val) {
-      this.multipleSelection = val;
-    },
-    selectNotAll(e) {
-      console.log(e);
-    },
-    selectAll(e) {
-      console.log(e);
+    getUserInfo() {
+      var formData = new FormData(); // 创建一个formData对象
+      formData.append("userAccount", 19983994890); // 给这个对象添加键值对
+      request
+        .post("user/queryUserInfo", formData)
+        .then((data) => {
+          const { entity } = data.data.data;
+          this.userAccount = entity;
+          console.log("data", this.userAccount);
+        })
+        .catch((err) => {
+          console.log("err", err);
+        });
     },
   },
 };

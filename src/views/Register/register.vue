@@ -163,35 +163,43 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           alert("确认提交!");
+          const submitInfo = {
+            userName: this.ruleForm.name,
+            phone: this.ruleForm.phone,
+            emile: this.ruleForm.emile,
+            school: this.ruleForm.school,
+            password: this.ruleForm.pass,
+            userAccount: this.ruleForm.userAccount,
+          };
+          request
+            .post("user/userRegister", {
+              ...submitInfo,
+            })
+            .then((res) => {
+              const { code } = res.data;
+              if (code === 200) {
+                localStorage.setItem(
+                  "userInfo",
+                  JSON.stringify({ ...submitInfo })
+                );
+                this.$message({
+                  type: "success",
+                  message: "注册成功!",
+                });
+                this.$router.push("/home");
+              }
+            })
+            .catch((err) => {
+              this.$message({
+                type: "error",
+                message: "注册失败!",
+              });
+              throw new Error(err);
+            });
         } else {
-          console.log("error submit!!");
-          return false;
+          alert("error submit!!");
         }
       });
-      console.log(this.ruleForm);
-      // this.$http.post("user/userRegister", {
-      //   userName: this.ruleForm.name,
-      //   phone: this.ruleForm.phone,
-      //   emile: this.ruleForm.emile,
-      //   school: this.ruleForm.school,
-      //   password: this.ruleForm.pass,
-      //   userAccount: this.ruleForm.userAccount,
-      // });
-      request
-        .post("user/userRegister", {
-          userName: this.ruleForm.name,
-          phone: this.ruleForm.phone,
-          emile: this.ruleForm.emile,
-          school: this.ruleForm.school,
-          password: this.ruleForm.pass,
-          userAccount: this.ruleForm.userAccount,
-        })
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((err) => {
-          throw new Error(err);
-        });
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();

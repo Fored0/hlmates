@@ -85,10 +85,35 @@ export default {
       // 校验用户账号密码
       // 获取用户信息，更新主页头像（可缓存到本地）
       console.log(this.form);
-      this.$http.post("user/judgeAccountAndPassword", {
-        username: this.form.username,
+      const postInfo = {
+        userAccount: this.form.name,
         password: this.form.password,
-      });
+      };
+      request
+        .post("user/judgeAccountAndPassword", {
+          ...postInfo,
+        })
+        .then((data) => {
+          console.log(data.data);
+          const {
+            data: { code, message },
+          } = data;
+          message === "登录成功"
+            ? localStorage.setItem("userInfo", JSON.stringify({ ...postInfo }))
+            : null;
+          if (code === 200) {
+            this.$message({
+              type: message === "登录成功" ? "success" : "error",
+              message,
+            });
+          }
+        })
+        .catch((err) => {
+          this.$message({
+            type: "error",
+            info: "登录失败",
+          });
+        });
     },
     handleRegister() {
       this.$router.push("/register");

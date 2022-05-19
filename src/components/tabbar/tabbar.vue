@@ -4,13 +4,21 @@
       <i class="el-icon-s-home" @click="$router.push('/home')">主页</i>
     </div>
     <div class="center">
-      <h2 style="margin-right: 5px">{{ userInfo.nickName }}</h2>
+      <h2 style="margin-right: 5px">{{ userInfo.userName }}</h2>
       你好！欢迎来到&nbsp;同学你好&nbsp;二手交易平台
     </div>
     <div class="right">
       <div class="login">
         <div v-if="hasLoginned" @click="toTargetPath('usercenter')">
-          <img class="headImg" :src="userInfo.imgUrl" alt="" />
+          <img
+            class="headImg"
+            :src="
+              userInfo.imgUrl
+                ? userInfo.imgUrl
+                : 'https://img0.baidu.com/it/u=4060770951,4069855872&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500'
+            "
+            alt=""
+          />
         </div>
         <button v-else class="button" @click="$router.push('/login')">
           登录
@@ -62,10 +70,10 @@ export default {
     };
   },
   created() {
-    // this.userInfo = JSON.parse(localStorage.getItem("userInfo"));
-    // Object.keys(this.userInfo).length !== 0
-    //   ? (this.hasLoginned = true)
-    //   : (this.hasLoginned = false);
+    this.getUserInfo();
+  },
+  beforeUpdate() {
+    this.getUserInfo();
   },
   methods: {
     // 页面跳转
@@ -74,6 +82,21 @@ export default {
         this.$router.push(`/${path}`);
       } else {
         this.dialogVisible = true;
+      }
+    },
+    getUserInfo() {
+      const localStorageUserInfo = localStorage.getItem("userInfo");
+      if (
+        localStorage.getItem("userInfo") === null ||
+        localStorage.getItem("userInfo") === undefined
+      ) {
+        return;
+      } else {
+        this.userInfo = JSON.parse(localStorage.getItem("userInfo"));
+        console.log(this.userInfo);
+        Object.keys(this.userInfo).length !== 0
+          ? (this.hasLoginned = true)
+          : (this.hasLoginned = false);
       }
     },
   },

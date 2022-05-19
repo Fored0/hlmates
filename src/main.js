@@ -17,13 +17,13 @@ Vue.prototype.$http = axios
 axios.defaults.baseURL = 'api'
 
 // 模拟,需要将js值转换为JSON字符串进行缓存
-const userInfo = {
-  nickName: '大爱仙尊源源',
-  imgUrl: 'https://img2.baidu.com/it/u=1814268193,3619863984&fm=253&fmt=auto&app=138&f=JPEG?w=632&h=500',
-  phoneNumber: '18281564080'
-}
+// const userInfo = {
+//   nickName: '大爱仙尊源源',
+//   imgUrl: 'https://img2.baidu.com/it/u=1814268193,3619863984&fm=253&fmt=auto&app=138&f=JPEG?w=632&h=500',
+//   phoneNumber: '18281564080'
+// }
 
-localStorage.setItem('userInfo', JSON.stringify(userInfo))
+// localStorage.setItem('userInfo', JSON.stringify(userInfo))
 
 Vue.use(ElementUI)
 // Vue.use(MyHttpServer)
