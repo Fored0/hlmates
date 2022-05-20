@@ -6,14 +6,14 @@
       <div class="block">
         <div class="goods_item" v-for="(item, id) in goods" :key="id">
           <img
-            src="https://img0.baidu.com/it/u=3122136587,3938996930&fm=26&fmt=auto"
-            alt=""
+            src="https://img2.baidu.com/it/u=51701437,2799381878&fm=253&fmt=auto&app=138&f=JPEG?w=750&h=500"
+            alt="img"
           />
           <div class="desc" @click="toGoodsDetail(item.id)">
-            <p>{{ item.name }}</p>
+            <p>{{ item.text ? item.text : "老干妈" }}</p>
             <ul>
-              <li>{{ "浏览:" + item.liulan }}</li>
-              <li>{{ "想要:" + item.xiangyao }}</li>
+              <li>{{ "价格:" + item.price }}</li>
+              <li>{{ "新旧程度:" + item.abrasion }}</li>
             </ul>
           </div>
 
@@ -24,7 +24,7 @@
             <el-button type="primary" round @click="editId(item.id)"
               >编辑</el-button
             >
-            <el-button type="primary" round @click="editId(item.id)"
+            <el-button type="primary" round @click="toGoodsDetail(item.id)"
               >详情</el-button
             >
           </div>
@@ -68,7 +68,7 @@
         <el-button type="primary" @click="handleEdit()">确 定</el-button>
       </div>
     </el-dialog>
-    <div class="pagination">
+    <!-- <div class="pagination">
       <el-pagination
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
@@ -78,7 +78,7 @@
         :total="total"
       >
       </el-pagination>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -98,50 +98,7 @@ export default {
       pagesize: 10,
       total: 100,
       id: "",
-      goods: [
-        {
-          name: "任天堂 Nintendo Switch",
-          liulan: "25",
-          xiangyao: "34",
-          id: 1,
-        },
-        {
-          name: "任天堂 Nintendo Switch",
-          liulan: "333",
-          xiangyao: "333",
-          id: 2,
-        },
-        {
-          name: "任天堂 Nintendo Switch",
-          liulan: "233",
-          xiangyao: "545",
-          id: 3,
-        },
-        {
-          name: "任天堂 Nintendo Switch",
-          liulan: "121",
-          xiangyao: "232",
-          id: 4,
-        },
-        {
-          name: "任天堂 Nintendo Switch",
-          liulan: "121",
-          xiangyao: "232",
-          id: 5,
-        },
-        {
-          name: "任天堂 Nintendo Switch",
-          liulan: "121",
-          xiangyao: "232",
-          id: 6,
-        },
-        {
-          name: "任天堂 Nintendo Switch",
-          liulan: "121",
-          xiangyao: "232",
-          id: 7,
-        },
-      ],
+      goods: [],
       editDialogForm: {
         category: "",
         degree: "",
@@ -156,11 +113,17 @@ export default {
   },
   methods: {
     getReleaseData() {
-      request.post("release/selectReleaseOfInfo", {
-        pageNumber: "1", //当前页码
-        pageSize: "10", //每页记录数
-        property: JSON.parse(localStorage.getItem("userInfo")).id, //参数
-      });
+      request
+        .post("release/selectReleaseOfInfo", {
+          pageNumber: "1", //当前页码
+          pageSize: "10", //每页记录数
+          property: JSON.parse(localStorage.getItem("userInfo")).id, //参数
+        })
+        .then((res) => {
+          console.log(res);
+          const { list } = res.data.data;
+          this.goods = list;
+        });
     },
     handleOffShelf(e) {
       console.log(e);
@@ -170,17 +133,13 @@ export default {
         type: "warning",
       })
         .then((res) => {
-          if (res.status === "success") {
-            this.$message({
-              type: "success",
-              message: "下架成功!",
-            });
-          } else {
-            this.$message({
-              type: "erroe",
-              message: "下架失败!",
-            });
-          }
+          const formData = new FormData();
+          formData.append(
+            "id",
+            JSON.parse(localStorage.getItem("userInfo")).id
+          );
+          request.post("release/deleteRelease", formData);
+          this.getReleaseData();
         })
         .catch(() => {
           this.$message({
@@ -191,6 +150,18 @@ export default {
     },
     editId(e) {
       this.id = e;
+      console.log(e);
+      request.post("release/updateRelease", {
+        id: e, //主键id
+        title: this.editDialogForm.title, //标题
+        text: this.editDialogForm.desc, //内容
+        price: this.editDialogForm.price, //价格
+        abrasion: this.editDialogForm.degree, //新旧程度
+        fileId: "www.baidu.com", //文件地址
+        releaseType: "0", //发布类型(0,商品，1信息)
+        type: "0", //发布类别
+        childType: "0", //发布子类别
+      });
       this.editDialogFormVisible = true;
     },
     handleEdit() {
@@ -249,7 +220,7 @@ export default {
 
 .goods_item .desc {
   margin-left: 17%;
-  margin-top: -6.5%;
+  margin-top: -8.5%;
   width: 50%;
   cursor: pointer;
 }
@@ -261,7 +232,7 @@ export default {
 .desc ul {
   display: flex;
   margin-top: 3%;
-  width: 30%;
+  width: 50%;
 }
 
 .desc ul li {
