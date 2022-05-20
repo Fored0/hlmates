@@ -180,19 +180,47 @@ export default {
   },
   methods: {
     editAddress(e) {
-      console.log(e);
+      this.addressDialogVisible = true;
     },
     deleteAddress(scope) {
-      console.log(scope.row.id);
+      this.$confirm("确认删除该地址", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      })
+        .then((res) => {
+          const formData = new FormData();
+          formData.append(
+            "id",
+            JSON.parse(localStorage.getItem("userInfo")).id
+          );
+          request.post("userAddress/deleteUserAddress", formData).then(() => {
+            this.$message({
+              type: "success",
+              message: "删除成功!",
+            });
+            this.getUserAddress();
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消下架",
+          });
+        });
     },
     addressDialogOnSave() {
       let locationAddress = this.$refs.areaRef.getCheckedNodes()[0].pathLabels;
       this.addressDialogVisible = false;
-      request.post("userAddress/createUserAddress", {
-        userId: this.userAccount,
-        area: locationAddress[0],
-        address: locationAddress[1] + locationAddress[2],
-      });
+      request
+        .post("userAddress/createUserAddress", {
+          userId: this.userAccount,
+          area: locationAddress[0],
+          address: locationAddress[1] + locationAddress[2],
+        })
+        .then((res) => {
+          this.getUserAddress();
+        });
     },
     infoModifyDialogOnSave() {
       request
@@ -225,7 +253,6 @@ export default {
         .post("user/queryUserInfo", formData)
         .then((data) => {
           const { entity } = data.data.data;
-          console.log("data", entity);
           this.userCenterData = entity;
         })
         .catch((err) => {
@@ -237,7 +264,7 @@ export default {
       formData.append("userId", this.userAccount);
       request.post("userAddress/selectUserAddress", formData).then((res) => {
         const { list } = res.data.data;
-        console.log(list);
+
         this.addressData = list;
       });
     },

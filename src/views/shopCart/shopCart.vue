@@ -55,8 +55,6 @@
         </div>
         <div class="pagination">
           <el-pagination
-            @size-change="handleSizeChange"
-            @current-change="handleCurrentChange"
             :page-sizes="[10, 15, 20]"
             :page-size="pagesize"
             layout="total, sizes, prev, pager, next, jumper"
@@ -77,6 +75,7 @@
 
 <script>
 import TabBar from "@/components/tabbar/tabbar";
+import request from "@/network/http.js";
 export default {
   name: "shopCart",
   components: {
@@ -123,7 +122,21 @@ export default {
   mounted() {
     this.setCart();
   },
+  created() {
+    this.getCartData();
+  },
   methods: {
+    getCartData() {
+      request
+        .post("cart/selectCartByUserId", {
+          pageNumber: 1,
+          pageSize: 10,
+          property: JSON.parse(localStorage.getItem("userInfo")).id,
+        })
+        .then((res) => {
+          const { list } = res.data;
+        });
+    },
     //全选
     handleCheckAllChange(val) {
       this.isIndeterminate = false;

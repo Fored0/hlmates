@@ -84,6 +84,7 @@
 
 <script>
 import TabBar from "@/components/tabbar/tabbar";
+import request from "@/network/http.js";
 export default {
   components: {
     TabBar,
@@ -150,7 +151,17 @@ export default {
       },
     };
   },
+  created() {
+    this.getReleaseData();
+  },
   methods: {
+    getReleaseData() {
+      request.post("release/selectReleaseOfInfo", {
+        pageNumber: "1", //当前页码
+        pageSize: "10", //每页记录数
+        property: JSON.parse(localStorage.getItem("userInfo")).id, //参数
+      });
+    },
     handleOffShelf(e) {
       console.log(e);
       this.$confirm("您真的要下架该商品吗？", "提示", {

@@ -12,7 +12,11 @@
         >
           <el-table-column prop="detail" label="订单详情" width="390">
             <template slot-scope="scope">
-              <img :src="scope.row.imgUrlList[0]" alt style="width: 150px" />
+              <img
+                src="https://img0.baidu.com/it/u=2292808981,2192611081&fm=26&fmt=auto"
+                alt
+                style="width: 150px"
+              />
               <div class="desc_span">{{ scope.row.desc }}</div>
             </template>
           </el-table-column>
@@ -29,21 +33,28 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column
-            prop="date"
-            label="创建时间"
-            width="150"
-          ></el-table-column>
-          <el-table-column
-            prop="number"
-            label="订单编号"
-            width="150"
-          ></el-table-column>
-          <el-table-column
-            prop="state"
-            label="状态"
-            width="150"
-          ></el-table-column>
+          <el-table-column prop="creatTime" label="创建时间" width="150">
+            <template slot-scope="scope">
+              <div>
+                <p>
+                  {{
+                    scope.row.creatTime
+                      ? scope.row.creatTime
+                      : new Date().getTime()
+                  }}
+                </p>
+              </div>
+            </template></el-table-column
+          >
+          <el-table-column prop="id" label="订单编号" width="150">
+          </el-table-column>
+          <el-table-column prop="orderState" label="状态" width="150">
+            <template slot-scope="scope">
+              <div>
+                <p>{{ scope.row.orderState === 0 ? "未卖出" : "已卖出" }}</p>
+              </div>
+            </template>
+          </el-table-column>
           <el-table-column fixed="right" label="操作" width="150">
             <template slot-scope="scope">
               <el-button
@@ -128,25 +139,25 @@
     <el-dialog :visible.sync="purchaseDialogVisible" width="50%">
       <el-descriptions style="height: 35vh" :column="3" title="订单详情">
         <el-descriptions-item label="状态">{{
-          showPurchaseDetail.state
+          detailData.orderState === 0 ? "未卖出" : "已卖出"
         }}</el-descriptions-item>
         <el-descriptions-item label="金额">{{
-          showPurchaseDetail.price
+          detailData.price
         }}</el-descriptions-item>
         <el-descriptions-item label="付款方式">{{
           showPurchaseDetail.pay
         }}</el-descriptions-item>
         <el-descriptions-item label="创建时间">{{
-          showPurchaseDetail.date
+          detailData.creatTime
         }}</el-descriptions-item>
         <el-descriptions-item label="订单编号">{{
-          showPurchaseDetail.number
+          detailData.releaseId
         }}</el-descriptions-item>
         <el-descriptions-item label="收货地址">{{
-          showPurchaseDetail.address
+          detailData.address
         }}</el-descriptions-item>
         <el-descriptions-item label="描述" span="3">{{
-          showPurchaseDetail.desc
+          detailData.title
         }}</el-descriptions-item>
         <el-descriptions-item :span="3" label="图片">
           <div class="demo-image__preview">
@@ -231,15 +242,17 @@
 import TabBar from "@/components/tabbar/tabbar";
 import mockData from "./mockData";
 import request from "@/network/http";
+// import dateFormat from "@/utils/format";
 export default {
   components: {
     TabBar,
   },
   created() {
-    // this.getOrderData();
+    this.getOrderData();
   },
   data() {
     return {
+      detailData: {},
       orderData: mockData,
       purchaseDialogVisible: false,
       sellDialogVisible: false,
@@ -251,18 +264,39 @@ export default {
     };
   },
   methods: {
+    dateFormat(fmt, date) {
+      let ret;
+      const opt = {
+        "Y+": date.getFullYear().toString(), // 年
+        "m+": (date.getMonth() + 1).toString(), // 月
+        "d+": date.getDate().toString(), // 日
+        "H+": date.getHours().toString(), // 时
+        "M+": date.getMinutes().toString(), // 分
+        "S+": date.getSeconds().toString(), // 秒
+      };
+      for (let k in opt) {
+        ret = new RegExp("(" + k + ")").exec(fmt);
+        if (ret) {
+          fmt = fmt.replace(
+            ret[1],
+            ret[1].length == 1 ? opt[k] : opt[k].padStart(ret[1].length, "0")
+          );
+        }
+      }
+      return fmt;
+    },
     // 确保删除后再弹出消息
-    deleteRow(params) {
+    deleteRow(id) {
+      const formdata = new FormData();
+      formdata.append("id", id);
       request
-        .post("order/deleteOrder", {
-          id: params,
-        })
+        .post("order/deleteOrder", formdata)
         .then((res) => {
           console.log(res);
           if (res.status === 200) {
             this.$notify({
               title: "成功",
-              message: "这是一条成功的提示消息",
+              message: "删除成功",
               type: "success",
             });
           }
@@ -276,8 +310,12 @@ export default {
         });
     },
     showPurchaseDetailInfo(id) {
-      request.post("order/selectOrder", {
-        id,
+      const formdata = new FormData();
+      formdata.append("id", id);
+      request.post("order/selectOrder", formdata).then((res) => {
+        console.log(res);
+        this.detailData = res.data.data.entity;
+        console.log(this.detailData, "detail");
       });
       this.purchaseDialogVisible = true;
     },
@@ -288,11 +326,16 @@ export default {
       });
     },
     getOrderData() {
-      request.post("order/selectOrderList", {
-        pageNumber: this.currentPage,
-        pageSize: this.pagesize,
-        property: "f50a2ab9717b4077a345021b749bd1c6",
-      });
+      request
+        .post("order/selectOrderList", {
+          pageNumber: this.currentPage,
+          pageSize: this.pagesize,
+          property: "f50a2ab9717b4077a345021b749bd1c6",
+        })
+        .then((res) => {
+          this.orderData.tableData = res.data.data.list;
+          console.log(this.orderData);
+        });
     },
     handleSizeChange(val) {
       this.pagesize = val;
