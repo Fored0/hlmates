@@ -104,8 +104,8 @@ export default {
         Text: this.formData.desc,
         price: this.formData.price,
         abrasion: this.formData.degree,
-        // fileId:this.formData.fileList,
-        // releaseType: "1",
+        fileId: "www.baidu.com",
+        releaseType: "1",
         type: "1",
         childType: this.formData.category,
       });

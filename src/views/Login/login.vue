@@ -68,6 +68,7 @@ export default {
   data() {
     return {
       isShowModify: false,
+      userData: {},
       form: {
         name: "",
         password: "",
@@ -84,23 +85,25 @@ export default {
     handleLogin() {
       // 校验用户账号密码
       // 获取用户信息，更新主页头像（可缓存到本地）
-      console.log(this.form);
       const postInfo = {
         userAccount: this.form.name,
         password: this.form.password,
       };
+      const formData = new FormData();
+      formData.append("userAccount", this.form.name);
       request
         .post("user/judgeAccountAndPassword", {
           ...postInfo,
         })
         .then((data) => {
-          console.log(data.data);
+          request.post("user/queryUserInfo", formData).then((res) => {
+            const { entity } = res.data.data;
+            localStorage.setItem("userInfo", JSON.stringify({ ...entity }));
+          });
           const {
             data: { code, message },
           } = data;
-          message === "登录成功"
-            ? localStorage.setItem("userInfo", JSON.stringify({ ...postInfo }))
-            : null;
+          message === "登录成功" ? this.$router.push("/home") : null;
           if (code === 200) {
             this.$message({
               type: message === "登录成功" ? "success" : "error",

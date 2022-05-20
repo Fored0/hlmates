@@ -44,22 +44,15 @@
             >新增收货地址</el-button
           >
         </div>
-        <!-- <el-table :data="userCenterData.receive" style="width: 100%">
-          <el-table-column label="收货人" width="120">
-            <template slot-scope="scope">
-              <span style="margin-left: 10px">{{
-                scope.row.receivePeople
-              }}</span>
-            </template>
-          </el-table-column>
+        <el-table :data="addressData" style="width: 100%">
           <el-table-column label="所在地区" width="240">
             <template slot-scope="scope">
-              <span>{{ scope.row.locationAddress }}</span>
+              <span>{{ scope.row.area }}</span>
             </template>
           </el-table-column>
           <el-table-column label="详细地址" width="180">
             <template slot-scope="scope">
-              <span>{{ scope.row.detailAddress }}</span>
+              <span>{{ scope.row.address }}</span>
             </template>
           </el-table-column>
           <el-table-column label="操作">
@@ -72,7 +65,7 @@
               >
             </template>
           </el-table-column>
-        </el-table> -->
+        </el-table>
       </el-card>
     </div>
     <!-- dialog -->
@@ -84,7 +77,7 @@
       <el-form :model="infoForm">
         <el-form-item label="账户名" :label-width="formLabelWidth">
           <el-input
-            v-model="infoForm.userName"
+            v-model="infoForm.userAccount"
             autocomplete="off"
             disabled
             :placeholder="userCenterData.userAccount"
@@ -92,19 +85,19 @@
         </el-form-item>
         <el-form-item label="昵称" :label-width="formLabelWidth">
           <el-input
-            v-model="infoForm.nickName"
+            v-model="infoForm.userName"
             autocomplete="off"
             :placeholder="userCenterData.userName"
           ></el-input> </el-form-item
         ><el-form-item label="手机号" :label-width="formLabelWidth">
           <el-input
-            v-model="infoForm.phoneNumber"
+            v-model="infoForm.phone"
             autocomplete="off"
             :placeholder="userCenterData.phone"
           ></el-input> </el-form-item
         ><el-form-item label="邮箱" :label-width="formLabelWidth">
           <el-input
-            v-model="infoForm.email"
+            v-model="infoForm.emile"
             autocomplete="off"
             :placeholder="userCenterData.emile"
           ></el-input> </el-form-item
@@ -129,12 +122,6 @@
       :visible.sync="addressDialogVisible"
     >
       <el-form :model="addressForm">
-        <el-form-item label="添加收货人" :label-width="formLabelWidth">
-          <el-input
-            v-model="addressForm.receivePeople"
-            autocomplete="off"
-          ></el-input>
-        </el-form-item>
         <el-form-item label="添加收货地址" :label-width="formLabelWidth">
           <el-cascader
             style="width: 100%"
@@ -142,12 +129,7 @@
             :options="options"
             v-model="addressForm.locationAddress"
             clearable
-          ></el-cascader> </el-form-item
-        ><el-form-item label="详细地址" :label-width="formLabelWidth">
-          <el-input
-            v-model="addressForm.detailAddress"
-            autocomplete="off"
-          ></el-input>
+          ></el-cascader>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -171,15 +153,17 @@ export default {
   data() {
     return {
       userCenterData: {},
+      userAccount: 2889745514,
+      addressData: {},
       infoDialogVisible: false,
       addressDialogVisible: false,
       formLabelWidth: "120px",
       options: map,
       infoForm: {
+        userAccount: "",
         userName: "",
-        nickName: "",
-        phoneNumber: "",
-        email: "",
+        phone: "",
+        emile: "",
         school: "",
       },
       addressForm: {
@@ -190,7 +174,9 @@ export default {
     };
   },
   created() {
+    this.userAccount = JSON.parse(localStorage.getItem("userInfo")).userAccount;
     this.getUserInfo();
+    this.getUserAddress();
   },
   methods: {
     editAddress(e) {
@@ -198,50 +184,62 @@ export default {
     },
     deleteAddress(scope) {
       console.log(scope.row.id);
-      console.log(this.$store.state.shopCart.data);
     },
     addressDialogOnSave() {
-      console.log(this.$refs.areaRef.getCheckedNodes()[0].pathLabels);
       let locationAddress = this.$refs.areaRef.getCheckedNodes()[0].pathLabels;
-      console.log(this.addressForm);
       this.addressDialogVisible = false;
+      request.post("userAddress/createUserAddress", {
+        userId: this.userAccount,
+        area: locationAddress[0],
+        address: locationAddress[1] + locationAddress[2],
+      });
     },
     infoModifyDialogOnSave() {
-      console.log(this.infoForm);
-      request.post("user/updateUserInfo", {
-        userAccount: this.userCenterData.userCenter.userName,
-        userName:
-          this.infoForm.nickName === ""
-            ? this.userCenterData.userCenter.nickName
-            : this.infoForm.nickName,
-        phone:
-          this.infoForm.phoneNumber === ""
-            ? this.userCenterData.userCenter.phoneNumber
-            : this.infoForm.phoneNumber,
-        emile:
-          this.infoForm.email === ""
-            ? this.userCenterData.userCenter.email
-            : this.infoForm.email,
-        school:
-          this.infoForm.school === ""
-            ? this.userCenterData.userCenter.school
-            : this.infoForm.school,
-      });
+      request
+        .post("user/updateUserInfo", {
+          userAccount: this.userAccount,
+          phone:
+            this.infoForm.phone === ""
+              ? this.userCenterData.phone
+              : this.infoForm.phone,
+          emile:
+            this.infoForm.emile === ""
+              ? this.userCenterData.emile
+              : this.infoForm.emile,
+          school:
+            this.infoForm.school === ""
+              ? this.userCenterData.school
+              : this.infoForm.school,
+        })
+        .then((res) => {
+          if (res.data.code === 200) {
+            localStorage.setItem("userInfo", JSON.stringify(this.infoForm));
+          }
+        });
       this.infoDialogVisible = false;
     },
     getUserInfo() {
       var formData = new FormData(); // 创建一个formData对象
-      formData.append("userAccount", 19983994890); // 给这个对象添加键值对
+      formData.append("userAccount", this.userAccount); // 给这个对象添加键值对
       request
         .post("user/queryUserInfo", formData)
         .then((data) => {
           const { entity } = data.data.data;
-          this.userAccount = entity;
-          console.log("data", this.userAccount);
+          console.log("data", entity);
+          this.userCenterData = entity;
         })
         .catch((err) => {
           console.log("err", err);
         });
+    },
+    getUserAddress() {
+      const formData = new FormData();
+      formData.append("userId", this.userAccount);
+      request.post("userAddress/selectUserAddress", formData).then((res) => {
+        const { list } = res.data.data;
+        console.log(list);
+        this.addressData = list;
+      });
     },
   },
 };
