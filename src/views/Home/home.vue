@@ -102,12 +102,12 @@
       <p>为您推荐：</p>
       <div class="swiper">
         <el-carousel
-          height="230px"
+          height="300px"
           trigger="click"
           indicator-position="outside"
         >
           <el-carousel-item v-for="(item, index) in swiperList" :key="index">
-            <img style="width: 100%; height: 220px" :src="item.url" alt />
+            <img style="width: 300px; height: 300px" :src="item.url" alt />
           </el-carousel-item>
         </el-carousel>
       </div>
@@ -133,23 +133,7 @@ export default {
     return {
       searchInput: "",
       homeData: mockData,
-      swiperList: [
-        {
-          url: "https://img0.baidu.com/it/u=3073049700,2209615132&fm=253&fmt=auto&app=138&f=JPEG?w=990&h=500",
-        },
-        {
-          url: "https://img0.baidu.com/it/u=2775655496,2255017447&fm=253&fmt=auto&app=120&f=JPEG?w=1422&h=800",
-        },
-        {
-          url: "https://img1.baidu.com/it/u=700675537,3936578503&fm=253&fmt=auto&app=138&f=JPEG?w=889&h=500",
-        },
-        {
-          url: "https://img0.baidu.com/it/u=3712997108,442011921&fm=253&fmt=auto&app=138&f=JPEG?w=889&h=500",
-        },
-        {
-          url: "https://img1.baidu.com/it/u=2476457920,2055857727&fm=253&fmt=auto&app=138&f=JPEG?w=889&h=500",
-        },
-      ],
+      swiperList: mockData.swiperList,
     };
   },
   methods: {
