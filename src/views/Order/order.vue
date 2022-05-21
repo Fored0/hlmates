@@ -96,7 +96,6 @@
             <template slot-scope="scope">
               <div>
                 <p>{{ scope.row.price }}</p>
-                <p>{{ scope.row.pay }}</p>
               </div>
             </template>
           </el-table-column>
@@ -159,7 +158,7 @@
         <el-descriptions-item label="描述" span="3">{{
           detailData.title
         }}</el-descriptions-item>
-        <el-descriptions-item :span="3" label="图片">
+        <!-- <el-descriptions-item :span="3" label="图片">
           <div class="demo-image__preview">
             <el-image
               v-for="(item, index) in showPurchaseDetail.imgUrlList"
@@ -169,7 +168,7 @@
               :preview-src-list="showPurchaseDetail.imgUrlList"
             ></el-image>
           </div>
-        </el-descriptions-item>
+        </el-descriptions-item> -->
       </el-descriptions>
       <span slot="footer" class="dialog-footer">
         <el-button @click="purchaseDialogVisible = false">取 消</el-button>
@@ -202,7 +201,7 @@
         <el-descriptions-item label="描述" span="3">{{
           showSellDetail.desc
         }}</el-descriptions-item>
-        <el-descriptions-item :span="3" label="图片" style="overflow: hidden">
+        <!-- <el-descriptions-item :span="3" label="图片" style="overflow: hidden">
           <div
             class="demo-image__preview"
             v-if="Array.isArray(showSellDetail.imgUrlList)"
@@ -215,7 +214,7 @@
               :preview-src-list="showSellDetail.imgUrlList"
             ></el-image>
           </div>
-        </el-descriptions-item>
+        </el-descriptions-item> -->
       </el-descriptions>
       <span slot="footer" class="dialog-footer">
         <el-button @click="sellDialogVisible = false">取 消</el-button>
@@ -224,17 +223,6 @@
         >
       </span>
     </el-dialog>
-    <div class="pagination">
-      <el-pagination
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        :page-sizes="[10, 15, 20]"
-        :page-size="pagesize"
-        layout="total, sizes, prev, pager, next, jumper"
-        :total="total"
-      >
-      </el-pagination>
-    </div>
   </div>
 </template>
 
@@ -257,7 +245,7 @@ export default {
       purchaseDialogVisible: false,
       sellDialogVisible: false,
       showPurchaseDetail: [],
-      showSellDetail: [],
+      showSellDetail: mockData.sellDetail,
       currentPage: 1,
       pagesize: 10,
       total: 100,
@@ -321,9 +309,6 @@ export default {
     },
     showSellDetailInfo(id) {
       this.sellDialogVisible = true;
-      request.post("order/selectOrder", {
-        id,
-      });
     },
     getOrderData() {
       request

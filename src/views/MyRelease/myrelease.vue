@@ -152,15 +152,15 @@ export default {
       this.id = e;
       console.log(e);
       request.post("release/updateRelease", {
-        id: e, //主键id
-        title: this.editDialogForm.title, //标题
-        text: this.editDialogForm.desc, //内容
-        price: this.editDialogForm.price, //价格
-        abrasion: this.editDialogForm.degree, //新旧程度
-        fileId: "www.baidu.com", //文件地址
-        releaseType: "0", //发布类型(0,商品，1信息)
-        type: "0", //发布类别
-        childType: "0", //发布子类别
+        id: e,
+        title: this.editDialogForm.title,
+        text: this.editDialogForm.desc,
+        price: this.editDialogForm.price,
+        abrasion: this.editDialogForm.degree,
+        fileId: this.editDialogForm.abrasion,
+        releaseType: "0",
+        type: "0",
+        childType: "0",
       });
       this.editDialogFormVisible = true;
     },

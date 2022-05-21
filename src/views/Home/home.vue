@@ -111,9 +111,9 @@
           </el-carousel-item>
         </el-carousel>
       </div>
-      <div class="show_new_goods_message">
+      <!-- <div class="show_new_goods_message">
         <el-button plain @click="open2">右下角</el-button>
-      </div>
+      </div> -->
     </div>
     <bottom-bar></bottom-bar>
   </div>

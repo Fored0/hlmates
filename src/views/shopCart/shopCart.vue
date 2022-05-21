@@ -27,11 +27,17 @@
           ></el-checkbox>
           <div class="product-detail">
             <div class="img">
-              <img :src="item.img" />
+              <img
+                src="
+                  https://img2.baidu.com/it/u=2497928876,2124293559&fm=253&fmt=auto&app=138&f=JPEG?w=833&h=500
+                "
+              />
             </div>
             <div class="content">
-              <div class="name">{{ item.name }}</div>
-              <div class="specification">Memory Capacity:4TB Color:special</div>
+              <div class="name">{{ item.text }}</div>
+              <div class="specification">
+                {{ item.type === 0 ? "数码产品" : "鞋服" }}
+              </div>
             </div>
           </div>
           <div class="product-price">￥{{ item.price }}</div>
@@ -53,7 +59,7 @@
             >全选</el-checkbox
           >
         </div>
-        <div class="pagination">
+        <!-- <div class="pagination">
           <el-pagination
             :page-sizes="[10, 15, 20]"
             :page-size="pagesize"
@@ -61,7 +67,7 @@
             :total="total"
           >
           </el-pagination>
-        </div>
+        </div> -->
         <div class="total">
           合计 : <span style="color: #e33333">${{ totalPrice }}</span>
         </div>
@@ -90,32 +96,7 @@ export default {
       pagesize: 10,
       total: 100,
       totalPrice: 0,
-      cartList: [
-        {
-          id: 1,
-          img: "//img10.joybuy.com/N4/jfs/t1/176101/8/13660/51184/60c01ea8E1204306a/1687f0f76f243965.jpg.dpg",
-          name: 'Western Digital (WD) New My Passport 2.5 "Classic Black Mobile Hard Drive WDBYFT0020BBK-CESN',
-          num: 1,
-          price: 100,
-          checked: true,
-        },
-        {
-          id: 2,
-          img: "//img10.joybuy.com/N4/jfs/t1/176101/8/13660/51184/60c01ea8E1204306a/1687f0f76f243965.jpg.dpg",
-          name: 'Western Digital (WD) New My Passport 2.5 "Classic Black Mobile Hard Drive WDBYFT0020BBK-CESN',
-          num: 2,
-          price: 200,
-          checked: false,
-        },
-        {
-          id: 3,
-          img: "//img10.joybuy.com/N4/jfs/t1/176101/8/13660/51184/60c01ea8E1204306a/1687f0f76f243965.jpg.dpg",
-          name: 'Western Digital (WD) New My Passport 2.5 "Classic Black Mobile Hard Drive WDBYFT0020BBK-CESN',
-          num: 3,
-          price: 300,
-          checked: true,
-        },
-      ],
+      cartList: [],
       cart: [],
     };
   },
@@ -131,10 +112,12 @@ export default {
         .post("cart/selectCartByUserId", {
           pageNumber: 1,
           pageSize: 10,
-          property: JSON.parse(localStorage.getItem("userInfo")).id,
+          property: "eb342b80db36485abdfa93d17267a200",
         })
         .then((res) => {
-          const { list } = res.data;
+          console.log(res);
+          const { list } = res.data.data;
+          this.cartList = list;
         });
     },
     //全选
@@ -233,6 +216,7 @@ img {
   height: 100px;
 }
 .content {
+  margin-left: 30px;
   width: 450px;
 }
 .name {

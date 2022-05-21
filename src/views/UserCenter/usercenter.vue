@@ -12,6 +12,13 @@
             type="primary"
             >编辑信息</el-button
           >
+          <el-button
+            class="opeBtn"
+            @click="infoDialogVisible = true"
+            size="small"
+            type="primary"
+            >退出登录</el-button
+          >
         </div>
         <el-descriptions direction="vertical" :column="3" border>
           <el-descriptions-item label="账户名">{{
