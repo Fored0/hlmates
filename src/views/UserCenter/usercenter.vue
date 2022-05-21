@@ -14,9 +14,10 @@
           >
           <el-button
             class="opeBtn"
-            @click="infoDialogVisible = true"
+            @click="handleLoginOut"
             size="small"
-            type="primary"
+            type="warning"
+            style="margin-right: 20px"
             >退出登录</el-button
           >
         </div>
@@ -186,6 +187,10 @@ export default {
     this.getUserAddress();
   },
   methods: {
+    handleLoginOut() {
+      localStorage.clear();
+      this.$router.push("/home");
+    },
     editAddress(e) {
       this.addressDialogVisible = true;
     },

@@ -48,7 +48,6 @@
           action=""
           :on-preview="handlePreview"
           :on-remove="handleRemove"
-          :file-list="fileList"
           list-type="picture"
           style="width: 30%"
         >

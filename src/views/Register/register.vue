@@ -61,7 +61,22 @@
             autocomplete="off"
           ></el-input>
         </el-form-item>
-
+        <el-form-item>
+          <el-upload
+            class="upload-demo"
+            drag
+            action="api/file/uploadByOne"
+            :on-change="getChangeFileUrl"
+          >
+            <i class="el-icon-upload"></i>
+            <div class="el-upload__text">
+              将文件拖到此处，或<em>点击上传</em>
+            </div>
+            <div class="el-upload__tip" slot="tip">
+              只能上传jpg/png文件，且不超过500kb
+            </div>
+          </el-upload>
+        </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="submitForm('ruleForm')"
             >注册并登录</el-button
@@ -146,6 +161,7 @@ export default {
         school: "",
         phone: "",
         emile: "",
+        userPic: "",
       },
       rules: {
         name: [{ validator: validataName, trigger: "blur" }],
@@ -159,47 +175,56 @@ export default {
     };
   },
   methods: {
+    getFileUrl(file, fileList) {
+      console.log("file", file, "fileList", fileList);
+    },
+    getChangeFileUrl(file, fileList) {
+      console.log("changeFile", file);
+    },
     submitForm(formName) {
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          alert("确认提交!");
-          const submitInfo = {
-            userName: this.ruleForm.name,
-            phone: this.ruleForm.phone,
-            emile: this.ruleForm.emile,
-            school: this.ruleForm.school,
-            password: this.ruleForm.pass,
-            userAccount: this.ruleForm.userAccount,
-          };
-          request
-            .post("user/userRegister", {
-              ...submitInfo,
-            })
-            .then((res) => {
-              const { code } = res.data;
-              if (code === 200) {
-                localStorage.setItem(
-                  "userInfo",
-                  JSON.stringify({ ...submitInfo })
-                );
-                this.$message({
-                  type: "success",
-                  message: "注册成功!",
-                });
-                this.$router.push("/home");
-              }
-            })
-            .catch((err) => {
-              this.$message({
-                type: "error",
-                message: "注册失败!",
-              });
-              throw new Error(err);
-            });
-        } else {
-          alert("error submit!!");
-        }
-      });
+      console.log(this.ruleForm);
+      // this.$refs[formName].validate((valid) => {
+      //   if (valid) {
+      //     alert("确认提交!");
+      //     const submitInfo = {
+      //       userName: this.ruleForm.name,
+      //       phone: this.ruleForm.phone,
+      //       emile: this.ruleForm.emile,
+      //       school: this.ruleForm.school,
+      //       password: this.ruleForm.pass,
+      //       userAccount: this.ruleForm.userAccount,
+      //       userPic:
+      //         "https://img0.baidu.com/it/u=4060770951,4069855872&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500",
+      //     };
+      //     request
+      //       .post("user/userRegister", {
+      //         ...submitInfo,
+      //       })
+      //       .then((res) => {
+      //         const { code } = res.data;
+      //         if (code === 200) {
+      //           localStorage.setItem(
+      //             "userInfo",
+      //             JSON.stringify({ ...submitInfo })
+      //           );
+      //           this.$message({
+      //             type: "success",
+      //             message: "注册成功!",
+      //           });
+      //           this.$router.push("/home");
+      //         }
+      //       })
+      //       .catch((err) => {
+      //         this.$message({
+      //           type: "error",
+      //           message: "注册失败!",
+      //         });
+      //         throw new Error(err);
+      //       });
+      //   } else {
+      //     alert("error submit!!");
+      //   }
+      // });
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();
