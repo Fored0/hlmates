@@ -62,11 +62,13 @@
           ></el-input>
         </el-form-item>
         <el-form-item>
+          <!-- :on-change="getChangeFileUrl" -->
           <el-upload
             class="upload-demo"
             drag
             action="api/file/uploadByOne"
-            :on-change="getChangeFileUrl"
+            :on-success="getFileUrl"
+            :limit="1"
           >
             <i class="el-icon-upload"></i>
             <div class="el-upload__text">
@@ -153,6 +155,7 @@ export default {
       }
     };
     return {
+      userPic: "",
       ruleForm: {
         name: "",
         pass: "",
@@ -176,55 +179,81 @@ export default {
   },
   methods: {
     getFileUrl(file, fileList) {
-      console.log("file", file, "fileList", fileList);
+      // console.log("file", file, "fileList", fileList);
+      const { entity } = file.data;
+      const formData = new FormData();
+      formData.append("id", entity);
+      console.log("entity", entity);
+      request.post("file/getById", formData).then((res) => {
+        console.log("res", res);
+        const { name } = res.data.data.entity;
+        this.userPic = `http://120.79.189.8:9927/images/${name}`;
+        console.log(this.userPic);
+      });
     },
     getChangeFileUrl(file, fileList) {
-      console.log("changeFile", file);
+      console.log("changeFile", file, "fileList", fileList);
+      setTimeout(() => {
+        const { entity } = file.response.data;
+        console.log("changeFile", entity);
+        request.get("file/getById", {
+          id: entity,
+          userId: "",
+          releaseId: "",
+        });
+      }, 1000);
     },
     submitForm(formName) {
       console.log(this.ruleForm);
-      // this.$refs[formName].validate((valid) => {
-      //   if (valid) {
-      //     alert("确认提交!");
-      //     const submitInfo = {
-      //       userName: this.ruleForm.name,
-      //       phone: this.ruleForm.phone,
-      //       emile: this.ruleForm.emile,
-      //       school: this.ruleForm.school,
-      //       password: this.ruleForm.pass,
-      //       userAccount: this.ruleForm.userAccount,
-      //       userPic:
-      //         "https://img0.baidu.com/it/u=4060770951,4069855872&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500",
-      //     };
-      //     request
-      //       .post("user/userRegister", {
-      //         ...submitInfo,
-      //       })
-      //       .then((res) => {
-      //         const { code } = res.data;
-      //         if (code === 200) {
-      //           localStorage.setItem(
-      //             "userInfo",
-      //             JSON.stringify({ ...submitInfo })
-      //           );
-      //           this.$message({
-      //             type: "success",
-      //             message: "注册成功!",
-      //           });
-      //           this.$router.push("/home");
-      //         }
-      //       })
-      //       .catch((err) => {
-      //         this.$message({
-      //           type: "error",
-      //           message: "注册失败!",
-      //         });
-      //         throw new Error(err);
-      //       });
-      //   } else {
-      //     alert("error submit!!");
-      //   }
-      // });
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          alert("确认提交!");
+          const submitInfo = {
+            userName: this.ruleForm.name,
+            phone: this.ruleForm.phone,
+            emile: this.ruleForm.emile,
+            school: this.ruleForm.school,
+            password: this.ruleForm.pass,
+            userAccount: this.ruleForm.userAccount,
+            userPic: this.userPic,
+          };
+          request
+            .post("user/userRegister", {
+              ...submitInfo,
+            })
+            .then((res) => {
+              const { code } = res.data;
+              if (code === 200) {
+                const formData = new FormData();
+                formData.append("userAccount", this.ruleForm.userAccount);
+                request.post("user/queryUserInfo", formData).then((res) => {
+                  const {
+                    entity: { id },
+                  } = res.data.data;
+                  localStorage.setItem(
+                    "userInfo",
+                    JSON.stringify({ ...submitInfo, id })
+                  );
+                });
+
+                this.$message({
+                  type: "success",
+                  message: "注册成功!",
+                });
+                this.$router.push("/home");
+              }
+            })
+            .catch((err) => {
+              this.$message({
+                type: "error",
+                message: "注册失败!",
+              });
+              throw new Error(err);
+            });
+        } else {
+          alert("error submit!!");
+        }
+      });
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();

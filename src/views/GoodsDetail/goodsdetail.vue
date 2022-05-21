@@ -5,12 +5,12 @@
       <div class="top">
         <div class="title">{{ detailData.title }}</div>
         <div>
-          <div class="show_img"><img :src="detailData.img" alt="" /></div>
+          <div class="show_img"><img :src="detailData.fileId" alt="" /></div>
           <div class="good_detail">
             <div class="current_price">
-              现价:<span>￥{{ detailData.currentPrice }}</span>
+              现价:<span>￥{{ detailData.price }}</span>
             </div>
-            <div class="address">所在区域:{{ detailData.address }}</div>
+            <div class="address">所在区域:四川大学锦江学院</div>
             <div class="tags">
               <div class="item_tag" v-for="item in detailData.tags" :key="item">
                 <el-tag size="mini" type="warning">
@@ -40,35 +40,23 @@
             }}</span>
           </div>
         </div>
-        <div
-          class="desc"
-          v-for="(item, index) in detailData.description.slice(0, 3)"
-          :key="index"
-        >
+        <div class="desc">
           <div class="head_img">
-            <el-avatar :src="item.imgUrl"></el-avatar>
+            <el-avatar></el-avatar>
           </div>
-          <div class="desc_people">
-            {{ item.descPeople }} <span>有话说:</span>
-          </div>
+          <div class="desc_people">dsa <span>有话说:</span></div>
           <div class="hide_sanjiao"></div>
-          <div class="desc_content">{{ item.content }}</div>
+          <div class="desc_content">12</div>
         </div>
       </div>
       <div class="bottom_img">
         <div class="vertical_divider"></div>
         <div class="desc_text">
-          物品描述<span class="total_comment">{{
-            "共有" + totalPicture + "张图片"
-          }}</span>
+          物品描述<span class="total_comment">{{ "共有" + 1 + "张图片" }}</span>
         </div>
         <div class="goods_img">
-          <div
-            class="item_img"
-            v-for="(item, index) in detailData.goodsImgs.slice(0, 5)"
-            :key="index"
-          >
-            <img :src="item" alt="img" />
+          <div class="item_img">
+            <img alt="img" :src="detailData.fileId" />
           </div>
         </div>
       </div>
@@ -95,7 +83,7 @@
 import TabBar from "components/tabbar/tabbar.vue";
 import mockData from "./mockData";
 import request from "@/network/http.js";
-
+import axios from "axios";
 export default {
   components: {
     TabBar,
@@ -105,7 +93,7 @@ export default {
       id: {
         type: Number,
       },
-      detailData: mockData,
+      detailData: {},
       totalComment: 0,
       totalPicture: 0,
       dialogVisible: false,
@@ -115,6 +103,29 @@ export default {
     };
   },
   methods: {
+    getDetailsByid() {
+      const formdata = new FormData();
+      formdata.append("id", this.id);
+      // request
+      //     .post("release/selectReleaseById", {
+      //           id:this.id,
+      //     })
+      //     .then((res) => {
+      //       this.orderData.tableData = res.data.data.list;
+      //       console.log(this.orderData);
+      //     });
+      axios({
+        //请求方式，'GET'或者'POST'
+        method: "post",
+        //请求地址
+        url: "http://localhost:8080/api/release/selectReleaseById",
+        //url中的查询参数，GET方法的传参
+        data: formdata,
+      }).then((res) => {
+        this.detailData = res.data.data.entity;
+        console.log(this.detailData);
+      });
+    },
     toReply() {
       this.dialogVisible = false;
     },
@@ -137,6 +148,7 @@ export default {
       ? this.detailData.goodsImgs.length
       : 0;
     console.log(this.id);
+    this.getDetailsByid();
   },
 };
 </script>

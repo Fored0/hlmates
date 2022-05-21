@@ -10,15 +10,7 @@
     <div class="right">
       <div class="login">
         <div v-if="hasLoginned" @click="toTargetPath('usercenter')">
-          <img
-            class="headImg"
-            :src="
-              userInfo.imgUrl
-                ? userInfo.imgUrl
-                : 'https://img0.baidu.com/it/u=4060770951,4069855872&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500'
-            "
-            alt=""
-          />
+          <img class="headImg" :src="userInfo.userPic" alt="" />
         </div>
         <button v-else class="button" @click="$router.push('/login')">
           登录

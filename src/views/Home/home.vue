@@ -18,18 +18,18 @@
       <!-- 数码产品 -->
       <div class="goods_rec">
         <div class="goods_title">
-          <div class="goods__title--left">{{ homeData.digital.itemName }}</div>
-          <div class="goods__title--right">换一批</div>
+          <div class="goods__title--left">数码产品</div>
+          <div class="goods__title--right" @click="changeList1()">换一批</div>
         </div>
         <div class="goods__item">
           <div
             class="goods__item--show"
-            v-for="(item, index) in homeData.digital.itemList.slice(0, 4)"
+            v-for="(item, index) in Array1.slice(0, 4)"
             @click="toGoodsDetail(item.id)"
             :key="index"
           >
-            <img class="goods__item--img" :src="item.url" />
-            <div class="goods__item--desc">{{ item.description }}</div>
+            <img class="goods__item--img" :src="item.fileId" />
+            <div class="goods__item--desc">{{ item.title }}</div>
             <div class="goods__item--price">￥{{ item.price }}</div>
           </div>
         </div>
@@ -37,18 +37,18 @@
       <!-- 鞋服化妆品 clothes-->
       <div class="goods_rec">
         <div class="goods_title">
-          <div class="goods__title--left">{{ homeData.clothes.itemName }}</div>
-          <div class="goods__title--right">换一批</div>
+          <div class="goods__title--left">鞋服产品</div>
+          <div class="goods__title--right" @click="changeList2()">换一批</div>
         </div>
         <div class="goods__item">
           <div
             class="goods__item--show"
-            v-for="(item, index) in homeData.clothes.itemList.slice(0, 4)"
+            v-for="(item, index) in Array2.slice(0, 4)"
             @click="toGoodsDetail(item.id)"
             :key="index"
           >
-            <img class="goods__item--img" :src="item.url" />
-            <div class="goods__item--desc">{{ item.description }}</div>
+            <img class="goods__item--img" :src="item.fileId" />
+            <div class="goods__item--desc">{{ item.title }}</div>
             <div class="goods__item--price">￥{{ item.price }}</div>
           </div>
         </div>
@@ -56,18 +56,18 @@
       <!-- 书籍 book-->
       <div class="goods_rec">
         <div class="goods_title">
-          <div class="goods__title--left">{{ homeData.book.itemName }}</div>
-          <div class="goods__title--right">换一批</div>
+          <div class="goods__title--left">书籍推荐</div>
+          <div class="goods__title--right" @click="changeList3()">换一批</div>
         </div>
         <div class="goods__item">
           <div
             class="goods__item--show"
-            v-for="(item, index) in homeData.book.itemList.slice(0, 4)"
+            v-for="(item, index) in Array3.slice(0, 4)"
             @click="toGoodsDetail(item.id)"
             :key="index"
           >
-            <img class="goods__item--img" :src="item.url" />
-            <div class="goods__item--desc">{{ item.description }}</div>
+            <img class="goods__item--img" :src="item.fileId" />
+            <div class="goods__item--desc">{{ item.title }}</div>
             <div class="goods__item--price">￥{{ item.price }}</div>
           </div>
         </div>
@@ -75,23 +75,18 @@
       <!-- 宿舍小物件 roomLittleThing-->
       <div class="goods_rec">
         <div class="goods_title">
-          <div class="goods__title--left">
-            {{ homeData.roomLittleThing.itemName }}
-          </div>
-          <div class="goods__title--right">换一批</div>
+          <div class="goods__title--left">宿舍小物件</div>
+          <div class="goods__title--right" @click="changeList4()">换一批</div>
         </div>
         <div class="goods__item">
           <div
             class="goods__item--show"
-            v-for="(item, index) in homeData.roomLittleThing.itemList.slice(
-              0,
-              4
-            )"
+            v-for="(item, index) in Array4.slice(0, 4)"
             @click="toGoodsDetail(item.id)"
             :key="index"
           >
-            <img class="goods__item--img" :src="item.url" />
-            <div class="goods__item--desc">{{ item.description }}</div>
+            <img class="goods__item--img" :src="item.fileId" />
+            <div class="goods__item--desc">{{ item.title }}</div>
             <div class="goods__item--price">￥{{ item.price }}</div>
           </div>
         </div>
@@ -131,12 +126,63 @@ export default {
   },
   data() {
     return {
+      Array1: [],
+      Array3: [],
+      Array2: [],
+      Array4: [],
       searchInput: "",
       homeData: mockData,
       swiperList: mockData.swiperList,
     };
   },
+  created() {
+    this.getInitData();
+  },
   methods: {
+    getInitData() {
+      request
+        .post("release/selectReleaseOfGood", {
+          pageNumber: "1", //当前页码
+          pageSize: "100", //每页记录数
+        })
+        .then((res) => {
+          let myData1 = res.data.data.list;
+          console.log(myData1);
+          let myData2 = res.data.data.list;
+          let myData3 = res.data.data.list;
+          let myData4 = res.data.data.list;
+          var myData5 = myData1.filter((item) => {
+            return item.type === 0;
+          });
+          var myData6 = myData2.filter((item) => {
+            return item.type === 1;
+          });
+          var myData7 = myData3.filter((item) => {
+            return item.type === 2;
+          });
+          var myData8 = myData4.filter((item) => {
+            return item.type === 3;
+          });
+          this.Array1 = myData5;
+          this.Array2 = myData6;
+          this.Array3 = myData7;
+          this.Array4 = myData8;
+          console.log(this.Array1, this.Array2, this.Array3);
+        });
+    },
+    changeList1() {
+      console.log(1);
+      this.Array1.splice(0, 3);
+    },
+    changeList2() {
+      this.Array2.splice(0, 3);
+    },
+    changeList3() {
+      this.Array3.splice(0, 3);
+    },
+    changeList4() {
+      this.Array4.splice(0, 3);
+    },
     toGoodsDetail(id) {
       this.$router.push(`/goodsdetail/${id}`);
     },

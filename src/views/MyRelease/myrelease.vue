@@ -112,6 +112,10 @@ export default {
     this.getReleaseData();
   },
   methods: {
+    getUserInfo() {
+      // const
+      request.post("user/queryUserInfo", {});
+    },
     getReleaseData() {
       request
         .post("release/selectReleaseOfInfo", {

@@ -3,7 +3,7 @@
     <el-form ref="form" :model="formData" label-width="80px">
       <el-form-item label="类别">
         <el-input
-          v-model="formData.category"
+          v-model="formData.childType"
           style="width: 30%"
           placeholder="请输入类别"
         ></el-input>
@@ -36,7 +36,7 @@
       <el-form-item label="详细描述">
         <el-input
           type="textarea"
-          v-model="formData.desc"
+          v-model="formData.text"
           style="width: 30%"
           placeholder="描述下转让原因、物品来源、可否面议、物品亮点瑕疵等方面"
         ></el-input>
@@ -45,9 +45,8 @@
       <el-form-item>
         <el-upload
           class="upload-demo"
-          action=""
-          :on-preview="handlePreview"
-          :on-remove="handleRemove"
+          action="api/file/uploadByOne"
+          :on-success="getFileUrl"
           list-type="picture"
           style="width: 30%"
         >
@@ -69,15 +68,21 @@
 import request from "@/network/http";
 export default {
   name: "items",
+  props: {
+    releaseType: {
+      type: Number,
+      default: 0,
+    },
+  },
   data() {
     return {
       itemsData: this.$attrs.Data,
+      fileId: "",
       formData: {
-        category: "",
+        childType: "",
         degree: "",
         price: "",
-        desc: "",
-        img: "",
+        text: "",
         title: "",
       },
       fileList: [
@@ -91,23 +96,23 @@ export default {
   created() {
     // console.log(this);
   },
-  beforeMount() {
-    console.log("attr", this.$attrs);
+  mounted() {
+    console.log("releaseType", this.releaseType);
   },
   methods: {
+    getFileUrl(file, fileList) {
+      const { entity } = file.data;
+      const formData = new FormData();
+      formData.append("id", entity);
+      request.post("file/getById", formData).then((res) => {
+        const { name } = res.data.data.entity;
+        this.fileId = `http://120.79.189.8:9927/images/${name}`;
+        console.log(this.fileId);
+      });
+    },
     // 提交表单
     onSubmit() {
-      console.log(this.formData);
-      request.post("release/insertRelease", {
-        title: this.formData.title,
-        Text: this.formData.desc,
-        price: this.formData.price,
-        abrasion: this.formData.degree,
-        fileId: "www.baidu.com",
-        releaseType: "1",
-        type: "1",
-        childType: this.formData.category,
-      });
+      this.$emit("getChildData", { ...this.formData, fileId: this.fileId });
     },
     onReset() {
       this.formData = {};
