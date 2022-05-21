@@ -5,10 +5,7 @@
     <div class="card">
       <div class="block">
         <div class="goods_item" v-for="(item, id) in goods" :key="id">
-          <img
-            src="https://img2.baidu.com/it/u=51701437,2799381878&fm=253&fmt=auto&app=138&f=JPEG?w=750&h=500"
-            alt="img"
-          />
+          <img :src="item.fileId" alt="img" />
           <div class="desc" @click="toGoodsDetail(item.id)">
             <p>{{ item.text ? item.text : "老干妈" }}</p>
             <ul>
@@ -118,10 +115,10 @@ export default {
     },
     getReleaseData() {
       request
-        .post("release/selectReleaseOfInfo", {
+        .post("release/selectReleaseOfGoodById", {
           pageNumber: "1", //当前页码
           pageSize: "10", //每页记录数
-          property: JSON.parse(localStorage.getItem("userInfo")).id, //参数
+          property: "12345", //参数
         })
         .then((res) => {
           console.log(res);
@@ -138,10 +135,7 @@ export default {
       })
         .then((res) => {
           const formData = new FormData();
-          formData.append(
-            "id",
-            JSON.parse(localStorage.getItem("userInfo")).id
-          );
+          formData.append("id", e.id);
           request.post("release/deleteRelease", formData);
           this.getReleaseData();
         })
@@ -155,8 +149,12 @@ export default {
     editId(e) {
       this.id = e;
       console.log(e);
+      this.editDialogFormVisible = true;
+    },
+    handleEdit() {
+      console.log(this.id);
       request.post("release/updateRelease", {
-        id: e,
+        id: this.id,
         title: this.editDialogForm.title,
         text: this.editDialogForm.desc,
         price: this.editDialogForm.price,
@@ -166,10 +164,7 @@ export default {
         type: "0",
         childType: "0",
       });
-      this.editDialogFormVisible = true;
-    },
-    handleEdit() {
-      console.log(this.id);
+      this.getReleaseData();
       this.editDialogFormVisible = false;
     },
     toGoodsDetail(id) {

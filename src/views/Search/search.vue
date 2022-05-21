@@ -23,10 +23,10 @@
           class="show__search"
           @click="todetail(item.id)"
         >
-          <img class="show__search--img" :src="item.img" alt="img" />
+          <img class="show__search--img" :src="item.fileId" alt="img" />
           <p class="show__search--title">
             <span class="show__search--base">{{
-              item.degree + item.type
+              item.abrasion + item.title
             }}</span>
             <span class="show__search--price">{{ "￥" + item.price }}</span>
           </p>
@@ -48,6 +48,7 @@ import TabBar from "components/tabbar/tabbar.vue";
 import BottomBar from "components/bottombar/bottombar.vue";
 import mockData from "./mockData";
 import request from "@/network/http.js";
+import axios from "axios";
 export default {
   name: "Serach",
   components: {
@@ -56,13 +57,34 @@ export default {
   },
   data() {
     return {
-      searchData: mockData,
+      searchData: [],
       searchInput: "",
       isLoading: false,
+      searchKey: "",
     };
   },
   created() {
-    console.log("params", this.$router.currentRoute.params.searchKey);
+    let key = this.$router.currentRoute.params.searchKey;
+    switch (key) {
+      case "数码产品":
+        key = 0;
+        break;
+      case "鞋服产品":
+        key = 1;
+        break;
+      case "书籍推荐":
+        key = 2;
+        break;
+      case "宿舍小物件":
+        key = 3;
+        break;
+      default:
+        key = 2;
+        break;
+    }
+    this.searchKey = key;
+    console.log("params", this.searchKey);
+    this, this.getSearchData(this.searchKey);
   },
   methods: {
     todetail(id) {
@@ -70,6 +92,25 @@ export default {
     },
     handleSearch() {
       console.log(this.searchInput);
+    },
+    getSearchData(property) {
+      axios({
+        //请求方式，'GET'或者'POST'
+        method: "post",
+        //请求地址
+        url: "http://localhost:8080/api/release/selectReleaseByTittle",
+        //url中的查询参数，GET方法的传参
+        data: {
+          pageSize: 1000,
+          pageNumber: 1,
+          property,
+        },
+      }).then((res) => {
+        const { list } = res.data.data;
+        console.log(res);
+        this.searchData = list;
+        console.log("4cb35695308f4f948b2f60186529fec6", this.searchData);
+      });
     },
   },
 };

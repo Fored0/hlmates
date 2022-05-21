@@ -27,14 +27,10 @@
           ></el-checkbox>
           <div class="product-detail">
             <div class="img">
-              <img
-                src="
-                  https://img2.baidu.com/it/u=2497928876,2124293559&fm=253&fmt=auto&app=138&f=JPEG?w=833&h=500
-                "
-              />
+              <img :src="item.fileId" />
             </div>
             <div class="content">
-              <div class="name">{{ item.text }}</div>
+              <div class="name">{{ item.title }}</div>
               <div class="specification">
                 {{ item.type === 0 ? "数码产品" : "鞋服" }}
               </div>
@@ -111,8 +107,8 @@ export default {
       request
         .post("cart/selectCartByUserId", {
           pageNumber: 1,
-          pageSize: 10,
-          property: "eb342b80db36485abdfa93d17267a200",
+          pageSize: 100,
+          property: JSON.parse(localStorage.getItem("userInfo")).id,
         })
         .then((res) => {
           console.log(res);
@@ -165,6 +161,10 @@ export default {
     },
     toPay() {
       console.log(this.cartList);
+      this.$message({
+        type: "success",
+        message: "支付成功",
+      });
     },
   },
 };

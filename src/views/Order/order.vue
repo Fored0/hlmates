@@ -17,7 +17,7 @@
                 alt
                 style="width: 150px"
               />
-              <div class="desc_span">{{ scope.row.desc }}</div>
+              <div class="desc_span">{{ scope.row.text }}</div>
             </template>
           </el-table-column>
           <el-table-column
@@ -33,25 +33,14 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column prop="creatTime" label="创建时间" width="150">
-            <template slot-scope="scope">
-              <div>
-                <p>
-                  {{
-                    scope.row.creatTime
-                      ? scope.row.creatTime
-                      : new Date().getTime()
-                  }}
-                </p>
-              </div>
-            </template></el-table-column
-          >
+          <el-table-column prop="createTime" label="创建时间" width="150">
+          </el-table-column>
           <el-table-column prop="id" label="订单编号" width="150">
           </el-table-column>
           <el-table-column prop="orderState" label="状态" width="150">
             <template slot-scope="scope">
               <div>
-                <p>{{ scope.row.orderState === 0 ? "未卖出" : "已卖出" }}</p>
+                <p>{{ scope.row.orderState === 0 ? "已付款" : "未付款" }}</p>
               </div>
             </template>
           </el-table-column>
@@ -138,7 +127,7 @@
     <el-dialog :visible.sync="purchaseDialogVisible" width="50%">
       <el-descriptions style="height: 35vh" :column="3" title="订单详情">
         <el-descriptions-item label="状态">{{
-          detailData.orderState === 0 ? "未卖出" : "已卖出"
+          detailData.orderState === 0 ? "已付款" : "未付款"
         }}</el-descriptions-item>
         <el-descriptions-item label="金额">{{
           detailData.price
@@ -147,7 +136,7 @@
           showPurchaseDetail.pay
         }}</el-descriptions-item>
         <el-descriptions-item label="创建时间">{{
-          detailData.creatTime
+          detailData.createTime
         }}</el-descriptions-item>
         <el-descriptions-item label="订单编号">{{
           detailData.releaseId
@@ -189,9 +178,9 @@
         <el-descriptions-item label="付款方式">{{
           showSellDetail.pay
         }}</el-descriptions-item>
-        <el-descriptions-item label="创建时间">{{
+        <!-- <el-descriptions-item label="创建时间">{{
           showSellDetail.date
-        }}</el-descriptions-item>
+        }}</el-descriptions-item> -->
         <el-descriptions-item label="订单编号">{{
           showSellDetail.number
         }}</el-descriptions-item>
@@ -287,6 +276,7 @@ export default {
               message: "删除成功",
               type: "success",
             });
+            this.getOrderData();
           }
         })
         .catch((err) => {
@@ -313,9 +303,9 @@ export default {
     getOrderData() {
       request
         .post("order/selectOrderList", {
-          pageNumber: this.currentPage,
-          pageSize: this.pagesize,
-          property: "f50a2ab9717b4077a345021b749bd1c6",
+          pageNumber: 1,
+          pageSize: 1000,
+          property: JSON.parse(localStorage.getItem("userInfo")).id,
         })
         .then((res) => {
           this.orderData.tableData = res.data.data.list;

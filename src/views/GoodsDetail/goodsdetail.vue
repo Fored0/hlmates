@@ -63,7 +63,7 @@
     </div>
     <el-dialog :visible.sync="dialogVisible" width="30%">
       <el-form :model="form"
-        ><el-form-item :label="'给' + detailData.user + '留言'"
+        ><el-form-item :label="'给张三留言'"
           ><el-input
             type="textarea"
             :rows="2"
@@ -84,6 +84,7 @@ import TabBar from "components/tabbar/tabbar.vue";
 import mockData from "./mockData";
 import request from "@/network/http.js";
 import axios from "axios";
+import { json } from "body-parser";
 export default {
   components: {
     TabBar,
@@ -127,15 +128,44 @@ export default {
       });
     },
     toReply() {
+      // console.log(this.$store.commit());
       this.dialogVisible = false;
     },
     toPay(params) {
-      this.$router.push("/placeorder");
+      // this.$router.push("/placeorder");
+      console.log(this.detailData);
+      axios({
+        method: "post",
+        url: "http://localhost:8080/api/order/insertOrder",
+        data: {
+          userId: JSON.parse(localStorage.getItem("userInfo")).id,
+          releaseId: this.detailData.id,
+          address: "测试地址",
+          price: this.detailData.price,
+          order: this.detailData.type,
+          title: this.detailData.title,
+          fileId: this.detailData.fileId,
+        },
+      });
     },
     joinShopCart() {
-      request.post("cart/insertCart", {
-        userId: "",
-        releaseId: "",
+      axios({
+        //请求方式，'GET'或者'POST'
+        method: "post",
+        //请求地址
+        url: "http://localhost:8080/api/cart/insertCart",
+        //url中的查询参数，GET方法的传参
+        data: {
+          userId: JSON.parse(localStorage.getItem("userInfo")).id,
+          releaseId: this.detailData.id,
+        },
+      }).then((res) => {
+        if (res.data.code === 200) {
+          this.$message({
+            type: "success",
+            message: "加入成功",
+          });
+        }
       });
     },
   },

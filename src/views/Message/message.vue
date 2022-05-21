@@ -65,6 +65,7 @@ export default {
   },
   created() {
     // this.renderData = mockData;
+    console.log("111", this.$store.getters.getValue);
   },
   data() {
     return {
@@ -84,6 +85,10 @@ export default {
     },
     toReply() {
       console.log(this.form);
+      this.$message({
+        type: "success",
+        message: "回复成功",
+      });
       this.dialogVisible = false;
       this.form = {};
     },
